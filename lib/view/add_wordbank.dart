@@ -1,13 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../view_model/controller/add_wordsbank_controller.dart';
+
 class AddWordbankScreen extends StatelessWidget {
   final bool isRename;
+  final int? id; // Make id optional for create
 
-  const AddWordbankScreen({super.key, this.isRename = false});
+  const AddWordbankScreen(
+      {super.key,
+      this.isRename = false,
+      this.id}); // Require the ID in constructor
 
   @override
   Widget build(BuildContext context) {
+    // Initialize the AddWordbankController
+    final AddWordbankController controller = Get.put(AddWordbankController());
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -52,6 +61,7 @@ class AddWordbankScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 TextField(
+                  controller: controller.nameController,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
@@ -76,6 +86,7 @@ class AddWordbankScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 TextField(
+                  controller: controller.footnoteController,
                   textAlignVertical: TextAlignVertical.top,
                   maxLines: 4,
                   decoration: InputDecoration(
@@ -107,15 +118,11 @@ class AddWordbankScreen extends StatelessWidget {
                       ),
                     ),
                     onPressed: () {
-                      // Handle create or rename wordbank action
-                      if (isRename) {
-                        // Perform rename action
-                        // Add actual rename logic here
-                        Get.snackbar('Action', 'Wordbank renamed');
+                      // Call create or rename wordbank action and pass the ID if renaming
+                      if (isRename && id != null) {
+                        controller.renameWordbank(id: id!); // Pass the ID
                       } else {
-                        // Perform create action
-                        // Add actual create logic here
-                        Get.snackbar('Action', 'Wordbank created');
+                        controller.createWordbank();
                       }
                     },
                     child: Text(

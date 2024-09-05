@@ -2,9 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:word_bank/routes/routes_name.dart';
 import '../components/PersonalWordBankList.dart';
+import '../view_model/controller/wordsbank_controller.dart'; // Import the controller
 
-class PersonalWordbankScreen extends StatelessWidget {
+class PersonalWordbankScreen extends StatefulWidget {
   const PersonalWordbankScreen({super.key});
+
+  @override
+  State<PersonalWordbankScreen> createState() => _PersonalWordbankScreenState();
+}
+
+class _PersonalWordbankScreenState extends State<PersonalWordbankScreen> {
+  // Initialize the WordsbankController
+  final WordsbankController controller = Get.put(WordsbankController());
 
   @override
   Widget build(BuildContext context) {
@@ -31,14 +40,23 @@ class PersonalWordbankScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: ListView.builder(
-        itemCount: 10, // Replace with your dynamic item count
-
-        itemBuilder: (context, index) {
-          return ListItemWidget(
-              index: index); // Use the ListItemWidget with index
-        },
-      ),
+      body: Obx(() {
+        // Display the list when the data is available
+        if (controller.wordBankList.isEmpty) {
+          return const Center(child: Text('No wordbanks available.'));
+        } else {
+          return ListView.builder(
+            itemCount: controller.wordBankList.length,
+            itemBuilder: (context, index) {
+              var wordBank = controller.wordBankList[index];
+              return ListItemWidget(
+                index: index,
+                wordBank: wordBank, // Pass the entire wordBank object
+              );
+            },
+          );
+        }
+      }),
       floatingActionButton: SizedBox(
         height: 60.0,
         width: 60.0,

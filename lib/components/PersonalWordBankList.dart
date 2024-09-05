@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:word_bank/components/showConfirmationPopup.dart';
 import 'package:word_bank/routes/routes_name.dart';
-import 'package:word_bank/view/add_word_to_wordbank.dart';
 
+import '../view/add_word_to_wordbank.dart';
 import '../view/add_wordbank.dart';
 
 class ListItemWidget extends StatelessWidget {
   final int index;
+  final Map<String, dynamic> wordBank; // Receive the entire wordBank object
 
-  const ListItemWidget({super.key, required this.index});
+  const ListItemWidget(
+      {super.key, required this.index, required this.wordBank});
 
   @override
   Widget build(BuildContext context) {
@@ -31,8 +32,11 @@ class ListItemWidget extends StatelessWidget {
               style: TextStyle(color: Colors.white),
             ),
           ),
-          title: const Text('List item'),
-          subtitle: const Text('Supporting line text lorem ipsum...'),
+          title: Text(wordBank['name']), // Display the wordBank name
+          subtitle: Text(
+              wordBank['footnote'] != null && wordBank['footnote'].isNotEmpty
+                  ? wordBank['footnote']
+                  : ''), // Display additional info (like the ID)
           trailing: Row(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
@@ -46,31 +50,35 @@ class ListItemWidget extends StatelessWidget {
                 onSelected: (String value) {
                   switch (value) {
                     case 'rename':
-                      // Pass the 'isRename' parameter to the next screen
-                      Get.to(() => const AddWordbankScreen(isRename: true));
+                      // Pass the wordBank's id when renaming
+                      Get.to(() => AddWordbankScreen(
+                          isRename: true, id: wordBank['id']));
                       break;
                     case 'add':
-                      // Handle add a word to wordbank action
-                      // Get.snackbar('Action', 'Add a word to wordbank pressed');
                       Get.to(() => const AddWordToWordbankScreen());
-
                       break;
                     case 'delete':
-                      // Show confirmation dialog before deleting
                       showDialog(
                         context: context,
-                        builder: (context) => ShowConfirmationPopup(
-                          title: "Quit test?",
-                          message: "這次的作答記錄和積分都會取消，確定要離開測驗？",
-                          confirmButtonText: "Confirm & quit",
-                          cancelButtonText: "Cancel",
-                          confirmIcon: Icons.exit_to_app,
-                          onConfirm: () {
-                            Navigator.of(context).pop();
-                          },
-                          onCancel: () {
-                            Navigator.of(context).pop();
-                          },
+                        builder: (context) => AlertDialog(
+                          title: const Text('Confirm Deletion'),
+                          content: const Text(
+                              'Are you sure you want to delete this wordbank?'),
+                          actions: <Widget>[
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: const Text('Cancel'),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                                Get.snackbar('Action', 'Wordbank deleted');
+                              },
+                              child: const Text('Delete'),
+                            ),
+                          ],
                         ),
                       );
                       break;
@@ -95,34 +103,6 @@ class ListItemWidget extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-
-  void _showDeleteConfirmationDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Confirm Deletion'),
-          content: const Text('Are you sure you want to delete this wordbank?'),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop(); // Close the dialog
-              },
-              child: const Text('Cancel'),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop(); // Close the dialog
-                // Handle the delete action here
-                Get.snackbar('Action', 'Wordbank deleted');
-              },
-              child: const Text('Delete'),
-            ),
-          ],
-        );
-      },
     );
   }
 }

@@ -54,6 +54,27 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const Text(
+                        'Name',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(height: 8),
+                      TextField(
+                        onChanged: (value) => controller.name.value = value,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                            borderSide: const BorderSide(color: Colors.blue),
+                          ),
+                          contentPadding:
+                              const EdgeInsets.symmetric(horizontal: 10),
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      const Text(
                         'Email',
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.bold),

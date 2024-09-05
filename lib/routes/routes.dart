@@ -52,10 +52,20 @@ class AppRoutes {
           transitionDuration: const Duration(microseconds: 250),
           transition: Transition.leftToRightWithFade,
         ),
+        // GetPage(
+        //   name: RouteName.addWordBankScreen,
+        //   page: () => const AddWordbankScreen(
+        //     id: 1,
+        //   ),
+        //   transitionDuration: const Duration(microseconds: 250),
+        //   transition: Transition.leftToRightWithFade,
+        // ),
         GetPage(
           name: RouteName.addWordBankScreen,
-          page: () => const AddWordbankScreen(),
-          transitionDuration: const Duration(microseconds: 250),
+          page: () => AddWordbankScreen(
+              isRename: Get.arguments['isRename'] ?? false,
+              id: Get.arguments['id']), // Pass id through arguments
+          transitionDuration: const Duration(milliseconds: 250),
           transition: Transition.leftToRightWithFade,
         ),
         GetPage(
