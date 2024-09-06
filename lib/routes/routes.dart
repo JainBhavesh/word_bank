@@ -52,14 +52,6 @@ class AppRoutes {
           transitionDuration: const Duration(microseconds: 250),
           transition: Transition.leftToRightWithFade,
         ),
-        // GetPage(
-        //   name: RouteName.addWordBankScreen,
-        //   page: () => const AddWordbankScreen(
-        //     id: 1,
-        //   ),
-        //   transitionDuration: const Duration(microseconds: 250),
-        //   transition: Transition.leftToRightWithFade,
-        // ),
         GetPage(
           name: RouteName.addWordBankScreen,
           page: () => AddWordbankScreen(
@@ -82,7 +74,8 @@ class AppRoutes {
         ),
         GetPage(
           name: RouteName.addWordToWordbank,
-          page: () => const AddWordToWordbankScreen(),
+          page: () =>
+              AddWordToWordbankScreen(wordbankId: Get.arguments['wordbankId']),
           transitionDuration: const Duration(microseconds: 250),
           transition: Transition.leftToRightWithFade,
         ),

@@ -4,6 +4,7 @@ import 'package:word_bank/routes/routes_name.dart';
 
 import '../view/add_word_to_wordbank.dart';
 import '../view/add_wordbank.dart';
+import '../view_model/controller/add_wordsbank_controller.dart';
 
 class ListItemWidget extends StatelessWidget {
   final int index;
@@ -14,6 +15,7 @@ class ListItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final AddWordbankController controller = Get.find<AddWordbankController>();
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
       child: Card(
@@ -55,7 +57,8 @@ class ListItemWidget extends StatelessWidget {
                           isRename: true, id: wordBank['id']));
                       break;
                     case 'add':
-                      Get.to(() => const AddWordToWordbankScreen());
+                      Get.to(() =>
+                          AddWordToWordbankScreen(wordbankId: wordBank['id']));
                       break;
                     case 'delete':
                       showDialog(
@@ -73,8 +76,8 @@ class ListItemWidget extends StatelessWidget {
                             ),
                             TextButton(
                               onPressed: () {
+                                controller.deleteWordbank(id: wordBank['id']);
                                 Navigator.of(context).pop();
-                                Get.snackbar('Action', 'Wordbank deleted');
                               },
                               child: const Text('Delete'),
                             ),

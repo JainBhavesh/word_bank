@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:word_bank/components/button_widget.dart';
 
 class ReviewScreen extends StatefulWidget {
   const ReviewScreen({super.key});

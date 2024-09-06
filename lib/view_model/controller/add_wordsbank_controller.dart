@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:word_bank/routes/routes_name.dart';
 import '../../apis/api_call.dart';
-import '../../utils/preference.dart';
 
 class AddWordbankController extends GetxController {
   TextEditingController nameController = TextEditingController();
@@ -104,6 +103,47 @@ class AddWordbankController extends GetxController {
         await _hideLoader(); // Hide loader if status code is not 200
         Get.snackbar(
             'Error', responseBody["message"] ?? 'Failed to rename wordbank',
+            snackPosition: SnackPosition.TOP);
+      }
+    } catch (e) {
+      await _hideLoader(); // Hide loader on exception
+      Get.snackbar('Error', 'Something went wrong: $e',
+          snackPosition: SnackPosition.TOP);
+    }
+  }
+
+  Future<void> deleteWordbank({required int id}) async {
+    print("deleteWordbank=====>$id");
+
+    _showLoader();
+
+    try {
+      var response = await ApiCall().deleteWordsBank(id);
+
+      var responseBody = jsonDecode(response.body);
+
+      if (response.statusCode == 200) {
+        print("response delete is-->$responseBody");
+
+        if (responseBody['status'] == true ||
+            responseBody['status'] == "true") {
+          await _hideLoader(); // Await hiding the loader
+
+          Get.snackbar('Success', responseBody["message"],
+              snackPosition: SnackPosition.TOP);
+
+          // Navigate back to the previous screen after success
+          Get.back();
+        } else {
+          await _hideLoader(); // Hide loader on failure
+          Get.snackbar(
+              'Error', responseBody['message'] ?? 'Unknown error occurred',
+              snackPosition: SnackPosition.TOP);
+        }
+      } else {
+        await _hideLoader(); // Hide loader if status code is not 200
+        Get.snackbar(
+            'Error', responseBody["message"] ?? 'Failed to delete wordbank',
             snackPosition: SnackPosition.TOP);
       }
     } catch (e) {

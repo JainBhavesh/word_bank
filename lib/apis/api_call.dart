@@ -20,8 +20,9 @@ class ApiCall {
   }
 
 //word
-  addWord(data) async {
-    return await ApiManager().postData(AppUrl.words, data);
+  addWordToWordksbank(id, data) async {
+    final String url = '${AppUrl.words}?user_id=$id';
+    return await ApiManager().postData(url, data);
   }
 
   getWords(id) async {
@@ -41,7 +42,6 @@ class ApiCall {
 
 //Wordbank
   addWordsBank(data) async {
-    print("data------->$data");
     return await ApiManager().postData(AppUrl.wordbanks, data);
   }
 
@@ -51,7 +51,8 @@ class ApiCall {
   }
 
   deleteWordsBank(id) async {
-    final String url = '${AppUrl.getWordBank}/$id';
+    final String url = '${AppUrl.wordbanks}/$id';
+    print("deleteWordsBank url is------->$url");
     return await ApiManager().deleteData(url, {});
   }
 

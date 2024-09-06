@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:word_bank/routes/routes_name.dart';
 import '../components/PersonalWordBankList.dart';
-import '../view_model/controller/wordsbank_controller.dart'; // Import the controller
+import '../view_model/controller/add_wordsbank_controller.dart';
+import '../view_model/controller/wordsbank_controller.dart';
 
 class PersonalWordbankScreen extends StatefulWidget {
   const PersonalWordbankScreen({super.key});
@@ -16,6 +17,14 @@ class _PersonalWordbankScreenState extends State<PersonalWordbankScreen> {
   final WordsbankController controller = Get.put(WordsbankController());
 
   @override
+  void initState() {
+    super.initState();
+    // Initialize AddWordbankController here
+    Get.put(
+        AddWordbankController()); // This ensures the controller is available globally
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -23,7 +32,6 @@ class _PersonalWordbankScreenState extends State<PersonalWordbankScreen> {
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Get.back();
-            // Handle back button
           },
         ),
         title: const Text('Personal wordbanks'),
@@ -41,7 +49,6 @@ class _PersonalWordbankScreenState extends State<PersonalWordbankScreen> {
         ],
       ),
       body: Obx(() {
-        // Display the list when the data is available
         if (controller.wordBankList.isEmpty) {
           return const Center(child: Text('No wordbanks available.'));
         } else {
@@ -51,7 +58,7 @@ class _PersonalWordbankScreenState extends State<PersonalWordbankScreen> {
               var wordBank = controller.wordBankList[index];
               return ListItemWidget(
                 index: index,
-                wordBank: wordBank, // Pass the entire wordBank object
+                wordBank: wordBank,
               );
             },
           );
