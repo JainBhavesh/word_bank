@@ -97,14 +97,15 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 ElevatedButton(
                   onPressed: () {
-                    Get.toNamed(RouteName.personalWordBankScreen);
+                    // Navigate to Personal Wordbank and pass userId parameter
+                    Get.toNamed(RouteName.personalWordBankScreen,
+                        parameters: {"type": "personal", "userId": "1"});
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.black,
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(
-                          12), // Change this value to set your desired border radius
+                      borderRadius: BorderRadius.circular(12),
                     ),
                   ),
                   child: const Text(
@@ -116,14 +117,15 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    Get.toNamed(RouteName.builtinWordBankScreen);
+                    // Navigate to Built-in Wordbank without userId
+                    Get.toNamed(RouteName.builtinWordBankScreen,
+                        parameters: {"type": "builtin"});
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.black,
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(
-                          12), // Change this value to set your desired border radius
+                      borderRadius: BorderRadius.circular(12),
                     ),
                   ),
                   child: const Text(

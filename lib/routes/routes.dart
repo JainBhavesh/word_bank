@@ -55,8 +55,11 @@ class AppRoutes {
         GetPage(
           name: RouteName.addWordBankScreen,
           page: () => AddWordbankScreen(
-              isRename: Get.arguments['isRename'] ?? false,
-              id: Get.arguments['id']), // Pass id through arguments
+            isRename: Get.arguments != null && Get.arguments['isRename'] != null
+                ? Get.arguments['isRename']
+                : false,
+            id: Get.arguments != null ? Get.arguments['id'] : null,
+          ),
           transitionDuration: const Duration(milliseconds: 250),
           transition: Transition.leftToRightWithFade,
         ),
@@ -129,7 +132,8 @@ class AppRoutes {
         ),
         GetPage(
           name: RouteName.wordsInUnitScreen,
-          page: () => const WordsInUnitScreen(),
+          page: () => WordsInUnitScreen(
+              wordbankId: int.parse(Get.parameters['wordbankId']!)),
           transitionDuration: const Duration(microseconds: 250),
           transition: Transition.leftToRightWithFade,
         ),

@@ -13,15 +13,12 @@ class PersonalWordbankScreen extends StatefulWidget {
 }
 
 class _PersonalWordbankScreenState extends State<PersonalWordbankScreen> {
-  // Initialize the WordsbankController
   final WordsbankController controller = Get.put(WordsbankController());
 
   @override
   void initState() {
     super.initState();
-    // Initialize AddWordbankController here
-    Get.put(
-        AddWordbankController()); // This ensures the controller is available globally
+    Get.put(AddWordbankController());
   }
 
   @override
@@ -49,20 +46,29 @@ class _PersonalWordbankScreenState extends State<PersonalWordbankScreen> {
         ],
       ),
       body: Obx(() {
-        if (controller.wordBankList.isEmpty) {
-          return const Center(child: Text('No wordbanks available.'));
-        } else {
-          return ListView.builder(
-            itemCount: controller.wordBankList.length,
-            itemBuilder: (context, index) {
-              var wordBank = controller.wordBankList[index];
-              return ListItemWidget(
-                index: index,
-                wordBank: wordBank,
-              );
-            },
+        // Display a loader when data is being fetched
+        if (controller.isLoading.value) {
+          return const Center(
+            child: CircularProgressIndicator(),
           );
         }
+
+        // Display a message if the word bank list is empty
+        if (controller.personalwordBankList.isEmpty) {
+          return const Center(child: Text('No wordbanks available.'));
+        }
+
+        // Display the word bank list when the data is available
+        return ListView.builder(
+          itemCount: controller.personalwordBankList.length,
+          itemBuilder: (context, index) {
+            var wordBank = controller.personalwordBankList[index];
+            return ListItemWidget(
+              index: index,
+              wordBank: wordBank,
+            );
+          },
+        );
       }),
       floatingActionButton: SizedBox(
         height: 60.0,

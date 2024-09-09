@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:word_bank/components/button_widget.dart';
+import '../view_model/controller/word_controller.dart';
 
 class WordsInUnitScreen extends StatefulWidget {
-  const WordsInUnitScreen({super.key});
+  final int wordbankId; // Pass the wordbankId here
+
+  const WordsInUnitScreen({super.key, required this.wordbankId});
 
   @override
   // ignore: library_private_types_in_public_api
@@ -10,20 +14,17 @@ class WordsInUnitScreen extends StatefulWidget {
 }
 
 class _WordsInUnitScreenState extends State<WordsInUnitScreen> {
+  late final WordsController wordsController;
+
+  @override
+  void initState() {
+    super.initState();
+    wordsController = Get.put(WordsController(wordbankId: widget.wordbankId));
+  }
+
   int _selectedWordCount = 6;
   final int _minWordCount = 6;
   final int _maxWordCount = 12;
-
-  final List<String> words = [
-    "accord",
-    "acceptable",
-    "accident",
-    "account",
-    "accurate",
-    "ache",
-    "achieve",
-    "activity",
-  ];
 
   void _incrementWordCount() {
     if (_selectedWordCount < _maxWordCount) {
@@ -42,7 +43,6 @@ class _WordsInUnitScreenState extends State<WordsInUnitScreen> {
   }
 
   void _confirmSelection() {
-    // Add your confirmation logic here
     Navigator.of(context).pop();
     print("Selected $_selectedWordCount words");
   }
@@ -132,26 +132,37 @@ class _WordsInUnitScreenState extends State<WordsInUnitScreen> {
             ),
             const SizedBox(height: 20),
             Expanded(
-              child: ListView.separated(
-                itemCount: words.length,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8.0),
-                    child: Text(
-                      words[index],
-                      style: const TextStyle(
-                        fontSize: 18,
+              child: Obx(() {
+                if (wordsController.isLoading.value) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+
+                if (wordsController.wordList.isEmpty) {
+                  return const Center(child: Text("No words available."));
+                }
+
+                return ListView.separated(
+                  itemCount: wordsController.wordList.length,
+                  itemBuilder: (context, index) {
+                    var word = wordsController.wordList[index];
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: Text(
+                        word['english_name'], // Display the english_name
+                        style: const TextStyle(
+                          fontSize: 18,
+                        ),
                       ),
-                    ),
-                  );
-                },
-                separatorBuilder: (context, index) {
-                  return const Divider(
-                    thickness: 1,
-                    color: Colors.grey,
-                  );
-                },
-              ),
+                    );
+                  },
+                  separatorBuilder: (context, index) {
+                    return const Divider(
+                      thickness: 1,
+                      color: Colors.grey,
+                    );
+                  },
+                );
+              }),
             ),
           ],
         ),

@@ -3,11 +3,14 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:word_bank/routes/routes_name.dart';
+import 'package:word_bank/view_model/controller/wordsbank_controller.dart';
 import '../../apis/api_call.dart';
 
 class AddWordbankController extends GetxController {
   TextEditingController nameController = TextEditingController();
   TextEditingController footnoteController = TextEditingController();
+  final WordsbankController wordsbankController =
+      Get.find<WordsbankController>();
 
   Future<void> createWordbank() async {
     String name = nameController.text.trim();
@@ -28,12 +31,10 @@ class AddWordbankController extends GetxController {
       var responseBody = jsonDecode(response.body);
 
       if (response.statusCode == 200) {
-        print("response is-->$responseBody");
-
         if (responseBody['status'] == true ||
             responseBody['status'] == "true") {
           await _hideLoader(); // Await hiding the loader
-
+          wordsbankController.getPersonalWordsbankList();
           Get.snackbar('Success', responseBody["message"],
               snackPosition: SnackPosition.TOP);
 
@@ -67,7 +68,6 @@ class AddWordbankController extends GetxController {
   }
 
   Future<void> renameWordbank({required int id}) async {
-    print("renameWordbank=====>$id");
     String name = nameController.text.trim();
     String footnote = footnoteController.text.trim();
 
@@ -89,6 +89,7 @@ class AddWordbankController extends GetxController {
 
           Get.snackbar('Success', responseBody["message"],
               snackPosition: SnackPosition.TOP);
+          wordsbankController.getPersonalWordsbankList();
 
           // Navigate back to the previous screen after success
           print("Navigating back now...");
@@ -113,8 +114,6 @@ class AddWordbankController extends GetxController {
   }
 
   Future<void> deleteWordbank({required int id}) async {
-    print("deleteWordbank=====>$id");
-
     _showLoader();
 
     try {
@@ -128,12 +127,14 @@ class AddWordbankController extends GetxController {
         if (responseBody['status'] == true ||
             responseBody['status'] == "true") {
           await _hideLoader(); // Await hiding the loader
+          wordsbankController.getPersonalWordsbankList();
 
           Get.snackbar('Success', responseBody["message"],
               snackPosition: SnackPosition.TOP);
 
           // Navigate back to the previous screen after success
           Get.back();
+          wordsbankController.getPersonalWordsbankList();
         } else {
           await _hideLoader(); // Hide loader on failure
           Get.snackbar(

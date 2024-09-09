@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+import 'package:word_bank/view/words_in_unit_screen.dart';
 import '../view_model/controller/add_Word_To_WordbankController.dart';
+import '../view_model/controller/word_controller.dart';
 
 class AddWordToWordbankScreen extends StatefulWidget {
   final int wordbankId;
@@ -9,13 +10,23 @@ class AddWordToWordbankScreen extends StatefulWidget {
   const AddWordToWordbankScreen({super.key, required this.wordbankId});
 
   @override
+  // ignore: library_private_types_in_public_api
   _AddWordToWordbankScreenState createState() =>
       _AddWordToWordbankScreenState();
 }
 
 class _AddWordToWordbankScreenState extends State<AddWordToWordbankScreen> {
-  final AddWordToWordbankbankController controller =
+  final AddWordToWordbankbankController addWordController =
       Get.put(AddWordToWordbankbankController());
+
+  // Initialize WordsController to fetch the words from the word bank
+  late final WordsController wordsController;
+
+  @override
+  void initState() {
+    super.initState();
+    wordsController = Get.put(WordsController(wordbankId: widget.wordbankId));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +41,6 @@ class _AddWordToWordbankScreenState extends State<AddWordToWordbankScreen> {
         ),
       ),
       body: SingleChildScrollView(
-        // Wrap the content in a scrollable view
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
@@ -53,7 +63,7 @@ class _AddWordToWordbankScreenState extends State<AddWordToWordbankScreen> {
                       ),
                       const SizedBox(height: 5),
                       TextField(
-                        controller: controller.chineseController,
+                        controller: addWordController.chineseController,
                         decoration: InputDecoration(
                           labelText: 'Value',
                           border: OutlineInputBorder(
@@ -71,7 +81,7 @@ class _AddWordToWordbankScreenState extends State<AddWordToWordbankScreen> {
                       ),
                       const SizedBox(height: 5),
                       TextField(
-                        controller: controller.englishController,
+                        controller: addWordController.englishController,
                         decoration: InputDecoration(
                           labelText: 'Value',
                           border: OutlineInputBorder(
@@ -84,15 +94,16 @@ class _AddWordToWordbankScreenState extends State<AddWordToWordbankScreen> {
                       const SizedBox(height: 15),
                       Wrap(
                         spacing: 8.0,
-                        children: controller.wordTypes.map((type) {
+                        children: addWordController.wordTypes.map((type) {
                           return Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Checkbox(
-                                value: controller.selectedTypes[type],
+                                value: addWordController.selectedTypes[type],
                                 onChanged: (value) {
                                   setState(() {
-                                    controller.selectedTypes[type] = value!;
+                                    addWordController.selectedTypes[type] =
+                                        value!;
                                   });
                                 },
                               ),
@@ -114,9 +125,13 @@ class _AddWordToWordbankScreenState extends State<AddWordToWordbankScreen> {
                               ),
                             ),
                             onPressed: () {
-                              controller.addWordToWordbank(
-                                wordbankId: widget.wordbankId,
-                              );
+                              addWordController
+                                  .addWordToWordbank(
+                                      wordbankId: widget.wordbankId)
+                                  .then((_) {
+                                // Refresh the word list after adding a word
+                                wordsController.getWordsList();
+                              });
                             },
                             child: const Text(
                               'Save and one more',
@@ -132,10 +147,8 @@ class _AddWordToWordbankScreenState extends State<AddWordToWordbankScreen> {
                               ),
                             ),
                             onPressed: () {
-                              controller.addWordToWordbank(
-                                wordbankId: widget.wordbankId,
-                              );
-                              Get.back(); // Navigate back after saving
+                              Get.to(() => WordsInUnitScreen(
+                                  wordbankId: widget.wordbankId));
                             },
                             child: const Text(
                               'Done',
@@ -149,43 +162,52 @@ class _AddWordToWordbankScreenState extends State<AddWordToWordbankScreen> {
                 ),
               ),
               const SizedBox(height: 20),
-              GetBuilder<AddWordToWordbankbankController>(
-                builder: (controller) {
-                  return ListView.builder(
-                    shrinkWrap: true,
-                    physics:
-                        const NeverScrollableScrollPhysics(), // Prevent scroll conflicts with SingleChildScrollView
-                    itemCount: controller.words.length,
-                    itemBuilder: (context, index) {
-                      return Column(
-                        children: [
-                          ListTile(
-                            title: Text(
-                              '${controller.words[index]["chinese_name"]} - ${controller.words[index]["english_name"]}',
-                              style: const TextStyle(fontSize: 18),
-                            ),
-                            subtitle: Text(
-                              'Type: ${controller.words[index]["type"].join(", ")}',
-                              style: const TextStyle(fontSize: 14),
-                            ),
-                            trailing: IconButton(
-                              icon: const Icon(Icons.delete),
-                              onPressed: () {
-                                controller.deleteWordFromUI(index);
-                              },
-                            ),
+
+              // Display words fetched from backend using WordsController
+              Obx(() {
+                if (wordsController.isLoading.value) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+
+                if (wordsController.wordList.isEmpty) {
+                  return const Center(child: Text('No words available.'));
+                }
+
+                return ListView.builder(
+                  shrinkWrap: true,
+                  physics:
+                      const NeverScrollableScrollPhysics(), // Prevent scroll conflicts with SingleChildScrollView
+                  itemCount: wordsController.wordList.length,
+                  itemBuilder: (context, index) {
+                    var word = wordsController.wordList[index];
+                    return Column(
+                      children: [
+                        ListTile(
+                          title: Text(
+                            '${word["chinese_name"]} - ${word["english_name"]}',
+                            style: const TextStyle(fontSize: 18),
                           ),
-                          const Divider(
-                            height: 1,
-                            color: Colors.grey,
-                            thickness: 1,
-                          ),
-                        ],
-                      );
-                    },
-                  );
-                },
-              ),
+                          // subtitle: Text(
+                          //   'Type: ${word["type"] != null ? word["type"].join(", ") : "N/A"}',
+                          //   style: const TextStyle(fontSize: 14),
+                          // ),
+                          // trailing: IconButton(
+                          //   icon: const Icon(Icons.delete),
+                          //   onPressed: () {
+                          //     // Handle deletion logic if needed
+                          //   },
+                          // ),
+                        ),
+                        const Divider(
+                          height: 1,
+                          color: Colors.grey,
+                          thickness: 1,
+                        ),
+                      ],
+                    );
+                  },
+                );
+              }),
             ],
           ),
         ),

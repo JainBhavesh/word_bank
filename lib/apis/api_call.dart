@@ -26,7 +26,7 @@ class ApiCall {
   }
 
   getWords(id) async {
-    final String url = '${AppUrl.getWords}?user_id=$id';
+    final String url = '${AppUrl.getWords}?id=$id';
     return await ApiManager().getData(url);
   }
 
@@ -48,6 +48,10 @@ class ApiCall {
   getWordsBank(userId) async {
     final String url = '${AppUrl.getWordBank}?user_id=$userId';
     return await ApiManager().getData(url);
+  }
+
+  getBuiltInWordsBank() async {
+    return await ApiManager().getData(AppUrl.getWordBank);
   }
 
   deleteWordsBank(id) async {

@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../apis/api_call.dart';
-import '../../routes/routes_name.dart';
 
 class AddWordToWordbankbankController extends GetxController {
   TextEditingController chineseController = TextEditingController();
@@ -80,7 +79,7 @@ class AddWordToWordbankbankController extends GetxController {
 
           Get.snackbar('Success', responseBody["message"],
               snackPosition: SnackPosition.TOP);
-          Get.offNamed(RouteName.personalWordBankScreen);
+          // Get.offNamed(RouteName.personalWordBankScreen);
         } else {
           await _hideLoader();
           Get.snackbar(

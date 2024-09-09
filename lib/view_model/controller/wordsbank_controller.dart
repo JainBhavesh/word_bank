@@ -5,51 +5,43 @@ import '../../apis/api_call.dart';
 import '../../utils/preference.dart';
 
 class WordsbankController extends GetxController {
-  // Observable list to store word bank data
-  var wordBankList = <dynamic>[].obs;
+  var personalwordBankList = <dynamic>[].obs;
+  var buildinwordBankList = <dynamic>[].obs;
+  var isLoading = false.obs;
+
   TextEditingController nameController = TextEditingController();
   TextEditingController footnoteController = TextEditingController();
+
   @override
   void onInit() {
     super.onInit();
-    getWordsbankList(); // Fetch the word bank list when the controller is initialized
+    String? type =
+        Get.parameters['type']; // Check if it's personal or built-in word bank
+    if (type == 'builtin') {
+      getBuiltinWordsbankList();
+    } else {
+      getPersonalWordsbankList();
+    }
   }
 
   @override
   void onReady() {
     super.onReady();
-    // Fetch word bank list every time the screen is rendered
-    getWordsbankList();
+    getPersonalWordsbankList();
   }
 
-  // Method to show loader
-  void showLoader() {
-    Get.dialog(
-      const Center(
-        child: CircularProgressIndicator(),
-      ),
-      barrierDismissible: false,
-    );
-  }
-
-  // Method to hide loader
-  void hideLoader() {
-    if (Get.isDialogOpen!) {
-      Get.back(); // Close the loader
-    }
-  }
-
-  void getWordsbankList() async {
-    // showLoader();
+  void getPersonalWordsbankList() async {
+    isLoading(true);
     try {
       int? userId = await Preference.getInt('userId', 1);
       var res = await ApiCall().getWordsBank(userId);
-      hideLoader();
+      isLoading(false);
+
       if (res.statusCode == 200) {
         var body = json.decode(res.body);
 
         if (body['status'] == true || body['status'] == "true") {
-          wordBankList.value = body['data'];
+          personalwordBankList.value = body['data'].reversed.toList();
         } else {
           Get.snackbar('Error', body['message'] ?? 'Unknown error occurred',
               snackPosition: SnackPosition.TOP);
@@ -60,8 +52,35 @@ class WordsbankController extends GetxController {
         Get.snackbar('Error', errorMsg, snackPosition: SnackPosition.TOP);
       }
     } catch (e) {
-      // Handle network error
-      hideLoader();
+      isLoading(false);
+      Get.snackbar('Network Error',
+          'Unable to reach the server. Please check your internet connection.',
+          snackPosition: SnackPosition.TOP);
+    }
+  }
+
+  void getBuiltinWordsbankList() async {
+    isLoading(true);
+    try {
+      var res = await ApiCall().getBuiltInWordsBank();
+      isLoading(false);
+
+      if (res.statusCode == 200) {
+        var body = json.decode(res.body);
+
+        if (body['status'] == true || body['status'] == "true") {
+          buildinwordBankList.value = body['data'].reversed.toList();
+        } else {
+          Get.snackbar('Error', body['message'] ?? 'Unknown error occurred',
+              snackPosition: SnackPosition.TOP);
+        }
+      } else {
+        var errorResponse = json.decode(res.body);
+        String errorMsg = errorResponse['message'] ?? 'Unknown error occurred';
+        Get.snackbar('Error', errorMsg, snackPosition: SnackPosition.TOP);
+      }
+    } catch (e) {
+      isLoading(false);
       Get.snackbar('Network Error',
           'Unable to reach the server. Please check your internet connection.',
           snackPosition: SnackPosition.TOP);

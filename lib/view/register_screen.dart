@@ -71,6 +71,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                           contentPadding:
                               const EdgeInsets.symmetric(horizontal: 10),
+                          hintText: 'Value',
                         ),
                       ),
                       const SizedBox(height: 16),
@@ -92,6 +93,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                           contentPadding:
                               const EdgeInsets.symmetric(horizontal: 10),
+                          hintText: 'Value',
                         ),
                       ),
                       const SizedBox(height: 16),
@@ -113,6 +115,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                           contentPadding:
                               const EdgeInsets.symmetric(horizontal: 10),
+                          hintText: 'Value',
                         ),
                         obscureText: true,
                       ),

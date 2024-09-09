@@ -54,7 +54,9 @@ class ListItemWidget extends StatelessWidget {
                     case 'rename':
                       // Pass the wordBank's id when renaming
                       Get.to(() => AddWordbankScreen(
-                          isRename: true, id: wordBank['id']));
+                          isRename: true,
+                          id: wordBank['id'],
+                          wordBank: wordBank));
                       break;
                     case 'add':
                       Get.to(() =>
@@ -76,8 +78,8 @@ class ListItemWidget extends StatelessWidget {
                             ),
                             TextButton(
                               onPressed: () {
-                                controller.deleteWordbank(id: wordBank['id']);
                                 Navigator.of(context).pop();
+                                controller.deleteWordbank(id: wordBank['id']);
                               },
                               child: const Text('Delete'),
                             ),

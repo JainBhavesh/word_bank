@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../components/PersonalWordBankList.dart';
+import '../view_model/controller/add_wordsbank_controller.dart';
+import '../view_model/controller/wordsbank_controller.dart';
+
 class BuiltInWordbankScreen extends StatefulWidget {
   const BuiltInWordbankScreen({super.key});
 
@@ -9,6 +13,14 @@ class BuiltInWordbankScreen extends StatefulWidget {
 }
 
 class _BuiltInWordbankScreenState extends State<BuiltInWordbankScreen> {
+  final WordsbankController controller = Get.put(WordsbankController());
+
+  @override
+  void initState() {
+    super.initState();
+    Get.put(AddWordbankController());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,7 +29,6 @@ class _BuiltInWordbankScreenState extends State<BuiltInWordbankScreen> {
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Get.back();
-            // Handle back button
           },
         ),
         title: const Text('Built-in wordbanks'),
@@ -34,41 +45,31 @@ class _BuiltInWordbankScreenState extends State<BuiltInWordbankScreen> {
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10.0),
-        child: ListView.separated(
-          itemCount: 10, // Replace with your dynamic item count
-          separatorBuilder: (context, index) =>
-              const Divider(height: 1, color: Colors.grey), // Separator line
+      body: Obx(() {
+        // Display a loader when data is being fetched
+        if (controller.isLoading.value) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+
+        // Display a message if the word bank list is empty
+        if (controller.buildinwordBankList.isEmpty) {
+          return const Center(child: Text('No wordbanks available.'));
+        }
+
+        // Display the word bank list when the data is available
+        return ListView.builder(
+          itemCount: controller.buildinwordBankList.length,
           itemBuilder: (context, index) {
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: ListTile(
-                leading: const CircleAvatar(
-                  backgroundColor: Colors.purple,
-                  child: Text(
-                    'A',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
-                title: Text('List item $index'),
-                subtitle: const Text('Supporting line text lorem ipsum...'),
-                trailing: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    IconButton(
-                      icon: const Icon(Icons.more_horiz),
-                      onPressed: () {
-                        // Handle more options
-                      },
-                    ),
-                  ],
-                ),
-              ),
+            var wordBank = controller.buildinwordBankList[index];
+            return ListItemWidget(
+              index: index,
+              wordBank: wordBank,
             );
           },
-        ),
-      ),
+        );
+      }),
     );
   }
 }
