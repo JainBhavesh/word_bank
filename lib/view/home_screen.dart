@@ -74,7 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
           IconButton(
             icon: const Icon(Icons.person, color: Colors.purple),
             onPressed: () {
-              Get.toNamed(RouteName.registerScreen);
+              // Get.toNamed(RouteName.registerScreen);
             },
           ),
         ],

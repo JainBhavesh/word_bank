@@ -98,15 +98,14 @@ class _AddWordToWordbankScreenState extends State<AddWordToWordbankScreen> {
                           return Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              Checkbox(
-                                value: addWordController.selectedTypes[type],
-                                onChanged: (value) {
-                                  setState(() {
-                                    addWordController.selectedTypes[type] =
-                                        value!;
-                                  });
-                                },
-                              ),
+                              Obx(() => Checkbox(
+                                    value:
+                                        addWordController.selectedTypes[type],
+                                    onChanged: (value) {
+                                      addWordController.selectedTypes[type] =
+                                          value!;
+                                    },
+                                  )),
                               Text(type),
                             ],
                           );
@@ -187,16 +186,64 @@ class _AddWordToWordbankScreenState extends State<AddWordToWordbankScreen> {
                             '${word["chinese_name"]} - ${word["english_name"]}',
                             style: const TextStyle(fontSize: 18),
                           ),
-                          // subtitle: Text(
-                          //   'Type: ${word["type"] != null ? word["type"].join(", ") : "N/A"}',
-                          //   style: const TextStyle(fontSize: 14),
-                          // ),
-                          // trailing: IconButton(
-                          //   icon: const Icon(Icons.delete),
-                          //   onPressed: () {
-                          //     // Handle deletion logic if needed
-                          //   },
-                          // ),
+                          trailing: IconButton(
+                            icon: const Icon(Icons.more_horiz),
+                            onPressed: () {
+                              final RenderBox overlay = Overlay.of(context)!
+                                  .context
+                                  .findRenderObject() as RenderBox;
+
+                              showMenu(
+                                context: context,
+                                position: RelativeRect.fromLTRB(
+                                    overlay.size.width,
+                                    overlay.size.height / 2,
+                                    0,
+                                    0),
+                                items: [
+                                  PopupMenuItem(
+                                    value: 'edit',
+                                    child: ListTile(
+                                      leading: const Icon(Icons.edit,
+                                          color: Colors.black),
+                                      title: const Text('Edit word'),
+                                      onTap: () {
+                                        // Set the controllers with the current word details for editing
+                                        addWordController.chineseController
+                                            .text = word["chinese_name"];
+                                        addWordController.englishController
+                                            .text = word["english_name"];
+
+                                        // Call the edit function
+                                        addWordController.editWordToWordbank(
+                                            id: word['id']);
+
+                                        // Close the menu
+                                        Navigator.pop(context);
+                                      },
+                                    ),
+                                  ),
+                                  PopupMenuItem(
+                                    value: 'delete',
+                                    child: ListTile(
+                                      leading: const Icon(Icons.delete,
+                                          color: Colors.red),
+                                      title: const Text('Delete word',
+                                          style: TextStyle(color: Colors.red)),
+                                      onTap: () {
+                                        // Call the delete function
+                                        addWordController.deletWordToWordbank(
+                                            id: word['id']);
+
+                                        // Close the menu
+                                        Navigator.pop(context);
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              );
+                            },
+                          ),
                         ),
                         const Divider(
                           height: 1,

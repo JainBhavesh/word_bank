@@ -35,9 +35,9 @@ class ApiCall {
     return await ApiManager().deleteData(url, {});
   }
 
-  updateWord(id) async {
+  updateWord(id, data) async {
     final String url = '${AppUrl.words}/$id';
-    return await ApiManager().updateData(url, {});
+    return await ApiManager().updateData(url, data);
   }
 
 //Wordbank
