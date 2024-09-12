@@ -11,13 +11,11 @@ class AddWordToWordbankScreen extends StatefulWidget {
 
   @override
   // ignore: library_private_types_in_public_api
-  _AddWordToWordbankScreenState createState() =>
-      _AddWordToWordbankScreenState();
+  _AddWordToWordbankScreenState createState() => _AddWordToWordbankScreenState();
 }
 
 class _AddWordToWordbankScreenState extends State<AddWordToWordbankScreen> {
-  final AddWordToWordbankbankController addWordController =
-      Get.put(AddWordToWordbankbankController());
+  final AddWordToWordbankbankController addWordController = Get.put(AddWordToWordbankbankController());
 
   // Initialize WordsController to fetch the words from the word bank
   late final WordsController wordsController;
@@ -31,8 +29,7 @@ class _AddWordToWordbankScreenState extends State<AddWordToWordbankScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset:
-          true, // Ensures the view adjusts for the keyboard
+      resizeToAvoidBottomInset: true, // Ensures the view adjusts for the keyboard
       appBar: AppBar(
         title: const Text('Add words'),
         leading: IconButton(
@@ -58,8 +55,7 @@ class _AddWordToWordbankScreenState extends State<AddWordToWordbankScreen> {
                     children: [
                       const Text(
                         'Chinese',
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.w500),
+                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                       ),
                       const SizedBox(height: 5),
                       TextField(
@@ -69,15 +65,13 @@ class _AddWordToWordbankScreenState extends State<AddWordToWordbankScreen> {
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10.0),
                           ),
-                          contentPadding: const EdgeInsets.symmetric(
-                              vertical: 10.0, horizontal: 10.0),
+                          contentPadding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
                         ),
                       ),
                       const SizedBox(height: 15),
                       const Text(
                         'English',
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.w500),
+                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                       ),
                       const SizedBox(height: 5),
                       TextField(
@@ -87,8 +81,7 @@ class _AddWordToWordbankScreenState extends State<AddWordToWordbankScreen> {
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10.0),
                           ),
-                          contentPadding: const EdgeInsets.symmetric(
-                              vertical: 10.0, horizontal: 10.0),
+                          contentPadding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
                         ),
                       ),
                       const SizedBox(height: 15),
@@ -99,11 +92,9 @@ class _AddWordToWordbankScreenState extends State<AddWordToWordbankScreen> {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Obx(() => Checkbox(
-                                    value:
-                                        addWordController.selectedTypes[type],
+                                    value: addWordController.selectedTypes[type],
                                     onChanged: (value) {
-                                      addWordController.selectedTypes[type] =
-                                          value!;
+                                      addWordController.selectedTypes[type] = value!;
                                     },
                                   )),
                               Text(type),
@@ -124,13 +115,16 @@ class _AddWordToWordbankScreenState extends State<AddWordToWordbankScreen> {
                               ),
                             ),
                             onPressed: () {
-                              addWordController
-                                  .addWordToWordbank(
-                                      wordbankId: widget.wordbankId)
-                                  .then((_) {
-                                // Refresh the word list after adding a word
-                                wordsController.getWordsList();
-                              });
+                              FocusManager.instance.primaryFocus?.unfocus();
+                              addWordController.wordbankId == 0
+                                  ? addWordController.addWordToWordbank(wordbankId: widget.wordbankId).then((_) {
+                                      // Refresh the word list after adding a word
+                                      wordsController.getWordsList();
+                                    })
+                                  : addWordController.editWordToWordbank().then((_) {
+                                      // Refresh the word list after adding a word
+                                      wordsController.getWordsList();
+                                    });
                             },
                             child: const Text(
                               'Save and one more',
@@ -146,8 +140,11 @@ class _AddWordToWordbankScreenState extends State<AddWordToWordbankScreen> {
                               ),
                             ),
                             onPressed: () {
-                              Get.to(() => WordsInUnitScreen(
-                                  wordbankId: widget.wordbankId));
+                              if (wordsController.wordList.length >= 6) {
+                                Get.to(() => WordsInUnitScreen(wordbankId: widget.wordbankId));
+                              } else {
+                                Get.snackbar('Error', 'Please add atleast 6 words', snackPosition: SnackPosition.TOP);
+                              }
                             },
                             child: const Text(
                               'Done',
@@ -174,8 +171,7 @@ class _AddWordToWordbankScreenState extends State<AddWordToWordbankScreen> {
 
                 return ListView.builder(
                   shrinkWrap: true,
-                  physics:
-                      const NeverScrollableScrollPhysics(), // Prevent scroll conflicts with SingleChildScrollView
+                  physics: const NeverScrollableScrollPhysics(), // Prevent scroll conflicts with SingleChildScrollView
                   itemCount: wordsController.wordList.length,
                   itemBuilder: (context, index) {
                     var word = wordsController.wordList[index];
@@ -189,54 +185,45 @@ class _AddWordToWordbankScreenState extends State<AddWordToWordbankScreen> {
                           trailing: IconButton(
                             icon: const Icon(Icons.more_horiz),
                             onPressed: () {
-                              final RenderBox overlay = Overlay.of(context)!
-                                  .context
-                                  .findRenderObject() as RenderBox;
+                              final RenderBox overlay = Overlay.of(context)!.context.findRenderObject() as RenderBox;
 
                               showMenu(
                                 context: context,
-                                position: RelativeRect.fromLTRB(
-                                    overlay.size.width,
-                                    overlay.size.height / 2,
-                                    0,
-                                    0),
+                                position: RelativeRect.fromLTRB(overlay.size.width, overlay.size.height / 2, 0, 0),
                                 items: [
                                   PopupMenuItem(
                                     value: 'edit',
                                     child: ListTile(
-                                      leading: const Icon(Icons.edit,
-                                          color: Colors.black),
+                                      leading: const Icon(Icons.edit, color: Colors.black),
                                       title: const Text('Edit word'),
                                       onTap: () {
                                         // Set the controllers with the current word details for editing
-                                        addWordController.chineseController
-                                            .text = word["chinese_name"];
-                                        addWordController.englishController
-                                            .text = word["english_name"];
+                                        addWordController.wordbankId = 0;
+                                        addWordController.chineseController.text = word["chinese_name"];
+                                        addWordController.englishController.text = word["english_name"];
 
                                         // Call the edit function
-                                        addWordController.editWordToWordbank(
-                                            id: word['id']);
+
+                                        addWordController.setDataToUpdate(id: word['id']);
 
                                         // Close the menu
                                         Navigator.pop(context);
+                                        FocusScope.of(context).unfocus();
                                       },
                                     ),
                                   ),
                                   PopupMenuItem(
                                     value: 'delete',
                                     child: ListTile(
-                                      leading: const Icon(Icons.delete,
-                                          color: Colors.red),
-                                      title: const Text('Delete word',
-                                          style: TextStyle(color: Colors.red)),
+                                      leading: const Icon(Icons.delete, color: Colors.red),
+                                      title: const Text('Delete word', style: TextStyle(color: Colors.red)),
                                       onTap: () {
                                         // Call the delete function
-                                        addWordController.deletWordToWordbank(
-                                            id: word['id']);
+                                        Navigator.pop(context);
+
+                                        addWordController.deletWordToWordbank(id: word['id']);
 
                                         // Close the menu
-                                        Navigator.pop(context);
                                       },
                                     ),
                                   ),

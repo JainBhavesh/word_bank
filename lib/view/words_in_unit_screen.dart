@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:word_bank/components/button_widget.dart';
+import 'package:word_bank/view_model/controller/word_in_unit_controller.dart';
 import '../view_model/controller/word_controller.dart';
 
 class WordsInUnitScreen extends StatefulWidget {
@@ -15,14 +16,16 @@ class WordsInUnitScreen extends StatefulWidget {
 
 class _WordsInUnitScreenState extends State<WordsInUnitScreen> {
   late final WordsController wordsController;
+  final WordInUnitController wordInUnitController = Get.put(WordInUnitController());
 
   @override
   void initState() {
     super.initState();
     wordsController = Get.put(WordsController(wordbankId: widget.wordbankId));
+    _selectedWordCount = wordsController.wordList.length;
   }
 
-  int _selectedWordCount = 6;
+  int _selectedWordCount = 0;
   final int _minWordCount = 6;
   final int _maxWordCount = 12;
 
@@ -40,11 +43,6 @@ class _WordsInUnitScreenState extends State<WordsInUnitScreen> {
         _selectedWordCount--;
       });
     }
-  }
-
-  void _confirmSelection() {
-    Navigator.of(context).pop();
-    print("Selected $_selectedWordCount words");
   }
 
   @override
@@ -89,8 +87,7 @@ class _WordsInUnitScreenState extends State<WordsInUnitScreen> {
                   onPressed: _decrementWordCount,
                 ),
                 Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   decoration: BoxDecoration(
                     border: Border.all(color: Colors.black),
                     borderRadius: BorderRadius.circular(8),
@@ -127,7 +124,17 @@ class _WordsInUnitScreenState extends State<WordsInUnitScreen> {
                 icon: Icons.logout,
                 backgroundColor: Colors.black,
                 textColor: Colors.white,
-                onPressed: _confirmSelection,
+                onPressed: () {
+                  print("Selected $_selectedWordCount words");
+                  if (_selectedWordCount == wordsController.wordList.length) {
+                    int count = wordsController.wordList.length;
+                    wordInUnitController.createUnit(count: count, wordbankId: widget.wordbankId);
+                    print('true----------------');
+                  } else {
+                    Navigator.of(context).pop();
+                    print('false----------------');
+                  }
+                },
               ),
             ),
             const SizedBox(height: 20),

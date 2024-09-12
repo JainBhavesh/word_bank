@@ -46,6 +46,7 @@
 // }
 
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import '../../apis/api_call.dart';
 
@@ -73,11 +74,11 @@ class WordsController extends GetxController {
       if (res.statusCode == 200) {
         var body = json.decode(res.body);
         if (body['status'] == true || body['status'] == "true") {
-          wordList.value = body['data'].reversed.toList();
+          debugPrint('--body---body--->${body.toString()}');
+          wordList.value = body['data']['words'].reversed.toList();
           print('Word list updated successfully'); // Debugging
         } else {
-          Get.snackbar('Error', body['message'] ?? 'Unknown error occurred',
-              snackPosition: SnackPosition.TOP);
+          Get.snackbar('Error', body['message'] ?? 'Unknown error occurred', snackPosition: SnackPosition.TOP);
           print('Error in response: ${body['message']}'); // Debugging
         }
       } else {
@@ -87,9 +88,7 @@ class WordsController extends GetxController {
         print('Error message: $errorMsg'); // Debugging
       }
     } catch (e) {
-      Get.snackbar('Network Error',
-          'Unable to reach the server. Please check your internet connection.',
-          snackPosition: SnackPosition.TOP);
+      Get.snackbar('Network Error', 'Unable to reach the server. Please check your internet connection.', snackPosition: SnackPosition.TOP);
       print('Network error: $e'); // Debugging
     } finally {
       isLoading(false);

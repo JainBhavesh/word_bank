@@ -1,15 +1,18 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:word_bank/view_model/controller/word_controller.dart';
 import '../../apis/api_call.dart';
 
 class AddWordToWordbankbankController extends GetxController {
   TextEditingController chineseController = TextEditingController();
   TextEditingController englishController = TextEditingController();
 
+  int wordbankId = 0;
+  int updateBankId = 0;
+
   // Word Types with default unchecked
-  final List<String> wordTypes =
-      ['noun', 'verb', 'prep', 'conj', 'adj', 'adv'].obs;
+  final List<String> wordTypes = ['noun', 'verb', 'prep', 'conj', 'adj', 'adv'].obs;
   late Map<String, bool> selectedTypes = {
     'noun': false,
     'verb': false,
@@ -27,76 +30,55 @@ class AddWordToWordbankbankController extends GetxController {
 
     // Validation: Ensure both Chinese and English fields are not empty
     if (chineseName.isEmpty || englishName.isEmpty) {
-      Get.snackbar('Error', 'Both Chinese and English fields are required',
-          snackPosition: SnackPosition.TOP);
+      Get.snackbar('Error', 'Both Chinese and English fields are required', snackPosition: SnackPosition.TOP);
       return;
     }
 
     // Collect selected word types
-    List<String> selectedWordTypes = selectedTypes.entries
-        .where((entry) => entry.value)
-        .map((entry) => entry.key)
-        .toList();
+    List<String> selectedWordTypes = selectedTypes.entries.where((entry) => entry.value).map((entry) => entry.key).toList();
 
     // Validation: Ensure at least one word type is selected
     if (selectedWordTypes.isEmpty) {
-      Get.snackbar('Error', 'At least one word type must be selected',
-          snackPosition: SnackPosition.TOP);
+      Get.snackbar('Error', 'At least one word type must be selected', snackPosition: SnackPosition.TOP);
       return;
     }
 
     _showLoader();
 
-    var requestBody = {
-      "chinese_name": chineseName,
-      "english_name": englishName,
-      "type": selectedWordTypes,
-      "wordbank_id": wordbankId
-    };
+    var requestBody = {"chinese_name": chineseName, "english_name": englishName, "type": selectedWordTypes, "wordbank_id": wordbankId};
+
+    debugPrint('----requestBody------->>>>${requestBody.toString()}');
 
     try {
-      var response =
-          await ApiCall().addWordToWordksbank(wordbankId, requestBody);
+      var response = await ApiCall().addWordToWordksbank(wordbankId, requestBody);
       var responseBody = jsonDecode(response.body);
-      print("responseBody addWordToWordksbank====>$responseBody");
+      debugPrint("responseBody addWordToWordksbank====>$responseBody");
       if (response.statusCode == 200) {
-        if (responseBody['status'] == true ||
-            responseBody['status'] == "true") {
+        if (responseBody['status'] == true || responseBody['status'] == "true") {
           await _hideLoader();
 
           // Add the word locally for temporary display in UI
-          words.add({
-            "chinese_name": chineseName,
-            "english_name": englishName,
-            "type": selectedWordTypes
-          });
+          words.add({"chinese_name": chineseName, "english_name": englishName, "type": selectedWordTypes});
 
           // Clear the text fields and reset selected types after successfully adding a word
           chineseController.clear();
           englishController.clear();
 
           // Reset selectedTypes map to all false
-          selectedTypes.updateAll((key, value) =>
-              false); // This will reset all selected types to false
+          selectedTypes.updateAll((key, value) => false); // This will reset all selected types to false
 
-          Get.snackbar('Success', responseBody["message"],
-              snackPosition: SnackPosition.TOP);
+          Get.snackbar('Success', responseBody["message"], snackPosition: SnackPosition.TOP);
         } else {
           await _hideLoader();
-          Get.snackbar(
-              'Error', responseBody['message'] ?? 'Unknown error occurred',
-              snackPosition: SnackPosition.TOP);
+          Get.snackbar('Error', responseBody['message'] ?? 'Unknown error occurred', snackPosition: SnackPosition.TOP);
         }
       } else {
         await _hideLoader();
-        Get.snackbar('Error',
-            responseBody["message"] ?? 'Failed to add word to wordbank',
-            snackPosition: SnackPosition.TOP);
+        Get.snackbar('Error', responseBody["message"] ?? 'Failed to add word to wordbank', snackPosition: SnackPosition.TOP);
       }
     } catch (e) {
       await _hideLoader();
-      Get.snackbar('Error', 'Something went wrong: $e',
-          snackPosition: SnackPosition.TOP);
+      Get.snackbar('Error', 'Something went wrong: $e', snackPosition: SnackPosition.TOP);
     }
   }
 
@@ -178,78 +160,69 @@ class AddWordToWordbankbankController extends GetxController {
   //   }
   // }
 
-  Future<void> editWordToWordbank({required int id}) async {
+  Future<void> setDataToUpdate({required int id}) async {
+    String chineseName = chineseController.text.trim();
+    String englishName = englishController.text.trim();
+
+    wordbankId = id;
+    update();
+  }
+
+  Future<void> editWordToWordbank() async {
     String chineseName = chineseController.text.trim();
     String englishName = englishController.text.trim();
 
     // Validation: Ensure both Chinese and English fields are not empty
     if (chineseName.isEmpty || englishName.isEmpty) {
-      Get.snackbar('Error', 'Both Chinese and English fields are required',
-          snackPosition: SnackPosition.TOP);
+      Get.snackbar('Error', 'Both Chinese and English fields are required', snackPosition: SnackPosition.TOP);
       return;
     }
 
     // Collect selected word types
-    List<String> selectedWordTypes = selectedTypes.entries
-        .where((entry) => entry.value)
-        .map((entry) => entry.key)
-        .toList();
+    List<String> selectedWordTypes = selectedTypes.entries.where((entry) => entry.value).map((entry) => entry.key).toList();
 
     // Validation: Ensure at least one word type is selected
     if (selectedWordTypes.isEmpty) {
-      Get.snackbar('Error', 'At least one word type must be selected',
-          snackPosition: SnackPosition.TOP);
+      Get.snackbar('Error', 'At least one word type must be selected', snackPosition: SnackPosition.TOP);
       return;
     }
 
     _showLoader();
 
-    var requestBody = {
-      "chinese_name": chineseName,
-      "english_name": englishName,
-      "type": selectedWordTypes,
-      "wordbank_id": id
-    };
+    var requestBody = {"chinese_name": chineseName, "english_name": englishName, "type": selectedWordTypes, "wordbank_id": wordbankId};
+
+    print("requestBody requestBody====>$requestBody");
 
     try {
-      var response = await ApiCall().updateWord(id, requestBody);
+      var response = await ApiCall().updateWord(wordbankId, requestBody);
       var responseBody = jsonDecode(response.body);
       print("responseBody addWordToWordksbank====>$responseBody");
       if (response.statusCode == 200) {
-        if (responseBody['status'] == true ||
-            responseBody['status'] == "true") {
+        if (responseBody['status'] == true || responseBody['status'] == "true") {
           await _hideLoader();
           // Add the word locally for temporary display in UI
-          words.add({
-            "chinese_name": chineseName,
-            "english_name": englishName,
-            "type": selectedWordTypes
-          });
+          // words.add({"chinese_name": chineseName, "english_name": englishName, "type": selectedWordTypes});
 
           // Clear the text fields and selections after successfully adding a word
           chineseController.clear();
           englishController.clear();
           selectedTypes.updateAll((key, value) => false);
 
-          Get.snackbar('Success', responseBody["message"],
-              snackPosition: SnackPosition.TOP);
+          Get.find<WordsController>().getWordsList();
+
+          Get.snackbar('Success', responseBody["message"], snackPosition: SnackPosition.TOP);
           // Get.offNamed(RouteName.personalWordBankScreen);
         } else {
           await _hideLoader();
-          Get.snackbar(
-              'Error', responseBody['message'] ?? 'Unknown error occurred',
-              snackPosition: SnackPosition.TOP);
+          Get.snackbar('Error', responseBody['message'] ?? 'Unknown error occurred', snackPosition: SnackPosition.TOP);
         }
       } else {
         await _hideLoader();
-        Get.snackbar('Error',
-            responseBody["message"] ?? 'Failed to add word to wordbank',
-            snackPosition: SnackPosition.TOP);
+        Get.snackbar('Error', responseBody["message"] ?? 'Failed to add word to wordbank', snackPosition: SnackPosition.TOP);
       }
     } catch (e) {
       await _hideLoader();
-      Get.snackbar('Error', 'Something went wrong: $e',
-          snackPosition: SnackPosition.TOP);
+      Get.snackbar('Error', 'Something went wrong: $e', snackPosition: SnackPosition.TOP);
     }
   }
 
@@ -261,25 +234,21 @@ class AddWordToWordbankbankController extends GetxController {
       var response = await ApiCall().deleteWord(id);
       var responseBody = jsonDecode(response.body);
       if (response.statusCode == 200) {
-        if (responseBody['status'] == true ||
-            responseBody['status'] == "true") {
+        if (responseBody['status'] == true || responseBody['status'] == "true") {
           // Successfully deleted
           await _hideLoader();
-          Get.snackbar('Success', responseBody["message"],
-              snackPosition: SnackPosition.TOP);
+          Get.find<WordsController>().getWordsList();
+          Get.snackbar('Success', responseBody["message"], snackPosition: SnackPosition.TOP);
         }
       } else {
         // Handle failure
         await _hideLoader();
-        Get.snackbar('Error',
-            responseBody['message'] ?? 'Failed to delete word from wordbank',
-            snackPosition: SnackPosition.TOP);
+        Get.snackbar('Error', responseBody['message'] ?? 'Failed to delete word from wordbank', snackPosition: SnackPosition.TOP);
       }
     } catch (e) {
       // Handle unexpected errors
       await _hideLoader();
-      Get.snackbar('Error', 'Something went wrong: $e',
-          snackPosition: SnackPosition.TOP);
+      Get.snackbar('Error', 'Something went wrong: $e', snackPosition: SnackPosition.TOP);
     }
   }
 

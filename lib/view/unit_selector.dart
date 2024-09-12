@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:word_bank/routes/routes_name.dart';
 import 'package:get/get.dart';
+import 'package:word_bank/view_model/controller/unit_selector_controller.dart';
 
 class UnitSelector extends StatefulWidget {
   const UnitSelector({super.key});
@@ -11,6 +12,8 @@ class UnitSelector extends StatefulWidget {
 }
 
 class _UnitSelectorState extends State<UnitSelector> {
+  final UnitSelectorController unitSelectorController = Get.put(UnitSelectorController());
+
   int selectedUnitIndex = 0;
   final int totalUnits = 15;
   final int daysLeft = 22;
@@ -34,25 +37,34 @@ class _UnitSelectorState extends State<UnitSelector> {
           ),
         ],
       ),
-      body: GridView.builder(
-        padding: const EdgeInsets.all(16.0),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3,
-          childAspectRatio: 1,
-          crossAxisSpacing: 16,
-          mainAxisSpacing: 16,
-        ),
-        itemCount: totalUnits,
-        itemBuilder: (context, index) {
-          if (index == 0) {
-            return _buildFinishButton();
-          } else if (index <= 5) {
-            return _buildDaysLeftButton(index);
-          } else {
-            return _buildUnplannedButton();
-          }
-        },
-      ),
+      body: Obx(() {
+        if (unitSelectorController.isLoading.value) {
+          return const Center(child: CircularProgressIndicator());
+        }
+
+        return GridView.builder(
+          padding: const EdgeInsets.all(16.0),
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 3,
+            childAspectRatio: 1,
+            crossAxisSpacing: 16,
+            mainAxisSpacing: 16,
+          ),
+          itemCount: unitSelectorController.dateList.length,
+          itemBuilder: (context, index) {
+            var typeData = unitSelectorController.dateList[index];
+            DateTime? targetDate = unitSelectorController.parseDate(typeData['target_date']);
+
+            if (targetDate == null) {
+              return _buildUnplannedButton();
+            } else if (targetDate.isBefore(DateTime.now())) {
+              return _buildFinishButton();
+            } else {
+              return _buildDaysLeftButton(index);
+            }
+          },
+        );
+      }),
     );
   }
 
@@ -96,9 +108,7 @@ class _UnitSelectorState extends State<UnitSelector> {
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           color: Colors.white,
-          border: Border.all(
-              color: selectedUnitIndex == index ? Colors.blue : Colors.red,
-              width: 4),
+          border: Border.all(color: selectedUnitIndex == index ? Colors.blue : Colors.red, width: 4),
         ),
         child: Center(
           child: Column(

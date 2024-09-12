@@ -57,13 +57,13 @@ class _LoginScreenState extends State<LoginScreen> {
                     children: [
                       const Text(
                         'Email',
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold),
+                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(height: 8),
                       TextField(
                         onChanged: (value) => controller.email.value = value,
                         decoration: InputDecoration(
+                          hintText: 'Enter email',
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8.0),
                           ),
@@ -71,20 +71,19 @@ class _LoginScreenState extends State<LoginScreen> {
                             borderRadius: BorderRadius.circular(8.0),
                             borderSide: const BorderSide(color: Colors.blue),
                           ),
-                          contentPadding:
-                              const EdgeInsets.symmetric(horizontal: 10),
+                          contentPadding: const EdgeInsets.symmetric(horizontal: 10),
                         ),
                       ),
                       const SizedBox(height: 16),
                       const Text(
                         'Password',
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold),
+                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(height: 8),
                       TextField(
                         onChanged: (value) => controller.password.value = value,
                         decoration: InputDecoration(
+                          hintText: 'Enter Password',
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8.0),
                           ),
@@ -92,8 +91,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             borderRadius: BorderRadius.circular(8.0),
                             borderSide: const BorderSide(color: Colors.blue),
                           ),
-                          contentPadding:
-                              const EdgeInsets.symmetric(horizontal: 10),
+                          contentPadding: const EdgeInsets.symmetric(horizontal: 10),
                         ),
                         obscureText: true,
                       ),
@@ -112,8 +110,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text('I agree to the agreement'),
-                              Text('Description',
-                                  style: TextStyle(fontSize: 12)),
+                              Text('Description', style: TextStyle(fontSize: 12)),
                             ],
                           ),
                         ],
@@ -144,8 +141,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           text: TextSpan(
                             text: "Don't have an account? ",
                             style: const TextStyle(
-                              color: Colors
-                                  .black, // Default color for non-clickable text
+                              color: Colors.black, // Default color for non-clickable text
                             ),
                             children: [
                               TextSpan(

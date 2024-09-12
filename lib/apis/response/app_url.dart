@@ -9,5 +9,6 @@ class AppUrl {
   static const String getWordBank = "getWordBank";
   static const String wordbanks = "wordbanks";
   static const String words = "words";
-  static const String wordbankUnits = "wordbank-units";
+  static const String wordbankUnits = "wordBankUnits";
+  static const String getUnits = "getUnits";
 }

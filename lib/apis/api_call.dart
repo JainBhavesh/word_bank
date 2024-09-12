@@ -70,8 +70,8 @@ class ApiCall {
     return await ApiManager().postData(AppUrl.wordbankUnits, data);
   }
 
-  getWordsUnits(userId) async {
-    final String url = '${AppUrl.wordbankUnits}?user_id=$userId';
+  getWordsUnits(id) async {
+    final String url = '${AppUrl.getUnits}?id=$id';
     return await ApiManager().getData(url);
   }
 
