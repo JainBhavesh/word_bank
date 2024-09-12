@@ -12,7 +12,8 @@ class UnitSelector extends StatefulWidget {
 }
 
 class _UnitSelectorState extends State<UnitSelector> {
-  final UnitSelectorController unitSelectorController = Get.put(UnitSelectorController());
+  final UnitSelectorController unitSelectorController =
+      Get.put(UnitSelectorController());
 
   int selectedUnitIndex = 0;
   final int totalUnits = 15;
@@ -42,28 +43,31 @@ class _UnitSelectorState extends State<UnitSelector> {
           return const Center(child: CircularProgressIndicator());
         }
 
-        return GridView.builder(
-          padding: const EdgeInsets.all(16.0),
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3,
-            childAspectRatio: 1,
-            crossAxisSpacing: 16,
-            mainAxisSpacing: 16,
-          ),
-          itemCount: unitSelectorController.dateList.length,
-          itemBuilder: (context, index) {
-            var typeData = unitSelectorController.dateList[index];
-            DateTime? targetDate = unitSelectorController.parseDate(typeData['target_date']);
+        return unitSelectorController.dateList.isEmpty
+            ? const Center(child: Text('No data available'))
+            : GridView.builder(
+                padding: const EdgeInsets.all(16.0),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                  childAspectRatio: 1,
+                  crossAxisSpacing: 16,
+                  mainAxisSpacing: 16,
+                ),
+                itemCount: unitSelectorController.dateList.length,
+                itemBuilder: (context, index) {
+                  var typeData = unitSelectorController.dateList[index];
+                  DateTime? targetDate =
+                      unitSelectorController.parseDate(typeData['target_date']);
 
-            if (targetDate == null) {
-              return _buildUnplannedButton();
-            } else if (targetDate.isBefore(DateTime.now())) {
-              return _buildFinishButton();
-            } else {
-              return _buildDaysLeftButton(index);
-            }
-          },
-        );
+                  if (targetDate == null) {
+                    return _buildUnplannedButton();
+                  } else if (targetDate.isBefore(DateTime.now())) {
+                    return _buildFinishButton();
+                  } else {
+                    return _buildDaysLeftButton(index);
+                  }
+                },
+              );
       }),
     );
   }
@@ -108,7 +112,9 @@ class _UnitSelectorState extends State<UnitSelector> {
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           color: Colors.white,
-          border: Border.all(color: selectedUnitIndex == index ? Colors.blue : Colors.red, width: 4),
+          border: Border.all(
+              color: selectedUnitIndex == index ? Colors.blue : Colors.red,
+              width: 4),
         ),
         child: Center(
           child: Column(
