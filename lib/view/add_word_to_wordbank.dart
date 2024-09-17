@@ -185,7 +185,7 @@ class _AddWordToWordbankScreenState extends State<AddWordToWordbankScreen> {
                           trailing: IconButton(
                             icon: const Icon(Icons.more_horiz),
                             onPressed: () {
-                              final RenderBox overlay = Overlay.of(context)!.context.findRenderObject() as RenderBox;
+                              final RenderBox overlay = Overlay.of(context).context.findRenderObject() as RenderBox;
 
                               showMenu(
                                 context: context,

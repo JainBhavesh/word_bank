@@ -11,4 +11,8 @@ class AppUrl {
   static const String words = "words";
   static const String wordbankUnits = "wordBankUnits";
   static const String getUnits = "getUnits";
+  static const String getExamType = "examType";
+  static const String exam = "exam";
+  static const String review = "review";
+  static const String generatesentence = "generate-sentence";
 }

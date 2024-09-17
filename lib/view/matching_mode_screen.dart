@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:word_bank/components/button_widget.dart';
+
+import '../view_model/controller/review_test_controller.dart';
 
 class MatchingModeScreen extends StatefulWidget {
   const MatchingModeScreen({super.key});
@@ -10,6 +13,8 @@ class MatchingModeScreen extends StatefulWidget {
 }
 
 class _MatchingModeScreenState extends State<MatchingModeScreen> {
+  final ReviewTestController reviewTestController =
+      Get.put(ReviewTestController());
   final List<String> words = [
     'accord',
     'acceptable',
@@ -29,12 +34,19 @@ class _MatchingModeScreenState extends State<MatchingModeScreen> {
   List<bool> selectedMeanings = [];
   int? selectedWordIndex;
   int? selectedMeaningIndex;
+  late int unitId;
+  late int examId;
 
   @override
   void initState() {
     super.initState();
     selectedWords = List<bool>.filled(words.length, false);
     selectedMeanings = List<bool>.filled(meanings.length, false);
+    final arguments = Get.arguments;
+    unitId = arguments['unitId'] ?? 0;
+    examId = arguments['examId'] ?? 0;
+    reviewTestController.exam(
+        unit_id: unitId, exam_id: examId); // Fetch API data
   }
 
   void _onWordSelected(int index) {

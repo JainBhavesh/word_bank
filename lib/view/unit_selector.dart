@@ -58,16 +58,16 @@ class _UnitSelectorState extends State<UnitSelector> {
                   var typeData = unitSelectorController.dateList[index];
                   DateTime? targetDate =
                       unitSelectorController.parseDate(typeData['target_date']);
+                  int remainingDays = typeData['remaining_day'] ?? 0;
 
                   if (targetDate == null) {
-                    return _buildUnplannedButton();
+                    return _buildUnplannedButton(typeData['id']);
                   } else if (targetDate.isBefore(DateTime.now())) {
                     return _buildFinishButton();
                   } else {
-                    return _buildDaysLeftButton(index);
+                    return _buildDaysLeftButton(typeData['id'], remainingDays);
                   }
-                },
-              );
+                });
       }),
     );
   }
@@ -98,23 +98,23 @@ class _UnitSelectorState extends State<UnitSelector> {
     );
   }
 
-  Widget _buildDaysLeftButton(int index) {
+  Widget _buildDaysLeftButton(int index, int daysLeft) {
     return GestureDetector(
       onTap: () {
-        // Handle days left button tap
         setState(() {
           selectedUnitIndex = index;
         });
-        Get.toNamed(RouteName.reviewOrTestScreen);
-        print('Unit $index selected');
+        Get.toNamed(RouteName.reviewOrTestScreen,
+            arguments: {'unitId': index, 'daysLeft': daysLeft});
       },
       child: Container(
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           color: Colors.white,
           border: Border.all(
-              color: selectedUnitIndex == index ? Colors.blue : Colors.red,
-              width: 4),
+            color: selectedUnitIndex == index ? Colors.blue : Colors.red,
+            width: 4,
+          ),
         ),
         child: Center(
           child: Column(
@@ -142,12 +142,10 @@ class _UnitSelectorState extends State<UnitSelector> {
     );
   }
 
-  Widget _buildUnplannedButton() {
+  Widget _buildUnplannedButton(int index) {
     return GestureDetector(
       onTap: () {
-        // Handle unplanned button tap (if necessary)
-        print('Unplanned button pressed');
-        Get.toNamed(RouteName.targetDateScreen);
+        Get.toNamed(RouteName.targetDateScreen, arguments: {'unitId': index});
       },
       child: Container(
         decoration: BoxDecoration(

@@ -92,10 +92,10 @@ class AuthService {
           instaAppId: '215643524910532',
           instaAppSecret: 'b19d87bf98b632e0319f2ebab495b345',
           redirectUrl: 'https://ayesha-iftikhar.web.app/',
-          onComplete: (_token, _userid, _username) {
-            print("_token-->$_token");
-            print("_userid-->$_userid");
-            print("_username-->$_username");
+          onComplete: (token, userid, username) {
+            print("_token-->$token");
+            print("_userid-->$userid");
+            print("_username-->$username");
             WidgetsBinding.instance.addPostFrameCallback((timeStamp) {});
           });
     } catch (error) {

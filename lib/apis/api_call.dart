@@ -56,7 +56,6 @@ class ApiCall {
 
   deleteWordsBank(id) async {
     final String url = '${AppUrl.wordbanks}/$id';
-    print("deleteWordsBank url is------->$url");
     return await ApiManager().deleteData(url, {});
   }
 
@@ -79,4 +78,32 @@ class ApiCall {
     final String url = '${AppUrl.wordbankUnits}/$id';
     return await ApiManager().deleteData(url, {});
   }
+
+  updateWordBankUnits(id, body) async {
+    final String url = '${AppUrl.wordbankUnits}/$id';
+    return await ApiManager().updateData(url, body);
+  }
+
+  getExamType() async {
+    return await ApiManager().getData(AppUrl.getExamType);
+  }
+
+  getExam(unit_id, exam_id) async {
+    final String url = '${AppUrl.exam}?unit_id=$unit_id&exam_id=$exam_id';
+    print("get exam url---->$url");
+    return await ApiManager().getData(url);
+  }
+
+  getReview(unit_id) async {
+    final String url = '${AppUrl.review}?id=$unit_id';
+    return await ApiManager().getData(url);
+  }
+
+  aiDataHandler(word) async {
+    final String url = '${AppUrl.generatesentence}?word=$word';
+    print("get ai data url---->$url");
+    return await ApiManager().postData(url, {});
+  }
 }
+
+//pinthat.eyesome.tw/api/wordBankUnits/update/8 

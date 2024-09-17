@@ -7,11 +7,11 @@ class EditWordScreen extends StatefulWidget {
   final Set<String>? selectedCategories;
 
   const EditWordScreen({
-    Key? key,
+    super.key,
     this.chineseWord,
     this.englishWord,
     this.selectedCategories,
-  }) : super(key: key);
+  });
 
   @override
   _EditWordScreenState createState() => _EditWordScreenState();

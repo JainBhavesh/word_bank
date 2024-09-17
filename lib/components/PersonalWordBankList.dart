@@ -10,7 +10,8 @@ class ListItemWidget extends StatelessWidget {
   final int index;
   final Map<String, dynamic> wordBank; // Receive the entire wordBank object
 
-  const ListItemWidget({super.key, required this.index, required this.wordBank});
+  const ListItemWidget(
+      {super.key, required this.index, required this.wordBank});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +25,8 @@ class ListItemWidget extends StatelessWidget {
         ),
         child: ListTile(
           onTap: () {
-            Get.toNamed(RouteName.unitSelector, arguments: {'id': wordBank['id']});
+            Get.toNamed(RouteName.unitSelector,
+                arguments: {'id': wordBank['id']});
           },
           leading: const CircleAvatar(
             backgroundColor: Colors.purple,
@@ -34,14 +36,18 @@ class ListItemWidget extends StatelessWidget {
             ),
           ),
           title: Text(wordBank['name']), // Display the wordBank name
-          subtitle: Text(wordBank['footnote'] != null && wordBank['footnote'].isNotEmpty ? wordBank['footnote'] : ''), // Display additional info (like the ID)
+          subtitle: Text(
+              wordBank['footnote'] != null && wordBank['footnote'].isNotEmpty
+                  ? wordBank['footnote']
+                  : ''), // Display additional info (like the ID)
           trailing: Row(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              const Badge(
-                value: '4',
-                color: Colors.red,
-              ),
+              if (wordBank['unit_count'] != null && wordBank['unit_count'] != 0)
+                Badge(
+                  value: wordBank['unit_count'].toString(),
+                  color: Colors.red,
+                ),
               const SizedBox(width: 8),
               PopupMenuButton<String>(
                 icon: const Icon(Icons.more_horiz),
@@ -49,17 +55,22 @@ class ListItemWidget extends StatelessWidget {
                   switch (value) {
                     case 'rename':
                       // Pass the wordBank's id when renaming
-                      Get.to(() => AddWordbankScreen(isRename: true, id: wordBank['id'], wordBank: wordBank));
+                      Get.to(() => AddWordbankScreen(
+                          isRename: true,
+                          id: wordBank['id'],
+                          wordBank: wordBank));
                       break;
                     case 'add':
-                      Get.to(() => AddWordToWordbankScreen(wordbankId: wordBank['id']));
+                      Get.to(() =>
+                          AddWordToWordbankScreen(wordbankId: wordBank['id']));
                       break;
                     case 'delete':
                       showDialog(
                         context: context,
                         builder: (context) => AlertDialog(
                           title: const Text('Confirm Deletion'),
-                          content: const Text('Are you sure you want to delete this wordbank?'),
+                          content: const Text(
+                              'Are you sure you want to delete this wordbank?'),
                           actions: <Widget>[
                             TextButton(
                               onPressed: () {

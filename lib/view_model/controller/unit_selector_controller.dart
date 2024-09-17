@@ -19,16 +19,18 @@ class UnitSelectorController extends GetxController {
   void getWordsList() async {
     isLoading(true);
     try {
+      print("id---------->$id");
       var res = await ApiCall().getWordsUnits(id);
 
       if (res.statusCode == 200) {
         var body = json.decode(res.body);
         if (body['status'] == true || body['status'] == "true") {
-          debugPrint('--body----->${body.toString()}');
+          // debugPrint('--body----->${body.toString()}');
           dateList.value = body['data'];
-          debugPrint('--body----->${dateList.toString()}');
+          // debugPrint('--body----->${dateList.toString()}');
         } else {
-          Get.snackbar('Error', body['message'] ?? 'Unknown error occurred', snackPosition: SnackPosition.TOP);
+          Get.snackbar('Error', body['message'] ?? 'Unknown error occurred',
+              snackPosition: SnackPosition.TOP);
         }
       } else {
         var errorResponse = json.decode(res.body);
@@ -36,10 +38,43 @@ class UnitSelectorController extends GetxController {
         Get.snackbar('Error', errorMsg, snackPosition: SnackPosition.TOP);
       }
     } catch (e) {
-      Get.snackbar('Network Error', 'Unable to reach the server. Please check your internet connection.', snackPosition: SnackPosition.TOP);
+      Get.snackbar('Network Error',
+          'Unable to reach the server. Please check your internet connection.',
+          snackPosition: SnackPosition.TOP);
       print('Network error: $e'); // Debugging
     } finally {
       isLoading(false);
+    }
+  }
+
+  Future<void> updateWordsUnit(int unitId, String selectedDate) async {
+    isLoading(true); // Show loader
+    try {
+      var requestBody = {"target_date": selectedDate};
+      var res = await ApiCall().updateWordBankUnits(unitId, requestBody);
+      var body = json.decode(res.body);
+
+      if (res.statusCode == 200) {
+        if (body['status'] == true || body['status'] == "true") {
+          dateList.value = body['data'] ?? [];
+          Get.snackbar('Success', body['message'] ?? 'Operation successful',
+              snackPosition: SnackPosition.TOP);
+        } else {
+          Get.snackbar('Error', body['message'] ?? 'Unknown error occurred',
+              snackPosition: SnackPosition.TOP);
+        }
+      } else {
+        var errorResponse = json.decode(res.body);
+        String errorMsg = errorResponse['message'] ?? 'Unknown error occurred';
+        Get.snackbar('Error', errorMsg, snackPosition: SnackPosition.TOP);
+      }
+    } catch (e) {
+      Get.snackbar('Network Error',
+          'Unable to reach the server. Please check your internet connection.',
+          snackPosition: SnackPosition.TOP);
+      print('Network error: $e');
+    } finally {
+      isLoading(false); // Hide loader
     }
   }
 
