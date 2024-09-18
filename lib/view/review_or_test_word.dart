@@ -149,29 +149,6 @@ class _ReviewOrTestScreenState extends State<ReviewOrTestScreen> {
                 ],
               );
             }),
-
-            // Obx(() {
-            //   return Row(
-            //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            //     children: [
-            //       // Iterate over examTypeList and assign colors by index
-            //       ..._controller.examTypeList.asMap().entries.map((entry) {
-            //         int index = entry.key;
-            //         Map<String, dynamic> examType = entry.value;
-
-            //         return ModeWidget(
-            //           label: examType['name'] ?? 'Unknown',
-            //           count: examType['id'] ?? 0, // or any other count logic
-            //           color: colors[
-            //               index % colors.length], // Assign color based on index
-            //         );
-            //       }).toList(),
-
-            //       const ModeWidget(
-            //           label: 'Push test', count: 1, color: Colors.blue),
-            //     ],
-            //   );
-            // }),
             const SizedBox(height: 20),
             Expanded(
               child: Padding(

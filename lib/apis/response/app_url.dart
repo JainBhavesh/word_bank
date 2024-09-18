@@ -15,4 +15,5 @@ class AppUrl {
   static const String exam = "exam";
   static const String review = "review";
   static const String generatesentence = "generate-sentence";
+  static const String gameResult = "result";
 }

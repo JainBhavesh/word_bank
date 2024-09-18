@@ -96,6 +96,7 @@ class ApiCall {
 
   getReview(unit_id) async {
     final String url = '${AppUrl.review}?id=$unit_id';
+    print("get review url---->$url");
     return await ApiManager().getData(url);
   }
 
@@ -104,6 +105,9 @@ class ApiCall {
     print("get ai data url---->$url");
     return await ApiManager().postData(url, {});
   }
-}
 
-//pinthat.eyesome.tw/api/wordBankUnits/update/8 
+  gameResult(body) async {
+    print("gameResult body---->$body");
+    return await ApiManager().postData(AppUrl.gameResult, body);
+  }
+}
