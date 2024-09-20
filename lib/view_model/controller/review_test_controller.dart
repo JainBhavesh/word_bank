@@ -93,45 +93,6 @@ class ReviewTestController extends GetxController {
     }
   }
 
-  // void exam({required int unit_id, required int exam_id}) async {
-  //   print("unit_id---------------->$unit_id");
-  //   print("exam_id---------------->$exam_id");
-  //   isLoading(true); // Start loading indicator
-  //   try {
-  //     var res = await ApiCall().getExam(unit_id, exam_id);
-
-  //     if (res.statusCode == 200) {
-  //       var body = json.decode(res.body);
-  //       if (body['status'] == true || body['status'] == "true") {
-  //         print("question list-->$body");
-  //         if (exam_id == 1) {
-  //           easyExamData.value = body['data'];
-  //         }
-  //         if (exam_id == 2) {
-  //           examData.value = body['data']; // Store the exam data here
-  //         }
-  //         if (exam_id == 3) {
-  //           matchingModeData.value = body['data']; // Store the exam data here
-  //         }
-  //       } else {
-  //         Get.snackbar('Error', body['message'] ?? 'Unknown error occurred',
-  //             snackPosition: SnackPosition.TOP);
-  //       }
-  //     } else {
-  //       var errorResponse = json.decode(res.body);
-  //       String errorMsg = errorResponse['message'] ?? 'Unknown error occurred';
-  //       Get.snackbar('Error', errorMsg, snackPosition: SnackPosition.TOP);
-  //     }
-  //   } catch (e) {
-  //     Get.snackbar('Network Error',
-  //         'Unable to reach the server. Please check your internet connection.',
-  //         snackPosition: SnackPosition.TOP);
-  //     print('Network error: $e'); // Debugging
-  //   } finally {
-  //     isLoading(false); // Stop loading indicator
-  //   }
-  // }
-
   // ignore: non_constant_identifier_names
   void getReview({required int unit_id}) async {
     isLoading(true);

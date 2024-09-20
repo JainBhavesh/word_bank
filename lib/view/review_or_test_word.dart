@@ -134,7 +134,7 @@ class _ReviewOrTestScreenState extends State<ReviewOrTestScreen> {
 
                     return ModeWidget(
                       label: examType['name'] ?? 'Unknown',
-                      count: examType['id'] ?? 0,
+                      count: examType['count'] ?? 0,
                       color: colors[
                           index % colors.length], // Assign color based on index
                       onTap: onTap,

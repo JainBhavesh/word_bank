@@ -37,6 +37,7 @@ class ApiCall {
 
   updateWord(id, data) async {
     final String url = '${AppUrl.words}/$id';
+    print("update word------>$url");
     return await ApiManager().updateData(url, data);
   }
 

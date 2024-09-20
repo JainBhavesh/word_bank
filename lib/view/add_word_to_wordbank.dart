@@ -11,11 +11,13 @@ class AddWordToWordbankScreen extends StatefulWidget {
 
   @override
   // ignore: library_private_types_in_public_api
-  _AddWordToWordbankScreenState createState() => _AddWordToWordbankScreenState();
+  _AddWordToWordbankScreenState createState() =>
+      _AddWordToWordbankScreenState();
 }
 
 class _AddWordToWordbankScreenState extends State<AddWordToWordbankScreen> {
-  final AddWordToWordbankbankController addWordController = Get.put(AddWordToWordbankbankController());
+  final AddWordToWordbankbankController addWordController =
+      Get.put(AddWordToWordbankbankController());
 
   // Initialize WordsController to fetch the words from the word bank
   late final WordsController wordsController;
@@ -29,7 +31,8 @@ class _AddWordToWordbankScreenState extends State<AddWordToWordbankScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: true, // Ensures the view adjusts for the keyboard
+      resizeToAvoidBottomInset:
+          true, // Ensures the view adjusts for the keyboard
       appBar: AppBar(
         title: const Text('Add words'),
         leading: IconButton(
@@ -55,7 +58,8 @@ class _AddWordToWordbankScreenState extends State<AddWordToWordbankScreen> {
                     children: [
                       const Text(
                         'Chinese',
-                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.w500),
                       ),
                       const SizedBox(height: 5),
                       TextField(
@@ -65,13 +69,15 @@ class _AddWordToWordbankScreenState extends State<AddWordToWordbankScreen> {
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10.0),
                           ),
-                          contentPadding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 10.0, horizontal: 10.0),
                         ),
                       ),
                       const SizedBox(height: 15),
                       const Text(
                         'English',
-                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.w500),
                       ),
                       const SizedBox(height: 5),
                       TextField(
@@ -81,27 +87,54 @@ class _AddWordToWordbankScreenState extends State<AddWordToWordbankScreen> {
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10.0),
                           ),
-                          contentPadding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 10.0, horizontal: 10.0),
                         ),
                       ),
                       const SizedBox(height: 15),
                       Wrap(
                         spacing: 8.0,
                         children: addWordController.wordTypes.map((type) {
-                          return Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Obx(() => Checkbox(
-                                    value: addWordController.selectedTypes[type],
-                                    onChanged: (value) {
-                                      addWordController.selectedTypes[type] = value!;
-                                    },
-                                  )),
-                              Text(type),
-                            ],
-                          );
+                          return Obx(() {
+                            return Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Checkbox(
+                                  value:
+                                      addWordController.selectedTypes[type] ??
+                                          false,
+                                  onChanged: (value) {
+                                    addWordController.selectedTypes[type] =
+                                        value!;
+                                  },
+                                ),
+                                Text(type),
+                              ],
+                            );
+                          });
                         }).toList(),
                       ),
+
+                      // Wrap(
+                      //   spacing: 8.0,
+                      //   children: addWordController.wordTypes.map((type) {
+                      //     return Row(
+                      //       mainAxisSize: MainAxisSize.min,
+                      //       children: [
+                      //         Obx(() => Checkbox(
+                      //               value:
+                      //                   addWordController.selectedTypes[type] ??
+                      //                       false,
+                      //               onChanged: (value) {
+                      //                 addWordController.selectedTypes[type] =
+                      //                     value!;
+                      //               },
+                      //             )),
+                      //         Text(type),
+                      //       ],
+                      //     );
+                      //   }).toList(),
+                      // ),
                       const SizedBox(height: 15),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -116,14 +149,25 @@ class _AddWordToWordbankScreenState extends State<AddWordToWordbankScreen> {
                             ),
                             onPressed: () {
                               FocusManager.instance.primaryFocus?.unfocus();
-                              addWordController.wordbankId == 0
-                                  ? addWordController.addWordToWordbank(wordbankId: widget.wordbankId).then((_) {
+                              addWordController.updateBankId == 0
+                                  ? addWordController
+                                      .addWordToWordbank(
+                                          wordbankId: widget.wordbankId)
+                                      .then((_) {
                                       // Refresh the word list after adding a word
                                       wordsController.getWordsList();
                                     })
-                                  : addWordController.editWordToWordbank().then((_) {
+                                  : addWordController
+                                      .editWordToWordbank()
+                                      .then((_) {
                                       // Refresh the word list after adding a word
                                       wordsController.getWordsList();
+                                      addWordController.chineseController
+                                          .clear();
+                                      addWordController.englishController
+                                          .clear();
+                                      addWordController.selectedTypes
+                                          .updateAll((key, value) => false);
                                     });
                             },
                             child: const Text(
@@ -131,26 +175,38 @@ class _AddWordToWordbankScreenState extends State<AddWordToWordbankScreen> {
                               style: TextStyle(color: Colors.white),
                             ),
                           ),
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.black,
-                              minimumSize: const Size(100, 40),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                            ),
-                            onPressed: () {
-                              if (wordsController.wordList.length >= 6) {
-                                Get.to(() => WordsInUnitScreen(wordbankId: widget.wordbankId));
-                              } else {
-                                Get.snackbar('Error', 'Please add atleast 6 words', snackPosition: SnackPosition.TOP);
-                              }
-                            },
-                            child: const Text(
-                              'Done',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ),
+                          Obx(() {
+                            if (wordsController.wordListObj["units_count"] !=
+                                    null &&
+                                wordsController.wordListObj["units_count"] ==
+                                    1) {
+                              return Container(); // Return an empty container when units_count is 1
+                            } else {
+                              return ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.black,
+                                  minimumSize: const Size(100, 40),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                ),
+                                onPressed: () {
+                                  if (wordsController.wordList.length >= 6) {
+                                    Get.to(() => WordsInUnitScreen(
+                                        wordbankId: widget.wordbankId));
+                                  } else {
+                                    Get.snackbar(
+                                        'Error', 'Please add atleast 6 words',
+                                        snackPosition: SnackPosition.TOP);
+                                  }
+                                },
+                                child: const Text(
+                                  'Done',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              );
+                            }
+                          })
                         ],
                       ),
                     ],
@@ -168,10 +224,10 @@ class _AddWordToWordbankScreenState extends State<AddWordToWordbankScreen> {
                 if (wordsController.wordList.isEmpty) {
                   return const Center(child: Text('No words available.'));
                 }
-
                 return ListView.builder(
                   shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(), // Prevent scroll conflicts with SingleChildScrollView
+                  physics:
+                      const NeverScrollableScrollPhysics(), // Prevent scroll conflicts with SingleChildScrollView
                   itemCount: wordsController.wordList.length,
                   itemBuilder: (context, index) {
                     var word = wordsController.wordList[index];
@@ -185,26 +241,40 @@ class _AddWordToWordbankScreenState extends State<AddWordToWordbankScreen> {
                           trailing: IconButton(
                             icon: const Icon(Icons.more_horiz),
                             onPressed: () {
-                              final RenderBox overlay = Overlay.of(context).context.findRenderObject() as RenderBox;
+                              final RenderBox overlay = Overlay.of(context)
+                                  .context
+                                  .findRenderObject() as RenderBox;
 
                               showMenu(
                                 context: context,
-                                position: RelativeRect.fromLTRB(overlay.size.width, overlay.size.height / 2, 0, 0),
+                                position: RelativeRect.fromLTRB(
+                                    overlay.size.width,
+                                    overlay.size.height / 2,
+                                    0,
+                                    0),
                                 items: [
                                   PopupMenuItem(
                                     value: 'edit',
                                     child: ListTile(
-                                      leading: const Icon(Icons.edit, color: Colors.black),
+                                      leading: const Icon(Icons.edit,
+                                          color: Colors.black),
                                       title: const Text('Edit word'),
                                       onTap: () {
                                         // Set the controllers with the current word details for editing
-                                        addWordController.wordbankId = 0;
-                                        addWordController.chineseController.text = word["chinese_name"];
-                                        addWordController.englishController.text = word["english_name"];
+                                        addWordController.updateBankId = 0;
+                                        addWordController.chineseController
+                                            .text = word["chinese_name"];
+                                        addWordController.englishController
+                                            .text = word["english_name"];
 
-                                        // Call the edit function
-
-                                        addWordController.setDataToUpdate(id: word['id']);
+                                        // Set the checkboxes based on the types of the current word
+                                        addWordController.setDataToUpdate(
+                                          id: word['id'],
+                                          chineseName: word['chinese_name'],
+                                          englishName: word['english_name'],
+                                          wordTypesToEdit: List<String>.from(word[
+                                              'type']), // Pass the word types
+                                        );
 
                                         // Close the menu
                                         Navigator.pop(context);
@@ -215,13 +285,16 @@ class _AddWordToWordbankScreenState extends State<AddWordToWordbankScreen> {
                                   PopupMenuItem(
                                     value: 'delete',
                                     child: ListTile(
-                                      leading: const Icon(Icons.delete, color: Colors.red),
-                                      title: const Text('Delete word', style: TextStyle(color: Colors.red)),
+                                      leading: const Icon(Icons.delete,
+                                          color: Colors.red),
+                                      title: const Text('Delete word',
+                                          style: TextStyle(color: Colors.red)),
                                       onTap: () {
                                         // Call the delete function
                                         Navigator.pop(context);
 
-                                        addWordController.deletWordToWordbank(id: word['id']);
+                                        addWordController.deletWordToWordbank(
+                                            id: word['id']);
 
                                         // Close the menu
                                       },

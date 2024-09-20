@@ -7,6 +7,7 @@ class WordsController extends GetxController {
   var wordList = <dynamic>[].obs;
   var isLoading = false.obs;
   final int wordbankId;
+  var wordListObj = {}.obs;
 
   WordsController({required this.wordbankId});
 
@@ -23,12 +24,12 @@ class WordsController extends GetxController {
       print('Fetching words for wordbankId: $wordbankId'); // Debugging
       var res = await ApiCall().getWords(wordbankId);
 
-      print('API Response: ${res.body}'); // Debugging
       if (res.statusCode == 200) {
         var body = json.decode(res.body);
         if (body['status'] == true || body['status'] == "true") {
-          debugPrint('--body---body--->${body.toString()}');
           wordList.value = body['data']['words'].reversed.toList();
+          wordListObj.assignAll(body['data']);
+
           print('Word list updated successfully'); // Debugging
         } else {
           Get.snackbar('Error', body['message'] ?? 'Unknown error occurred',
