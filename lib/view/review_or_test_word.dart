@@ -140,12 +140,6 @@ class _ReviewOrTestScreenState extends State<ReviewOrTestScreen> {
                       onTap: onTap,
                     );
                   }).toList(),
-
-                  const ModeWidget(
-                      label: 'Push test',
-                      count: 1,
-                      color: Colors.blue,
-                      onTap: null),
                 ],
               );
             }),

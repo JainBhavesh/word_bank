@@ -585,8 +585,6 @@ class _MatchingModeScreenState extends State<MatchingModeScreen> {
         _shuffleLists(); // Call shuffle only after data is loaded
       }
     });
-
-    reviewTestController.gameResult(unit_id: unitId, exam_id: examId);
   }
 
   void _shuffleLists() {
@@ -639,7 +637,7 @@ class _MatchingModeScreenState extends State<MatchingModeScreen> {
     });
   }
 
-  void _checkMatch() {
+  void _checkMatch() async {
     if (selectedWordIndex != null && selectedMeaningIndex != null) {
       // Get the selected Chinese name and selected shuffled English name
       String selectedChineseName = meanings[selectedMeaningIndex!];
@@ -669,6 +667,21 @@ class _MatchingModeScreenState extends State<MatchingModeScreen> {
           // Check if all answers are correct
           allAnswersCorrect = correctWords.every((element) => element) &&
               correctMeanings.every((element) => element);
+
+          // If all answers are correct, call gameResult API
+          if (allAnswersCorrect) {
+            await reviewTestController.gameResult(
+                unit_id: unitId, exam_id: examId);
+
+            // Show success popup after the API call
+            showDialog(
+              context: context,
+              barrierDismissible: false,
+              builder: (BuildContext context) {
+                return _buildSuccessPopup(context);
+              },
+            );
+          }
         } else {
           // It's a wrong match
           Get.snackbar('Wrong', 'This is not the correct match.',

@@ -154,7 +154,40 @@ class ReviewTestController extends GetxController {
     }
   }
 
-  void gameResult({required int unit_id, required int exam_id}) async {
+  // void gameResult({required int unit_id, required int exam_id}) async {
+  //   print("unit_id=====>$unit_id");
+  //   print("exam_id=====>$exam_id");
+
+  //   var requestBody = {"unit_id": unit_id, "exam_id": exam_id};
+  //   isLoading(true);
+  //   try {
+  //     var res = await ApiCall().gameResult(requestBody);
+  //     var body = json.decode(res.body);
+  //     print("body game result=====>$body");
+
+  //     if (res.statusCode == 200) {
+  //       if (body['status'] == true || body['status'] == "true") {
+  //         // Assign the data map to gameResultData using assignAll to preserve reactivity
+  //         gameResultData.assignAll(body['data']);
+  //       } else {
+  //         Get.snackbar('Error', body['message'] ?? 'Unknown error occurred',
+  //             snackPosition: SnackPosition.TOP);
+  //       }
+  //     } else {
+  //       var errorResponse = json.decode(res.body);
+  //       String errorMsg = errorResponse['message'] ?? 'Unknown error occurred';
+  //       Get.snackbar('Error', errorMsg, snackPosition: SnackPosition.TOP);
+  //     }
+  //   } catch (e) {
+  //     Get.snackbar('Network Error',
+  //         'Unable to reach the server. Please check your internet connection.',
+  //         snackPosition: SnackPosition.TOP);
+  //     print('Network error: $e'); // Debugging
+  //   } finally {
+  //     isLoading(false);
+  //   }
+  // }
+  Future<void> gameResult({required int unit_id, required int exam_id}) async {
     print("unit_id=====>$unit_id");
     print("exam_id=====>$exam_id");
 

@@ -30,7 +30,6 @@ class _AdvanceWordPuzzleScreenState extends State<AdvanceWordPuzzleScreen> {
     final arguments = Get.arguments;
     unitId = arguments['unitId'] ?? 0;
     examId = arguments['examId'] ?? 0;
-    reviewTestController.gameResult(unit_id: unitId, exam_id: examId);
     reviewTestController.exam(unit_id: unitId, exam_id: examId).then((_) {
       loadWord();
     });
@@ -63,18 +62,20 @@ class _AdvanceWordPuzzleScreenState extends State<AdvanceWordPuzzleScreen> {
     }
   }
 
-  void checkWord() {
+  void checkWord() async {
     if (reviewTestController.examData.isNotEmpty) {
       String correctAnswer = reviewTestController.examData[currentStep]["ans"];
       String inputWord =
           controllers.map((controller) => controller.text).join();
 
+      // Ensure all letters are filled
       if (inputWord.length != correctAnswer.length) {
         Get.snackbar('', 'Please fill out all the letters!',
             snackPosition: SnackPosition.TOP);
         return;
       }
 
+      // Check if the input matches the correct answer
       if (inputWord.toLowerCase() == correctAnswer.toLowerCase()) {
         if (currentStep < reviewTestController.examData.length - 1) {
           setState(() {
@@ -84,8 +85,15 @@ class _AdvanceWordPuzzleScreenState extends State<AdvanceWordPuzzleScreen> {
             loadWord();
           });
         } else {
+          // User has completed the last word
           Get.snackbar('', 'Congratulations! All words completed.',
               snackPosition: SnackPosition.TOP);
+
+          // Call gameResult API after the last word is completed
+          await reviewTestController.gameResult(
+              unit_id: unitId, exam_id: examId);
+
+          // Show success dialog after API call
           showDialog(
             context: context,
             barrierDismissible: false,
@@ -95,6 +103,7 @@ class _AdvanceWordPuzzleScreenState extends State<AdvanceWordPuzzleScreen> {
           );
         }
       } else {
+        // Show wrong answer message
         Get.snackbar('', 'Wrong Answer.', snackPosition: SnackPosition.TOP);
       }
     }
