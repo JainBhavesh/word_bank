@@ -16,7 +16,8 @@ class WordsInUnitScreen extends StatefulWidget {
 
 class _WordsInUnitScreenState extends State<WordsInUnitScreen> {
   late final WordsController wordsController;
-  final WordInUnitController wordInUnitController = Get.put(WordInUnitController());
+  final WordInUnitController wordInUnitController =
+      Get.put(WordInUnitController());
 
   @override
   void initState() {
@@ -87,7 +88,8 @@ class _WordsInUnitScreenState extends State<WordsInUnitScreen> {
                   onPressed: _decrementWordCount,
                 ),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   decoration: BoxDecoration(
                     border: Border.all(color: Colors.black),
                     borderRadius: BorderRadius.circular(8),
@@ -126,14 +128,17 @@ class _WordsInUnitScreenState extends State<WordsInUnitScreen> {
                 textColor: Colors.white,
                 onPressed: () {
                   print("Selected $_selectedWordCount words");
-                  if (_selectedWordCount == wordsController.wordList.length) {
-                    int count = wordsController.wordList.length;
-                    wordInUnitController.createUnit(count: count, wordbankId: widget.wordbankId);
-                    print('true----------------');
-                  } else {
-                    Navigator.of(context).pop();
-                    print('false----------------');
-                  }
+                  int count = wordsController.wordList.length;
+                  wordInUnitController.createUnit(
+                      count: count, wordbankId: widget.wordbankId);
+                  // if (_selectedWordCount == wordsController.wordList.length) {
+                  //   int count = wordsController.wordList.length;
+                  //   wordInUnitController.createUnit(count: count, wordbankId: widget.wordbankId);
+                  //   print('true----------------');
+                  // } else {
+                  //   Navigator.of(context).pop();
+                  //   print('false----------------');
+                  // }
                 },
               ),
             ),

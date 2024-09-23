@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:word_bank/routes/routes.dart';
 import 'package:word_bank/view/splash_screen.dart';
-import 'package:firebase_core/firebase_core.dart'; // Import Firebase Core
+// import 'package:firebase_core/firebase_core.dart'; // Import Firebase Core
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  try {
-    await Firebase.initializeApp();
-  } catch (e) {
-    print("Error initializing Firebase: $e");
-  }
+  // WidgetsFlutterBinding.ensureInitialized();
+  // try {
+  //   await Firebase.initializeApp();
+  // } catch (e) {
+  //   print("Error initializing Firebase: $e");
+  // }
   runApp(const MyApp());
 }
 

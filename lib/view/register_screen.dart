@@ -55,7 +55,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     children: [
                       const Text(
                         'Name',
-                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(height: 8),
                       TextField(
@@ -68,14 +69,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             borderRadius: BorderRadius.circular(8.0),
                             borderSide: const BorderSide(color: Colors.blue),
                           ),
-                          contentPadding: const EdgeInsets.symmetric(horizontal: 10),
+                          contentPadding:
+                              const EdgeInsets.symmetric(horizontal: 10),
                           hintText: 'Enter Name',
                         ),
                       ),
                       const SizedBox(height: 16),
                       const Text(
                         'Email',
-                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(height: 8),
                       TextField(
@@ -88,14 +91,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             borderRadius: BorderRadius.circular(8.0),
                             borderSide: const BorderSide(color: Colors.blue),
                           ),
-                          contentPadding: const EdgeInsets.symmetric(horizontal: 10),
+                          contentPadding:
+                              const EdgeInsets.symmetric(horizontal: 10),
                           hintText: 'Enter Email',
                         ),
                       ),
                       const SizedBox(height: 16),
                       const Text(
                         'Password',
-                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(height: 8),
                       TextField(
@@ -108,7 +113,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             borderRadius: BorderRadius.circular(8.0),
                             borderSide: const BorderSide(color: Colors.blue),
                           ),
-                          contentPadding: const EdgeInsets.symmetric(horizontal: 10),
+                          contentPadding:
+                              const EdgeInsets.symmetric(horizontal: 10),
                           hintText: 'Enter Password',
                         ),
                         obscureText: true,
@@ -128,7 +134,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text('I agree to the agreement'),
-                              Text('Description', style: TextStyle(fontSize: 12)),
+                              Text('Description',
+                                  style: TextStyle(fontSize: 12)),
                             ],
                           ),
                         ],
@@ -168,7 +175,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 icon: Icons.g_mobiledata,
                 onPressed: () {
                   // Handle Google registration
-                  controller.signInWithGoogle();
+                  // controller.signInWithGoogle();
                   // Get.snackbar('Google', 'Google registration pressed');
                 },
               ),
@@ -180,7 +187,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 icon: Icons.facebook,
                 onPressed: () {
                   // Handle Facebook registration
-                  controller.signInWithFacebook();
+                  // controller.signInWithFacebook();
                   // Get.snackbar('Facebook', 'Facebook registration pressed');
                 },
               ),
@@ -191,7 +198,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 textColor: Colors.white,
                 icon: Icons.camera_alt,
                 onPressed: () {
-                  controller.signInWithInstagram();
+                  // controller.signInWithInstagram();
                   // Get.snackbar('Instagram', 'Instagram registration pressed');
                 },
               ),

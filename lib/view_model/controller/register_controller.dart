@@ -1,13 +1,13 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:word_bank/view/login_screen.dart';
-import 'package:word_bank/view_model/services/auth_service.dart';
+// import 'package:word_bank/view_model/services/auth_service.dart';
 import '../../apis/api_call.dart';
 import '../../utils/preference.dart';
 import '../../view/home_screen.dart';
-import '../../view/insta_view_login.dart';
+// import '../../view/insta_view_login.dart';
 
 class RegisterController extends GetxController {
   var name = ''.obs;
@@ -19,7 +19,7 @@ class RegisterController extends GetxController {
   var instagramUsername = ''.obs;
   var agreeToTerms = false.obs;
 
-  final AuthService _authService = AuthService();
+  // final AuthService _authService = AuthService();
 
   // Method for validating email
   String? validateEmail(String value) {
@@ -158,11 +158,11 @@ class RegisterController extends GetxController {
 
     // Show loader before making the API call
     showLoader();
-
     var requestBody = {
       "email": email.value,
       "password": password.value,
     };
+    print("login call====>${requestBody}");
 
     try {
       // Make the login API call
@@ -172,7 +172,7 @@ class RegisterController extends GetxController {
       hideLoader();
 
       var body = json.decode(res.body);
-
+      print("login response---->$body");
       if (res.statusCode == 200) {
         // Handle both boolean true and string "true"
         if (body['status'] == true || body['status'] == "true") {
@@ -202,106 +202,106 @@ class RegisterController extends GetxController {
   }
 
   // Method for Google sign-in
-  Future<void> signInWithGoogle() async {
-    // Show the loader
-    showLoader();
+  // Future<void> signInWithGoogle() async {
+  //   // Show the loader
+  //   showLoader();
 
-    User? user = await _authService.signInWithGoogle();
+  //   User? user = await _authService.signInWithGoogle();
 
-    // Hide the loader
-    hideLoader();
+  //   // Hide the loader
+  //   hideLoader();
 
-    if (user != null) {
-      Get.snackbar('Success', 'Signed in as ${user.displayName}',
-          snackPosition: SnackPosition.TOP);
-    } else {
-      Get.snackbar('Error', 'Google sign-in failed',
-          snackPosition: SnackPosition.TOP);
-    }
-  }
+  //   if (user != null) {
+  //     Get.snackbar('Success', 'Signed in as ${user.displayName}',
+  //         snackPosition: SnackPosition.TOP);
+  //   } else {
+  //     Get.snackbar('Error', 'Google sign-in failed',
+  //         snackPosition: SnackPosition.TOP);
+  //   }
+  // }
 
   // Method for Facebook sign-in
-  Future<void> signInWithFacebook() async {
-    // Show the loader
-    showLoader();
+  // Future<void> signInWithFacebook() async {
+  //   // Show the loader
+  //   showLoader();
 
-    User? user = await _authService.signInWithFacebook();
+  //   User? user = await _authService.signInWithFacebook();
 
-    // Hide the loader
-    hideLoader();
+  //   // Hide the loader
+  //   hideLoader();
 
-    if (user != null) {
-      Get.snackbar('Success', 'Signed in as ${user.displayName}',
-          snackPosition: SnackPosition.TOP);
-    } else {
-      Get.snackbar('Error', 'Facebook sign-in failed',
-          snackPosition: SnackPosition.TOP);
-    }
-  }
+  //   if (user != null) {
+  //     Get.snackbar('Success', 'Signed in as ${user.displayName}',
+  //         snackPosition: SnackPosition.TOP);
+  //   } else {
+  //     Get.snackbar('Error', 'Facebook sign-in failed',
+  //         snackPosition: SnackPosition.TOP);
+  //   }
+  // }
 
   // Method for email and password sign-in
-  Future<void> signIn() async {
-    if (email.value.isEmpty || password.value.isEmpty) {
-      Get.snackbar('Error', 'Please fill in all fields',
-          snackPosition: SnackPosition.TOP);
-    } else {
-      // Show the loader
-      showLoader();
+  // Future<void> signIn() async {
+  //   if (email.value.isEmpty || password.value.isEmpty) {
+  //     Get.snackbar('Error', 'Please fill in all fields',
+  //         snackPosition: SnackPosition.TOP);
+  //   } else {
+  //     // Show the loader
+  //     showLoader();
 
-      User? user = await _authService.signInWithEmailPassword(
-          email.value, password.value);
+  //     User? user = await _authService.signInWithEmailPassword(
+  //         email.value, password.value);
 
-      // Hide the loader
-      hideLoader();
+  //     // Hide the loader
+  //     hideLoader();
 
-      if (user != null) {
-        Get.snackbar('Success', 'Signed in successfully',
-            snackPosition: SnackPosition.TOP);
-      } else {
-        Get.snackbar('Error', 'Sign-in failed',
-            snackPosition: SnackPosition.TOP);
-      }
-    }
-  }
+  //     if (user != null) {
+  //       Get.snackbar('Success', 'Signed in successfully',
+  //           snackPosition: SnackPosition.TOP);
+  //     } else {
+  //       Get.snackbar('Error', 'Sign-in failed',
+  //           snackPosition: SnackPosition.TOP);
+  //     }
+  //   }
+  // }
 
   // Method for Instagram sign-in
-  Future<void> signInWithInstagram() async {
-    try {
-      // Show the loader
-      showLoader();
+  // Future<void> signInWithInstagram() async {
+  //   try {
+  //     // Show the loader
+  //     showLoader();
 
-      final result = await Get.to(() => const InstaLoginScreen(
-            instaAppId: '215643524910532',
-            instaAppSecret: 'b19d87bf98b632e0319f2ebab495b345',
-            redirectUrl:
-                'https://my.m.redirect.net/?code=abcdefghijklmnopqrstuvwxyz#_/',
-          ));
+  //     final result = await Get.to(() => const InstaLoginScreen(
+  //           instaAppId: '215643524910532',
+  //           instaAppSecret: 'b19d87bf98b632e0319f2ebab495b345',
+  //           redirectUrl:
+  //               'https://my.m.redirect.net/?code=abcdefghijklmnopqrstuvwxyz#_/',
+  //         ));
 
-      // Hide the loader
-      hideLoader();
+  //     // Hide the loader
+  //     hideLoader();
 
-      if (result != null) {
-        // Handle the result from the screen
-        instagramToken.value = result['token'];
-        instagramUserId.value = result['userId'];
-        instagramUsername.value = result['username'];
-        Get.snackbar('Success', 'Signed in with Instagram',
-            snackPosition: SnackPosition.TOP);
-      } else {
-        Get.snackbar('Error', 'Instagram sign-in failed',
-            snackPosition: SnackPosition.TOP);
-      }
-    } catch (error) {
-      print("Error during Instagram login: $error");
-      Get.snackbar('Error', 'Instagram sign-in failed',
-          snackPosition: SnackPosition.TOP);
-    }
-  }
+  //     if (result != null) {
+  //       // Handle the result from the screen
+  //       instagramToken.value = result['token'];
+  //       instagramUserId.value = result['userId'];
+  //       instagramUsername.value = result['username'];
+  //       Get.snackbar('Success', 'Signed in with Instagram',
+  //           snackPosition: SnackPosition.TOP);
+  //     } else {
+  //       Get.snackbar('Error', 'Instagram sign-in failed',
+  //           snackPosition: SnackPosition.TOP);
+  //     }
+  //   } catch (error) {
+  //     print("Error during Instagram login: $error");
+  //     Get.snackbar('Error', 'Instagram sign-in failed',
+  //         snackPosition: SnackPosition.TOP);
+  //   }
+  // }
 
   // Method for sign-out
   Future<void> signOut() async {
-    await _authService.signOut();
-    Get.snackbar('Success', 'Signed out successfully',
-        snackPosition: SnackPosition.TOP);
+    // await _authService.signOut();
+    // Get.snackbar('Success', 'Signed out successfully',
+    //     snackPosition: SnackPosition.TOP);
   }
 }
