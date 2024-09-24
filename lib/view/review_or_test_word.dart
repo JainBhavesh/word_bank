@@ -34,25 +34,17 @@ class _ReviewOrTestScreenState extends State<ReviewOrTestScreen> {
     final arguments = Get.arguments;
     unitId = arguments['unitId'] ?? 0;
     daysLeft = arguments['daysLeft'] ?? 0;
-    _controller.getExamTypeList();
-    print("unitId==>$unitId");
+    _controller.getExamTypeList(unit_id: unitId);
+    // _controller.getUnitWordsList(unit_id: unitId);
   }
 
   void _showWordListPopup() {
+    print("Showing word list popup for unitId: $unitId");
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return const WordListPopup(
-          words: [
-            'accord',
-            'acceptable',
-            'accident',
-            'account',
-            'accurate',
-            'ache',
-            'achieve',
-            'activity',
-          ],
+        return WordListPopup(
+          unitId: unitId, // Pass only unitId to the popup
         );
       },
     );

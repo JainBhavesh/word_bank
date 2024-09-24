@@ -1,17 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:word_bank/components/button_widget.dart';
+
+import '../view_model/controller/review_test_controller.dart';
 
 class EditWordScreen extends StatefulWidget {
   final String? chineseWord;
   final String? englishWord;
+  final int? word_id;
+  final int? unit_id;
+
   final Set<String>? selectedCategories;
 
-  const EditWordScreen({
-    super.key,
-    this.chineseWord,
-    this.englishWord,
-    this.selectedCategories,
-  });
+  const EditWordScreen(
+      {super.key,
+      this.chineseWord,
+      this.englishWord,
+      this.selectedCategories,
+      this.word_id,
+      this.unit_id});
 
   @override
   _EditWordScreenState createState() => _EditWordScreenState();
@@ -21,7 +28,8 @@ class _EditWordScreenState extends State<EditWordScreen> {
   late TextEditingController _chineseController;
   late TextEditingController _englishController;
   late Set<String> _selectedCategories;
-
+  final ReviewTestController reviewTestController =
+      Get.put(ReviewTestController());
   @override
   void initState() {
     super.initState();
@@ -104,7 +112,36 @@ class _EditWordScreenState extends State<EditWordScreen> {
               child: ButtonWidget(
                 label: 'Done',
                 onPressed: () {
-                  Navigator.of(context).pop();
+                  final chineseName = _chineseController.text.trim();
+                  final englishName = _englishController.text.trim();
+                  final selectedCategories = _selectedCategories.toList();
+                  print("_selectedCategories==>$selectedCategories");
+                  print("chineseName==>$chineseName");
+                  print("englishName==>${englishName}");
+                  print("widget.word_id==>${widget.word_id}");
+                  print("widget.unit_id==>${widget.unit_id}");
+
+                  if (chineseName.isEmpty || englishName.isEmpty) {
+                    // Handle the error: both fields must be filled
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                          content: Text(
+                              'Both Chinese and English fields are required.')),
+                    );
+                  } else {
+                    reviewTestController
+                        .editWord(
+                      word_id:
+                          widget.word_id!, // Use `!` to assert it's non-null
+                      selectedWordTypes: selectedCategories,
+                      chineseName: chineseName,
+                      englishName: englishName,
+                    )
+                        .then((_) {
+                      reviewTestController.getUnitWordsList(
+                          unit_id: widget.unit_id!);
+                    });
+                  }
                 },
               ),
             ),

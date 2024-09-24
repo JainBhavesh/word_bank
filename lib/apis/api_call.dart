@@ -85,8 +85,9 @@ class ApiCall {
     return await ApiManager().updateData(url, body);
   }
 
-  getExamType() async {
-    return await ApiManager().getData(AppUrl.getExamType);
+  getExamType(unit_id) async {
+    final String url = '${AppUrl.getExamType}?unit_id=$unit_id';
+    return await ApiManager().getData(url);
   }
 
   getExam(unit_id, exam_id) async {
@@ -108,7 +109,13 @@ class ApiCall {
   }
 
   gameResult(body) async {
-    print("gameResult body---->$body");
     return await ApiManager().postData(AppUrl.gameResult, body);
+  }
+
+  getUnitWords(id) async {
+    final String url = '${AppUrl.getUnitWords}?unit_id=$id';
+    print("getUnitWordsy---->$url");
+
+    return await ApiManager().getData(url);
   }
 }

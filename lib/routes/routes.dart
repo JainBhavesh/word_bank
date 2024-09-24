@@ -118,6 +118,22 @@ class AppRoutes {
           transitionDuration: const Duration(microseconds: 250),
           transition: Transition.leftToRightWithFade,
         ),
+        // GetPage(
+        //   name: RouteName.editWordScreen,
+        //   page: () {
+        //     // Retrieve the necessary parameters from the arguments
+        //     final args = Get.arguments as Map<String, dynamic>;
+        //     return EditWordScreen(
+        //       chineseWord: args['chineseWord'],
+        //       englishWord: args['englishWord'],
+        //       selectedCategories: args['selectedCategories'],
+        //       wordId: args['wordId'],
+        //     );
+        //   },
+        //   transitionDuration: const Duration(milliseconds: 250),
+        //   transition: Transition.leftToRightWithFade,
+        // ),
+
         GetPage(
           name: RouteName.pushTestScreen,
           page: () => const PushTestScreen(),

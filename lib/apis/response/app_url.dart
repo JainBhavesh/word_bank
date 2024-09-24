@@ -16,4 +16,5 @@ class AppUrl {
   static const String review = "review";
   static const String generatesentence = "generate-sentence";
   static const String gameResult = "result";
+  static const String getUnitWords = "getUnitWords";
 }
