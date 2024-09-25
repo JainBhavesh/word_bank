@@ -19,4 +19,5 @@ class RouteName {
   static const String wordsInUnitScreen = "/words_in_unit_screen.dart";
   static const String advanceWordPuzzleScreen =
       "/advance_word_puzzle_screen.dart";
+  static const String noticationScreen = "/notification_list.dart";
 }

@@ -118,4 +118,16 @@ class ApiCall {
 
     return await ApiManager().getData(url);
   }
+
+  getTodayTask() async {
+    return await ApiManager().getData(AppUrl.todayTask);
+  }
+
+  notificationCount() async {
+    return await ApiManager().getData(AppUrl.notificationCount);
+  }
+
+  getNotification() async {
+    return await ApiManager().getData(AppUrl.getNotification);
+  }
 }

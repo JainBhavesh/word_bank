@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../view_model/controller/review_test_controller.dart';
 
 class ReviewScreen extends StatefulWidget {
-  const ReviewScreen({
-    super.key,
-  });
+  const ReviewScreen({super.key});
 
   @override
   // ignore: library_private_types_in_public_api
@@ -51,6 +48,26 @@ class _ReviewScreenState extends State<ReviewScreen> {
     Navigator.pop(context);
   }
 
+  // New method to handle AI content
+  void _generateAIContent() {
+    final content = reviewTestController.reviewData[currentIndex];
+    reviewTestController
+        .aiDataGenerate(word: content['english_word'])
+        .then((_) {
+      // Check if AI content is generated
+      if (reviewTestController.aiData.value['english_sentence'] != null &&
+          reviewTestController.aiData.value['chinese_sentence'] != null) {
+        // Add the AI-generated content to the current reviewData entry
+        reviewTestController.reviewData[currentIndex]['english_sentence'] =
+            reviewTestController.aiData.value['english_sentence'];
+        reviewTestController.reviewData[currentIndex]['chinese_sentence'] =
+            reviewTestController.aiData.value['chinese_sentence'];
+        // Optionally, call setState to rebuild the UI
+        setState(() {});
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,6 +89,7 @@ class _ReviewScreenState extends State<ReviewScreen> {
         ],
       ),
       body: Obx(() {
+        print("review data${reviewTestController.reviewData}");
         if (reviewTestController.isLoading.value) {
           return const Center(child: CircularProgressIndicator());
         }
@@ -104,10 +122,7 @@ class _ReviewScreenState extends State<ReviewScreen> {
                   const SizedBox(height: 10),
                   const SizedBox(height: 20),
                   ElevatedButton.icon(
-                    onPressed: () {
-                      reviewTestController.aiDataGenerate(
-                          word: content['english_word']);
-                    },
+                    onPressed: _generateAIContent, // Updated to call new method
                     icon: const Icon(
                       Icons.lock,
                       color: Colors.white,
@@ -139,43 +154,6 @@ class _ReviewScreenState extends State<ReviewScreen> {
                   textAlign: TextAlign.center,
                 ),
               ],
-              // Spacer between the content and AI-generated part
-              const SizedBox(height: 20),
-              Obx(() {
-                // Access the underlying Map using `value` and then check if it is not empty
-                if (reviewTestController.aiData.value.isNotEmpty) {
-                  final aiContent = reviewTestController.aiData.value;
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Divider(), // Divider to separate the sections
-                      const Text(
-                        "AI Generated Content:",
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold),
-                      ),
-                      const SizedBox(height: 10),
-                      Text(
-                        "Word: ${aiContent['word'] ?? ''}",
-                        style: const TextStyle(fontSize: 18),
-                      ),
-                      const SizedBox(height: 5),
-                      Text(
-                        "English: ${aiContent['english_sentence'] ?? ''}",
-                        style: const TextStyle(fontSize: 18),
-                      ),
-                      const SizedBox(height: 5),
-                      Text(
-                        "Chinese: ${aiContent['chinese_sentence'] ?? ''}",
-                        style: const TextStyle(fontSize: 18),
-                      ),
-                    ],
-                  );
-                } else {
-                  return const SizedBox.shrink(); // Hide if the data is empty
-                }
-              }),
-
               const Spacer(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

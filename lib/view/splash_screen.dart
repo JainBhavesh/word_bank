@@ -14,7 +14,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    splashServices.islogin();
+    // splashServices.islogin();
   }
 
   @override
@@ -22,10 +22,10 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       body: Center(
         child: Image.asset(
-          'assets/images/splash_image.png', // Ensure this path is correct
-          width: 200,
-          height: 200,
+          'assets/images/splash_img.png', // Ensure this path is correct
           fit: BoxFit.cover,
+          width: double.infinity,
+          height: double.infinity,
         ),
       ),
     );

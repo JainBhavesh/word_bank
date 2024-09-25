@@ -157,7 +157,7 @@ class ReviewTestController extends GetxController {
   }
 
   // ignore: non_constant_identifier_names
-  void aiDataGenerate({required String word}) async {
+  Future aiDataGenerate({required String word}) async {
     print("word=====>$word");
     isLoading(true);
     try {
@@ -198,6 +198,7 @@ class ReviewTestController extends GetxController {
         if (body['status'] == true || body['status'] == "true") {
           // Assign the data map to gameResultData using assignAll to preserve reactivity
           gameResultData.assignAll(body['data']);
+          getExamTypeList(unit_id: unit_id);
         } else {
           Get.snackbar('Error', body['message'] ?? 'Unknown error occurred',
               snackPosition: SnackPosition.TOP);

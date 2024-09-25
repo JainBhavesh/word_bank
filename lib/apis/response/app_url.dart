@@ -17,4 +17,7 @@ class AppUrl {
   static const String generatesentence = "generate-sentence";
   static const String gameResult = "result";
   static const String getUnitWords = "getUnitWords";
+  static const String todayTask = "todayTask";
+  static const String notificationCount = "notificationCount";
+  static const String getNotification = "getNotification";
 }

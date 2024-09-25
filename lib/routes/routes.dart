@@ -9,6 +9,7 @@ import 'package:word_bank/view/home_screen.dart';
 import 'package:word_bank/view/insta_view_login.dart';
 import 'package:word_bank/view/login_screen.dart';
 import 'package:word_bank/view/matching_mode_screen.dart';
+import 'package:word_bank/view/notification_list.dart';
 import 'package:word_bank/view/personal_wordbank_screen.dart';
 import 'package:word_bank/view/push_test_screen.dart';
 import 'package:word_bank/view/register_screen.dart';
@@ -118,22 +119,6 @@ class AppRoutes {
           transitionDuration: const Duration(microseconds: 250),
           transition: Transition.leftToRightWithFade,
         ),
-        // GetPage(
-        //   name: RouteName.editWordScreen,
-        //   page: () {
-        //     // Retrieve the necessary parameters from the arguments
-        //     final args = Get.arguments as Map<String, dynamic>;
-        //     return EditWordScreen(
-        //       chineseWord: args['chineseWord'],
-        //       englishWord: args['englishWord'],
-        //       selectedCategories: args['selectedCategories'],
-        //       wordId: args['wordId'],
-        //     );
-        //   },
-        //   transitionDuration: const Duration(milliseconds: 250),
-        //   transition: Transition.leftToRightWithFade,
-        // ),
-
         GetPage(
           name: RouteName.pushTestScreen,
           page: () => const PushTestScreen(),
@@ -156,6 +141,12 @@ class AppRoutes {
         GetPage(
           name: RouteName.advanceWordPuzzleScreen,
           page: () => const AdvanceWordPuzzleScreen(),
+          transitionDuration: const Duration(microseconds: 250),
+          transition: Transition.leftToRightWithFade,
+        ),
+        GetPage(
+          name: RouteName.noticationScreen,
+          page: () => NotificationListScreen(),
           transitionDuration: const Duration(microseconds: 250),
           transition: Transition.leftToRightWithFade,
         ),
