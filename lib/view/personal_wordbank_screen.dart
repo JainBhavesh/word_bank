@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:word_bank/routes/routes_name.dart';
 import '../components/PersonalWordBankList.dart';
 import '../view_model/controller/add_wordsbank_controller.dart';
+import '../view_model/controller/notification_controller.dart';
 import '../view_model/controller/wordsbank_controller.dart';
 
 class PersonalWordbankScreen extends StatefulWidget {
@@ -14,11 +15,17 @@ class PersonalWordbankScreen extends StatefulWidget {
 
 class _PersonalWordbankScreenState extends State<PersonalWordbankScreen> {
   final WordsbankController controller = Get.put(WordsbankController());
-
+  final NotificationController notificationController =
+      Get.put(NotificationController());
   @override
   void initState() {
     super.initState();
     Get.put(AddWordbankController());
+  }
+
+  void fetchData() {
+    notificationController.getNotificationCount();
+    notificationController.getTodayTask();
   }
 
   @override
@@ -29,6 +36,7 @@ class _PersonalWordbankScreenState extends State<PersonalWordbankScreen> {
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Get.back();
+            fetchData();
           },
         ),
         title: const Text('Personal wordbanks'),

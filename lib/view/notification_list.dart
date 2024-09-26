@@ -14,12 +14,24 @@ class NotificationListScreen extends StatelessWidget {
     controller.getTodayTask(); // Fetch notification count on screen load
   }
 
+  void fetchData() {
+    controller.getNotificationCount();
+    controller.getTodayTask();
+  }
+
   @override
   Widget build(BuildContext context) {
     Get.lazyPut<NotificationController>(() => NotificationController());
     return Scaffold(
       appBar: AppBar(
         title: Text('Notifications'),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Get.back();
+            fetchData();
+          },
+        ),
       ),
       body: Obx(() {
         if (controller.isLoading.value) {
