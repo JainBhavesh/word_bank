@@ -312,11 +312,6 @@ class _HomeScreenState extends State<HomeScreen> {
           return const Center(child: CircularProgressIndicator());
         }
 
-        // Handle the case where no tasks are available
-        if (notificationController.dateList.isEmpty) {
-          return const Center(child: Text("No tasks available"));
-        }
-
         return Center(
           child: Column(
             children: [
@@ -373,19 +368,33 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ],
               ),
-              const Align(
-                alignment: Alignment.centerLeft,
-                child: Padding(
-                  padding: EdgeInsets.only(left: 40.0, top: 20),
-                  child: Text(
-                    "Today's task",
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
+              notificationController.dateList.isNotEmpty
+                  ? const Align(
+                      alignment: Alignment.centerLeft,
+                      child: Padding(
+                        padding: EdgeInsets.only(left: 40.0, top: 20),
+                        child: Text(
+                          "Today's task",
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    )
+                  : const Align(
+                      alignment: Alignment.center,
+                      child: Padding(
+                        padding: EdgeInsets.only(top: 20),
+                        child: Text(
+                          "No tasks available",
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-              ),
               const SizedBox(height: 20),
               Expanded(
                 child: GridView.builder(
