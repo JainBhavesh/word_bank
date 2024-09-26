@@ -235,10 +235,10 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         );
       }),
-      bottomNavigationBar: CustomBottomNavigationBar(
-        currentIndex: _selectedIndex,
-        onTap: _onBottomNavTapped,
-      ),
+      // bottomNavigationBar: CustomBottomNavigationBar(
+      //   currentIndex: _selectedIndex,
+      //   onTap: _onBottomNavTapped,
+      // ),
     );
   }
 
