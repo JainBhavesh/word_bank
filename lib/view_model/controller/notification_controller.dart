@@ -76,13 +76,28 @@ class NotificationController extends GetxController {
 
   void getTodayTask() async {
     isLoading(true);
+    print("getTodayTask api calll============>");
     try {
       var res = await ApiCall().getTodayTask();
 
       if (res.statusCode == 200) {
         var body = json.decode(res.body);
         if (body['status'] == true || body['status'] == "true") {
-          dateList.value = body['data'];
+          var data = body['data'].map((item) {
+            var remainingDay = item['remaining_day'];
+
+            if (remainingDay is String) {
+              item['remaining_day'] = remainingDay == "finish"
+                  ? remainingDay
+                  : int.tryParse(remainingDay) ?? 0;
+            } else if (remainingDay is double) {
+              item['remaining_day'] = remainingDay.toInt();
+            }
+
+            return item;
+          }).toList();
+
+          dateList.value = data;
         } else {
           Get.snackbar('Error', body['message'] ?? 'Unknown error occurred',
               snackPosition: SnackPosition.TOP);
@@ -138,5 +153,7 @@ class NotificationController extends GetxController {
     // Call the API every time the screen is rendered
     getNotification();
     getNotificationCount();
+    getTodayTask();
+    Get.until((route) => route.isFirst);
   }
 }

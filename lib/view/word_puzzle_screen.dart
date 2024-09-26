@@ -20,6 +20,7 @@ class _WordPuzzleScreenState extends State<WordPuzzleScreen> {
   List<FocusNode> focusNodes = [];
   late int unitId;
   late int examId;
+  late int notification_id;
   bool isError = false;
 
   @override
@@ -28,7 +29,7 @@ class _WordPuzzleScreenState extends State<WordPuzzleScreen> {
     final arguments = Get.arguments;
     unitId = arguments['unitId'] ?? 0;
     examId = arguments['examId'] ?? 0;
-
+    notification_id = arguments['notification_id'] ?? 0;
     // Fetch data and then load the first word
     reviewTestController.exam(unit_id: unitId, exam_id: examId).then((_) {
       loadWord();
@@ -98,7 +99,8 @@ class _WordPuzzleScreenState extends State<WordPuzzleScreen> {
         });
       } else {
         // Handle the last step (call gameResult outside setState)
-        await reviewTestController.gameResult(unit_id: unitId, exam_id: examId);
+        await reviewTestController.gameResult(
+            unit_id: unitId, exam_id: examId, notification_id: notification_id);
 
         // After async work, update UI to show the success popup
         showDialog(

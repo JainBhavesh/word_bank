@@ -26,8 +26,23 @@ class UnitSelectorController extends GetxController {
         var body = json.decode(res.body);
         if (body['status'] == true || body['status'] == "true") {
           // debugPrint('--body----->${body.toString()}');
-          dateList.value = body['data'];
+          // dateList.value = body['data'];
           // debugPrint('--body----->${dateList.toString()}');
+          var data = body['data'].map((item) {
+            var remainingDay = item['remaining_day'];
+
+            if (remainingDay is String) {
+              item['remaining_day'] = remainingDay == "finish"
+                  ? remainingDay
+                  : int.tryParse(remainingDay) ?? 0;
+            } else if (remainingDay is double) {
+              item['remaining_day'] = remainingDay.toInt();
+            }
+
+            return item;
+          }).toList();
+
+          dateList.value = data;
         } else {
           Get.snackbar('Error', body['message'] ?? 'Unknown error occurred',
               snackPosition: SnackPosition.TOP);
@@ -56,7 +71,26 @@ class UnitSelectorController extends GetxController {
 
       if (res.statusCode == 200) {
         if (body['status'] == true || body['status'] == "true") {
-          dateList.value = body['data'] ?? [];
+          var data = body['data'].map((item) {
+            var remainingDay = item['remaining_day'];
+
+            if (remainingDay is String) {
+              item['remaining_day'] = remainingDay == "finish"
+                  ? null
+                  : int.tryParse(remainingDay) ?? 0;
+            } else if (remainingDay is int) {
+              // Already an integer
+            } else if (remainingDay is double) {
+              item['remaining_day'] = remainingDay.toInt();
+            } else {
+              item['remaining_day'] = null; // Handle unexpected types
+            }
+
+            return item;
+          }).toList();
+
+          dateList.value = data;
+
           Get.snackbar('Success', body['message'] ?? 'Operation successful',
               snackPosition: SnackPosition.TOP);
         } else {

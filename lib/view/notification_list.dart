@@ -8,7 +8,15 @@ class NotificationListScreen extends StatelessWidget {
   final NotificationController controller = Get.put(NotificationController());
 
   @override
+  // ignore: override_on_non_overriding_member
+  void initState() {
+    controller.getNotificationCount();
+    controller.getTodayTask(); // Fetch notification count on screen load
+  }
+
+  @override
   Widget build(BuildContext context) {
+    Get.lazyPut<NotificationController>(() => NotificationController());
     return Scaffold(
       appBar: AppBar(
         title: Text('Notifications'),
@@ -33,21 +41,33 @@ class NotificationListScreen extends StatelessWidget {
               onTap = () {
                 Get.toNamed(
                   RouteName.wordPuzzleScreen,
-                  arguments: {'unitId': notification['user_id'], 'examId': 1},
+                  arguments: {
+                    'unitId': notification['user_id'],
+                    'examId': 1,
+                    "notification_id": notification['notification_id']
+                  },
                 );
               };
             } else if (notification['exam_name'] == 'Advance Mode') {
               onTap = () {
                 Get.toNamed(
                   RouteName.advanceWordPuzzleScreen,
-                  arguments: {'unitId': notification['user_id'], 'examId': 2},
+                  arguments: {
+                    'unitId': notification['user_id'],
+                    'examId': 2,
+                    "notification_id": notification['notification_id']
+                  },
                 );
               };
             } else if (notification['exam_name'] == 'Matching Mode') {
               onTap = () {
                 Get.toNamed(
                   RouteName.matchingModeScreen,
-                  arguments: {'unitId': notification['user_id'], 'examId': 3},
+                  arguments: {
+                    'unitId': notification['user_id'],
+                    'examId': 3,
+                    "notification_id": notification['notification_id']
+                  },
                 );
               };
             } else {

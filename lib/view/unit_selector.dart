@@ -58,12 +58,19 @@ class _UnitSelectorState extends State<UnitSelector> {
                   var typeData = unitSelectorController.dateList[index];
                   DateTime? targetDate =
                       unitSelectorController.parseDate(typeData['target_date']);
-                  int remainingDays = typeData['remaining_day'] ?? 0;
+
+                  // Ensure remaining_days is an integer or 0 if not an int
+                  int remainingDays = (typeData['remaining_day'] is int)
+                      ? typeData['remaining_day']
+                      : (typeData['remaining_day'] is String &&
+                              typeData['remaining_day'] == "finish")
+                          ? 0 // Handle case for "finish"
+                          : 0; // Default to 0 for other cases
 
                   if (targetDate == null) {
                     return _buildUnplannedButton(typeData['id']);
-                  } else if (targetDate.isBefore(DateTime.now())) {
-                    return _buildFinishButton();
+                  } else if (typeData['remaining_day'] == "finish") {
+                    return _buildFinishButton(); // Call your finish button function here
                   } else {
                     return _buildDaysLeftButton(typeData['id'], remainingDays);
                   }

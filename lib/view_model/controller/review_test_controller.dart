@@ -15,11 +15,11 @@ class ReviewTestController extends GetxController {
   var aiData = Rx<Map<String, dynamic>>({});
   var gameResultData = {}.obs;
   var wordsUnitList = <dynamic>[].obs;
+  var total = 0.obs;
 
   @override
   void onInit() {
     super.onInit();
-    // getExamTypeList();
   }
 
   void getExamTypeList({required int unit_id}) async {
@@ -30,10 +30,17 @@ class ReviewTestController extends GetxController {
       if (res.statusCode == 200) {
         isLoading(false);
         var body = json.decode(res.body) as Map<String, dynamic>;
+
         if (body['status'] == true || body['status'] == "true") {
-          var data = body['data'] as List<dynamic>;
-          examTypeList.value =
-              data.map((item) => item as Map<String, dynamic>).toList();
+          var data = body['data'] as Map<String, dynamic>;
+          total.value = data['total'] ?? 0;
+          // Filter out 'total' from data
+          var examData = data.entries
+              .where((entry) => entry.key != 'total')
+              .map((entry) => entry.value as Map<String, dynamic>)
+              .toList();
+
+          examTypeList.value = examData;
         } else {
           Get.snackbar('Error', body['message'] ?? 'Unknown error occurred',
               snackPosition: SnackPosition.TOP);
@@ -54,6 +61,41 @@ class ReviewTestController extends GetxController {
       isLoading(false);
     }
   }
+
+  // void getExamTypeList({required int unit_id}) async {
+  //   isLoading(true);
+
+  //   try {
+  //     var res = await ApiCall().getExamType(unit_id);
+  //     if (res.statusCode == 200) {
+  //       isLoading(false);
+  //       var body = json.decode(res.body) as Map<String, dynamic>;
+  //       print("getExamTypeList res===>$body");
+
+  //       if (body['status'] == true || body['status'] == "true") {
+  //         var data = body['data'] as List<dynamic>;
+  //         examTypeList.value =
+  //             data.map((item) => item as Map<String, dynamic>).toList();
+  //       } else {
+  //         Get.snackbar('Error', body['message'] ?? 'Unknown error occurred',
+  //             snackPosition: SnackPosition.TOP);
+  //       }
+  //     } else {
+  //       isLoading(false);
+  //       var errorResponse = json.decode(res.body) as Map<String, dynamic>;
+  //       Get.snackbar(
+  //           'Error', errorResponse['message'] ?? 'Unknown error occurred',
+  //           snackPosition: SnackPosition.TOP);
+  //     }
+  //   } catch (e) {
+  //     isLoading(false);
+  //     Get.snackbar('Network Error',
+  //         'Unable to reach the server. Please check your internet connection.',
+  //         snackPosition: SnackPosition.TOP);
+  //   } finally {
+  //     isLoading(false);
+  //   }
+  // }
 
   void getUnitWordsList({required int unit_id}) async {
     isLoading(true);
@@ -186,8 +228,23 @@ class ReviewTestController extends GetxController {
     }
   }
 
-  Future<void> gameResult({required int unit_id, required int exam_id}) async {
-    var requestBody = {"unit_id": unit_id, "exam_id": exam_id};
+  Future<void> gameResult({
+    required int unit_id,
+    required int exam_id,
+    int? notification_id,
+  }) async {
+    // Create the request body with required fields
+    var requestBody = {
+      "unit_id": unit_id,
+      "exam_id": exam_id,
+    };
+
+    // Add notification_id if it's provided and not equal to 0
+    if (notification_id != null && notification_id != 0) {
+      requestBody["notification_id"] = notification_id;
+    }
+    print("body game requestBody=====>$requestBody");
+
     isLoading(true);
     try {
       var res = await ApiCall().gameResult(requestBody);
@@ -217,6 +274,41 @@ class ReviewTestController extends GetxController {
       isLoading(false);
     }
   }
+
+  // Future<void> gameResult(
+  //     {required int unit_id,
+  //     required int exam_id,
+  //     int? notification_id}) async {
+  //   var requestBody = {"unit_id": unit_id, "exam_id": exam_id};
+  //   isLoading(true);
+  //   try {
+  //     var res = await ApiCall().gameResult(requestBody);
+  //     var body = json.decode(res.body);
+  //     print("body game result=====>$body");
+
+  //     if (res.statusCode == 200) {
+  //       if (body['status'] == true || body['status'] == "true") {
+  //         // Assign the data map to gameResultData using assignAll to preserve reactivity
+  //         gameResultData.assignAll(body['data']);
+  //         getExamTypeList(unit_id: unit_id);
+  //       } else {
+  //         Get.snackbar('Error', body['message'] ?? 'Unknown error occurred',
+  //             snackPosition: SnackPosition.TOP);
+  //       }
+  //     } else {
+  //       var errorResponse = json.decode(res.body);
+  //       String errorMsg = errorResponse['message'] ?? 'Unknown error occurred';
+  //       Get.snackbar('Error', errorMsg, snackPosition: SnackPosition.TOP);
+  //     }
+  //   } catch (e) {
+  //     Get.snackbar('Network Error',
+  //         'Unable to reach the server. Please check your internet connection.',
+  //         snackPosition: SnackPosition.TOP);
+  //     print('Network error: $e'); // Debugging
+  //   } finally {
+  //     isLoading(false);
+  //   }
+  // }
 
   Future<void> editWord({
     required int word_id,

@@ -23,7 +23,8 @@ class _WordsInUnitScreenState extends State<WordsInUnitScreen> {
   void initState() {
     super.initState();
     wordsController = Get.put(WordsController(wordbankId: widget.wordbankId));
-    _selectedWordCount = wordsController.wordList.length;
+    // _selectedWordCount = wordsController.wordList.length;
+    _selectedWordCount = 12;
   }
 
   int _selectedWordCount = 0;

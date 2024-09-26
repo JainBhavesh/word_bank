@@ -27,11 +27,24 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  // @override
+  // void onInit() {
+  //   notificationController.getNotification();
+  //   // Adding a listener for route changes
+  //   ever(Get.routing as RxInterface<Object?>, (_) {
+  //     if (Get.currentRoute == '/notifications') {
+  //       notificationController
+  //           .getNotification(); // Call API on navigating back to this screen
+  //     }
+  //   });
+  // }
+
   @override
   void initState() {
     super.initState();
+    notificationController.getNotificationCount();
     notificationController
-        .getNotificationCount(); // Fetch notification count on screen load
+        .getTodayTask(); // Fetch notification count on screen load
   }
 
   void _showSettingsModal() {
@@ -63,6 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Get.lazyPut<NotificationController>(() => NotificationController());
     return Scaffold(
       appBar: AppBar(
         title: const Text('拼了', style: TextStyle(color: Colors.orange)),
@@ -125,10 +139,12 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             children: [
               const SizedBox(height: 20),
-              const Center(
-                child: FlutterLogo(
-                  size: 220,
-                  textColor: Colors.red,
+              Center(
+                child: Image.asset(
+                  'assets/images/boy.png', // Ensure this path is correct
+                  fit: BoxFit.cover,
+                  width: 155,
+                  height: 190,
                 ),
               ),
               const SizedBox(height: 20),
@@ -206,31 +222,37 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
               const SizedBox(height: 20),
               Expanded(
-                child: GridView.builder(
-                  padding: const EdgeInsets.symmetric(horizontal: 40.0),
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3, // Number of columns
-                    mainAxisSpacing: 20,
-                    crossAxisSpacing: 20,
-                  ),
-                  itemCount: notificationController.dateList.length,
-                  itemBuilder: (context, index) {
-                    var typeData = notificationController.dateList[index];
-                    DateTime? targetDate = notificationController
-                        .parseDate(typeData['target_date']);
-                    int remainingDays = typeData['remaining_day'] ?? 0;
+                  child: GridView.builder(
+                      padding: const EdgeInsets.symmetric(horizontal: 40.0),
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 3, // Number of columns
+                        mainAxisSpacing: 20,
+                        crossAxisSpacing: 20,
+                      ),
+                      itemCount: notificationController.dateList.length,
+                      itemBuilder: (context, index) {
+                        var typeData = notificationController.dateList[index];
+                        DateTime? targetDate = notificationController
+                            .parseDate(typeData['target_date']);
 
-                    if (targetDate == null) {
-                      return _buildUnplannedButton(typeData['id']);
-                    } else if (targetDate.isBefore(DateTime.now())) {
-                      return _buildFinishButton();
-                    } else {
-                      return _buildDaysLeftButton(
-                          typeData['id'], remainingDays);
-                    }
-                  },
-                ),
-              ),
+                        // Ensure remaining_days is an integer or 0 if not an int
+                        int remainingDays = (typeData['remaining_day'] is int)
+                            ? typeData['remaining_day']
+                            : (typeData['remaining_day'] is String &&
+                                    typeData['remaining_day'] == "finish")
+                                ? 0 // Handle case for "finish"
+                                : 0; // Default to 0 for other cases
+
+                        if (targetDate == null) {
+                          return _buildUnplannedButton(typeData['id']);
+                        } else if (typeData['remaining_day'] == "finish") {
+                          return _buildFinishButton(); // Call your finish button function here
+                        } else {
+                          return _buildDaysLeftButton(
+                              typeData['id'], remainingDays);
+                        }
+                      })),
             ],
           ),
         );

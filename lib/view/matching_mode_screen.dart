@@ -571,14 +571,15 @@ class _MatchingModeScreenState extends State<MatchingModeScreen> {
   List<int> originalWordIndexes = [];
   List<int> originalMeaningIndexes = [];
   bool allAnswersCorrect = false;
-
+  late int notification_id;
   @override
   void initState() {
     super.initState();
     final arguments = Get.arguments;
     unitId = arguments['unitId'] ?? 0;
     examId = arguments['examId'] ?? 0;
-
+    notification_id = arguments['notification_id'] ?? 0;
+    print("notification_id==>$notification_id");
     // Fetch data
     reviewTestController.exam(unit_id: unitId, exam_id: examId).then((_) {
       if (reviewTestController.matchingModeData.isNotEmpty) {
@@ -671,7 +672,9 @@ class _MatchingModeScreenState extends State<MatchingModeScreen> {
           // If all answers are correct, call gameResult API
           if (allAnswersCorrect) {
             await reviewTestController.gameResult(
-                unit_id: unitId, exam_id: examId);
+                unit_id: unitId,
+                exam_id: examId,
+                notification_id: notification_id);
 
             // Show success popup after the API call
             showDialog(

@@ -23,13 +23,14 @@ class _AdvanceWordPuzzleScreenState extends State<AdvanceWordPuzzleScreen> {
   bool isError = false; // To show error feedback
   late int unitId;
   late int examId;
-
+  late int notification_id;
   @override
   void initState() {
     super.initState();
     final arguments = Get.arguments;
     unitId = arguments['unitId'] ?? 0;
     examId = arguments['examId'] ?? 0;
+    notification_id = arguments['notification_id'] ?? 0;
     reviewTestController.exam(unit_id: unitId, exam_id: examId).then((_) {
       loadWord();
     });
@@ -91,7 +92,9 @@ class _AdvanceWordPuzzleScreenState extends State<AdvanceWordPuzzleScreen> {
 
           // Call gameResult API after the last word is completed
           await reviewTestController.gameResult(
-              unit_id: unitId, exam_id: examId);
+              unit_id: unitId,
+              exam_id: examId,
+              notification_id: notification_id);
 
           // Show success dialog after API call
           showDialog(
