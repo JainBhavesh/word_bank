@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../components/PersonalWordBankList.dart';
+import '../components/builtin_wordbank_list.dart';
 import '../view_model/controller/add_wordsbank_controller.dart';
 import '../view_model/controller/notification_controller.dart';
 import '../view_model/controller/wordsbank_controller.dart';
@@ -71,7 +71,7 @@ class _BuiltInWordbankScreenState extends State<BuiltInWordbankScreen> {
           itemCount: controller.buildinwordBankList.length,
           itemBuilder: (context, index) {
             var wordBank = controller.buildinwordBankList[index];
-            return ListItemWidget(
+            return BuiltinWordbankList(
               index: index,
               wordBank: wordBank,
             );

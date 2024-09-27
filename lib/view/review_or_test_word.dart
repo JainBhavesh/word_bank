@@ -94,10 +94,12 @@ class _ReviewOrTestScreenState extends State<ReviewOrTestScreen> {
               ],
             ),
             const SizedBox(height: 20),
-            CircularCountdownWidget(daysLeft: _controller.total.value),
+            Obx(() {
+              return CircularCountdownWidget(
+                  daysLeft: daysLeft, total: _controller.total.value);
+            }),
             const SizedBox(height: 20),
             Obx(() {
-              print("total===>${_controller.total}");
               return Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -212,8 +214,9 @@ class _ReviewOrTestScreenState extends State<ReviewOrTestScreen> {
 
 class CircularCountdownWidget extends StatelessWidget {
   final int daysLeft; // Add the daysLeft parameter
-
-  const CircularCountdownWidget({super.key, required this.daysLeft});
+  final int total;
+  const CircularCountdownWidget(
+      {super.key, required this.daysLeft, required this.total});
 
   @override
   Widget build(BuildContext context) {
@@ -224,7 +227,7 @@ class CircularCountdownWidget extends StatelessWidget {
           width: 120,
           height: 120,
           child: CircularProgressIndicator(
-            value: daysLeft / 8, // Update the logic based on your countdown
+            value: total / 8, // Update the logic based on your countdown
             strokeWidth: 10,
             color: Colors.red,
             backgroundColor: Colors.grey[300],

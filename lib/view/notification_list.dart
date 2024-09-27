@@ -54,7 +54,7 @@ class NotificationListScreen extends StatelessWidget {
                 Get.toNamed(
                   RouteName.wordPuzzleScreen,
                   arguments: {
-                    'unitId': notification['user_id'],
+                    'unitId': notification['unit_id'],
                     'examId': 1,
                     "notification_id": notification['notification_id']
                   },
@@ -65,7 +65,7 @@ class NotificationListScreen extends StatelessWidget {
                 Get.toNamed(
                   RouteName.advanceWordPuzzleScreen,
                   arguments: {
-                    'unitId': notification['user_id'],
+                    'unitId': notification['unit_id'],
                     'examId': 2,
                     "notification_id": notification['notification_id']
                   },
@@ -76,7 +76,7 @@ class NotificationListScreen extends StatelessWidget {
                 Get.toNamed(
                   RouteName.matchingModeScreen,
                   arguments: {
-                    'unitId': notification['user_id'],
+                    'unitId': notification['unit_id'],
                     'examId': 3,
                     "notification_id": notification['notification_id']
                   },

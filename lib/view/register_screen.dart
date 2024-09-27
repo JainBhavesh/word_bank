@@ -20,10 +20,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Get.back();
-            // Handle back button
           },
         ),
-        title: const Text('Register'),
+        title: Text('register'.tr),
         actions: const [
           Padding(
             padding: EdgeInsets.all(8.0),
