@@ -169,8 +169,8 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                         borderRadius: BorderRadius.circular(12),
                       ),
                     ),
-                    child: const Text(
-                      'Personal wordbank',
+                    child: Text(
+                      'personal_wordbank'.tr,
                       style: TextStyle(
                         color: Colors.white,
                       ),
@@ -189,8 +189,8 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                         borderRadius: BorderRadius.circular(12),
                       ),
                     ),
-                    child: const Text(
-                      'Built-in wordbank',
+                    child: Text(
+                      'built_in_wordbank'.tr,
                       style: TextStyle(
                         color: Colors.white,
                       ),
@@ -204,7 +204,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                       child: Padding(
                         padding: EdgeInsets.only(left: 40.0, top: 20),
                         child: Text(
-                          "Today's task",
+                          "todays_task",
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
@@ -212,12 +212,12 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                         ),
                       ),
                     )
-                  : const Align(
+                  : Align(
                       alignment: Alignment.center,
                       child: Padding(
                         padding: EdgeInsets.only(top: 20),
                         child: Text(
-                          "No tasks available",
+                          "no_tasks_available".tr,
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,

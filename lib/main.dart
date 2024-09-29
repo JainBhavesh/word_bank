@@ -59,10 +59,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: const SplashScreen(),
       getPages: AppRoutes.appRoutes(),
-      locale: const Locale('zh', 'CN'),
+      locale: const Locale('zh', 'CN'), //set defualt
+      // locale: const Locale('en', 'US'),
 
-      // fallbackLocale: const Locale('en', 'US'),
-      fallbackLocale: const Locale('zh', 'CN'),
+      fallbackLocale: const Locale('en', 'US'),
+      // fallbackLocale: const Locale('zh', 'CN'),
 
       translations: AppTranslations(),
 

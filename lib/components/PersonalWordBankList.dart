@@ -68,22 +68,21 @@ class ListItemWidget extends StatelessWidget {
                       showDialog(
                         context: context,
                         builder: (context) => AlertDialog(
-                          title: const Text('Confirm Deletion'),
-                          content: const Text(
-                              'Are you sure you want to delete this wordbank?'),
+                          title: Text('confirm_deletion'.tr),
+                          content: Text('delete_message'.tr),
                           actions: <Widget>[
                             TextButton(
                               onPressed: () {
                                 Navigator.of(context).pop();
                               },
-                              child: const Text('Cancel'),
+                              child: const Text('取消'),
                             ),
                             TextButton(
                               onPressed: () {
                                 Navigator.of(context).pop();
                                 controller.deleteWordbank(id: wordBank['id']);
                               },
-                              child: const Text('Delete'),
+                              child: Text('delete'.tr),
                             ),
                           ],
                         ),
@@ -92,17 +91,17 @@ class ListItemWidget extends StatelessWidget {
                   }
                 },
                 itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
-                  const PopupMenuItem<String>(
+                  PopupMenuItem<String>(
                     value: 'rename',
-                    child: Text('Rename'),
+                    child: Text('rename'.tr),
                   ),
-                  const PopupMenuItem<String>(
+                  PopupMenuItem<String>(
                     value: 'add',
-                    child: Text('Add a Word to Wordbank'),
+                    child: Text('add_word_to_wordbank'.tr),
                   ),
-                  const PopupMenuItem<String>(
+                  PopupMenuItem<String>(
                     value: 'delete',
-                    child: Text('Delete Wordbank'),
+                    child: Text('delete_wordbank'.tr),
                   ),
                 ],
               ),

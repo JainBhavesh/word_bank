@@ -52,8 +52,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        'Name',
+                      Text(
+                        'name'.tr,
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.bold),
                       ),
@@ -70,12 +70,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                           contentPadding:
                               const EdgeInsets.symmetric(horizontal: 10),
-                          hintText: 'Enter Name',
+                          hintText: 'enter_name'.tr,
                         ),
                       ),
                       const SizedBox(height: 16),
-                      const Text(
-                        'Email',
+                      Text(
+                        'email'.tr,
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.bold),
                       ),
@@ -92,12 +92,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                           contentPadding:
                               const EdgeInsets.symmetric(horizontal: 10),
-                          hintText: 'Enter Email',
+                          hintText: 'enter_email'.tr,
                         ),
                       ),
                       const SizedBox(height: 16),
-                      const Text(
-                        'Password',
+                      Text(
+                        'password'.tr,
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.bold),
                       ),
@@ -114,7 +114,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                           contentPadding:
                               const EdgeInsets.symmetric(horizontal: 10),
-                          hintText: 'Enter Password',
+                          hintText: 'enter_password'.tr,
                         ),
                         obscureText: true,
                       ),
@@ -129,12 +129,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               },
                             ),
                           ),
-                          const Column(
+                          Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('I agree to the agreement'),
-                              Text('Description',
-                                  style: TextStyle(fontSize: 12)),
+                              Text('agree_to_terms'.tr),
+                              Text('description'.tr,
+                                  style: const TextStyle(fontSize: 12)),
                             ],
                           ),
                         ],
@@ -151,8 +151,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               borderRadius: BorderRadius.circular(8.0),
                             ),
                           ),
-                          child: const Text(
-                            'Register',
+                          child: Text(
+                            'register'.tr,
                             style: TextStyle(color: Colors.white),
                           ),
                         ),
@@ -162,8 +162,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
               ),
               const SizedBox(height: 16),
-              const Text(
-                '系統會發送一封EMAIL，點擊郵件中的連結完成註冊',
+              Text(
+                'system_message'.tr,
                 style: TextStyle(fontSize: 12),
               ),
               const SizedBox(height: 16),

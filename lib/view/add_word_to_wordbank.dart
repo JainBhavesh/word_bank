@@ -34,7 +34,7 @@ class _AddWordToWordbankScreenState extends State<AddWordToWordbankScreen> {
       resizeToAvoidBottomInset:
           true, // Ensures the view adjusts for the keyboard
       appBar: AppBar(
-        title: const Text('Add words'),
+        title: Text('add_words'.tr),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () => Get.back(),
@@ -56,8 +56,8 @@ class _AddWordToWordbankScreenState extends State<AddWordToWordbankScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        'Chinese',
+                      Text(
+                        'chinese'.tr,
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.w500),
                       ),
@@ -65,7 +65,7 @@ class _AddWordToWordbankScreenState extends State<AddWordToWordbankScreen> {
                       TextField(
                         controller: addWordController.chineseController,
                         decoration: InputDecoration(
-                          labelText: 'Value',
+                          labelText: 'value'.tr,
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10.0),
                           ),
@@ -74,8 +74,8 @@ class _AddWordToWordbankScreenState extends State<AddWordToWordbankScreen> {
                         ),
                       ),
                       const SizedBox(height: 15),
-                      const Text(
-                        'English',
+                      Text(
+                        'english'.tr,
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.w500),
                       ),
@@ -83,7 +83,7 @@ class _AddWordToWordbankScreenState extends State<AddWordToWordbankScreen> {
                       TextField(
                         controller: addWordController.englishController,
                         decoration: InputDecoration(
-                          labelText: 'Value',
+                          labelText: 'value'.tr,
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10.0),
                           ),
@@ -114,27 +114,6 @@ class _AddWordToWordbankScreenState extends State<AddWordToWordbankScreen> {
                           });
                         }).toList(),
                       ),
-
-                      // Wrap(
-                      //   spacing: 8.0,
-                      //   children: addWordController.wordTypes.map((type) {
-                      //     return Row(
-                      //       mainAxisSize: MainAxisSize.min,
-                      //       children: [
-                      //         Obx(() => Checkbox(
-                      //               value:
-                      //                   addWordController.selectedTypes[type] ??
-                      //                       false,
-                      //               onChanged: (value) {
-                      //                 addWordController.selectedTypes[type] =
-                      //                     value!;
-                      //               },
-                      //             )),
-                      //         Text(type),
-                      //       ],
-                      //     );
-                      //   }).toList(),
-                      // ),
                       const SizedBox(height: 15),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -170,8 +149,8 @@ class _AddWordToWordbankScreenState extends State<AddWordToWordbankScreen> {
                                           .updateAll((key, value) => false);
                                     });
                             },
-                            child: const Text(
-                              'Save and one more',
+                            child: Text(
+                              'save_and_more'.tr,
                               style: TextStyle(color: Colors.white),
                             ),
                           ),
@@ -195,13 +174,12 @@ class _AddWordToWordbankScreenState extends State<AddWordToWordbankScreen> {
                                     Get.to(() => WordsInUnitScreen(
                                         wordbankId: widget.wordbankId));
                                   } else {
-                                    Get.snackbar(
-                                        'Error', 'Please add atleast 6 words',
+                                    Get.snackbar('Error', 'add_word_message'.tr,
                                         snackPosition: SnackPosition.TOP);
                                   }
                                 },
-                                child: const Text(
-                                  'Done',
+                                child: Text(
+                                  'done'.tr,
                                   style: TextStyle(color: Colors.white),
                                 ),
                               );
@@ -222,7 +200,7 @@ class _AddWordToWordbankScreenState extends State<AddWordToWordbankScreen> {
                 }
 
                 if (wordsController.wordList.isEmpty) {
-                  return const Center(child: Text('No words available.'));
+                  return Center(child: Text('no_words_available'.tr));
                 }
                 return ListView.builder(
                   shrinkWrap: true,
@@ -258,7 +236,7 @@ class _AddWordToWordbankScreenState extends State<AddWordToWordbankScreen> {
                                     child: ListTile(
                                       leading: const Icon(Icons.edit,
                                           color: Colors.black),
-                                      title: const Text('Edit word'),
+                                      title: Text('edit_word'.tr),
                                       onTap: () {
                                         // Set the controllers with the current word details for editing
                                         addWordController.updateBankId = 0;
