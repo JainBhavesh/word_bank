@@ -181,7 +181,7 @@ class _WordPuzzleScreenState extends State<WordPuzzleScreen> {
       if (reviewTestController.isLoading.value) {
         return Scaffold(
           appBar: AppBar(
-              title: const Text('Easy Word Puzzle'),
+              title: Text('easy_word_puzzle'.tr),
               backgroundColor: Colors.white,
               elevation: 0),
           body: Center(child: CircularProgressIndicator()),
@@ -192,12 +192,12 @@ class _WordPuzzleScreenState extends State<WordPuzzleScreen> {
       if (reviewTestController.easyExamData.isEmpty) {
         return Scaffold(
           appBar: AppBar(
-              title: const Text('Easy Word Puzzle'),
+              title: Text('easy_word_puzzle'.tr),
               backgroundColor: Colors.white,
               elevation: 0),
           body: Center(
             child: Text(
-              'No data available. Please try again later.',
+              'no_data'.tr,
               style: TextStyle(fontSize: 18, color: Colors.black),
             ),
           ),
@@ -208,13 +208,13 @@ class _WordPuzzleScreenState extends State<WordPuzzleScreen> {
       if (currentStep >= reviewTestController.easyExamData.length) {
         return Scaffold(
           appBar: AppBar(
-            title: const Text('Easy Word Puzzle'),
+            title: Text('easy_word_puzzle'.tr),
             backgroundColor: Colors.white,
             elevation: 0,
           ),
           body: Center(
             child: Text(
-              'You have completed the test!',
+              'completed_test_msg'.tr,
               style: TextStyle(fontSize: 18, color: Colors.black),
             ),
           ),
@@ -337,7 +337,7 @@ class _WordPuzzleScreenState extends State<WordPuzzleScreen> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 40),
                   child: ButtonWidget(
-                    label: 'Check',
+                    label: 'check'.tr,
                     icon: Icons.check,
                     textColor: Colors.white,
                     onPressed: () => checkWord(),
@@ -356,7 +356,7 @@ class _WordPuzzleScreenState extends State<WordPuzzleScreen> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 80),
                   child: ButtonWidget(
-                    label: 'Quit test',
+                    label: 'quit_test'.tr,
                     icon: Icons.logout,
                     textColor: Colors.white,
                     onPressed: () {

@@ -178,8 +178,8 @@ class _AdvanceWordPuzzleScreenState extends State<AdvanceWordPuzzleScreen> {
       backgroundColor: Colors.white,
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
-        title: const Text(
-          'Advance Puzzle',
+        title: Text(
+          'advance_puzzle'.tr,
           style: TextStyle(
             color: Colors.black,
             fontSize: 18,
@@ -204,7 +204,8 @@ class _AdvanceWordPuzzleScreenState extends State<AdvanceWordPuzzleScreen> {
               reviewTestController.examData[currentStep]["ans"];
           String chineseName =
               reviewTestController.examData[currentStep]["chinese_name"];
-
+          print(
+              'reviewTestController.examData====>${reviewTestController.examData}');
           return SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.all(16.0),

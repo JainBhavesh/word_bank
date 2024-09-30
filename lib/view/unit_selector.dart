@@ -23,7 +23,7 @@ class _UnitSelectorState extends State<UnitSelector> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Choose a unit'),
+        title: Text('choose_unit'.tr),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
@@ -91,9 +91,9 @@ class _UnitSelectorState extends State<UnitSelector> {
           color: Colors.yellow,
           border: Border.all(color: Colors.red, width: 4),
         ),
-        child: const Center(
+        child: Center(
           child: Text(
-            'Finish',
+            'finish'.tr,
             style: TextStyle(
               color: Colors.black,
               fontWeight: FontWeight.bold,
@@ -135,8 +135,8 @@ class _UnitSelectorState extends State<UnitSelector> {
                   fontSize: 24,
                 ),
               ),
-              const Text(
-                'Days left',
+              Text(
+                'days_left'.tr,
                 style: TextStyle(
                   color: Colors.red,
                   fontSize: 14,
@@ -160,9 +160,9 @@ class _UnitSelectorState extends State<UnitSelector> {
           color: Colors.grey,
           border: Border.all(color: Colors.grey.shade400, width: 4),
         ),
-        child: const Center(
+        child: Center(
           child: Text(
-            'unplanned',
+            'unplanned'.tr,
             style: TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold,

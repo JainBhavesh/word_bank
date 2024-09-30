@@ -39,7 +39,7 @@ class _BuiltInWordbankScreenState extends State<BuiltInWordbankScreen> {
             fetchData();
           },
         ),
-        title: const Text('Built-in wordbanks'),
+        title: Text('built_in_wordbank'.tr),
         actions: const [
           Padding(
             padding: EdgeInsets.all(8.0),
@@ -63,7 +63,7 @@ class _BuiltInWordbankScreenState extends State<BuiltInWordbankScreen> {
 
         // Display a message if the word bank list is empty
         if (controller.buildinwordBankList.isEmpty) {
-          return const Center(child: Text('No wordbanks available.'));
+          return Center(child: Text('no_word_bank_list.'.tr));
         }
 
         // Display the word bank list when the data is available

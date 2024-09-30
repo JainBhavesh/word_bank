@@ -127,8 +127,8 @@ class _ReviewScreenState extends State<ReviewScreen> {
                       Icons.lock,
                       color: Colors.white,
                     ),
-                    label: const Text(
-                      'AI content',
+                    label: Text(
+                      'ai_content'.tr,
                       style: TextStyle(color: Colors.white),
                     ),
                     style: ElevatedButton.styleFrom(
@@ -164,8 +164,8 @@ class _ReviewScreenState extends State<ReviewScreen> {
                       Icons.star,
                       color: Colors.white,
                     ),
-                    label: const Text('Prev',
-                        style: TextStyle(color: Colors.white)),
+                    label:
+                        Text('prev'.tr, style: TextStyle(color: Colors.white)),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.black,
                       shape: RoundedRectangleBorder(
@@ -181,8 +181,8 @@ class _ReviewScreenState extends State<ReviewScreen> {
                         borderRadius: BorderRadius.circular(10),
                       ),
                     ),
-                    child: const Text(
-                      'Next',
+                    child: Text(
+                      'next'.tr,
                       style: TextStyle(color: Colors.white),
                     ),
                   ),
@@ -199,8 +199,8 @@ class _ReviewScreenState extends State<ReviewScreen> {
                 ),
                 child: Text(
                   currentIndex == reviewTestController.reviewData.length - 1
-                      ? '完成複習'
-                      : 'Quit review',
+                      ? 'complete_review'.tr
+                      : 'quit_review'.tr,
                   style: const TextStyle(color: Colors.white),
                 ),
               ),

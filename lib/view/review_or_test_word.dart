@@ -54,7 +54,7 @@ class _ReviewOrTestScreenState extends State<ReviewOrTestScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Review or test'),
+        title: Text('review_test'.tr),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
@@ -81,8 +81,8 @@ class _ReviewOrTestScreenState extends State<ReviewOrTestScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text(
-                  'Check words',
+                Text(
+                  'check_word'.tr,
                   style: TextStyle(fontSize: 18),
                 ),
                 IconButton(
@@ -100,6 +100,7 @@ class _ReviewOrTestScreenState extends State<ReviewOrTestScreen> {
             }),
             const SizedBox(height: 20),
             Obx(() {
+              print("examType==>${_controller.examTypeList}");
               return Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -110,17 +111,17 @@ class _ReviewOrTestScreenState extends State<ReviewOrTestScreen> {
 
                     // Define onTap function based on the mode
                     VoidCallback? onTap;
-                    if (examType['name'] == 'easy mode') {
+                    if (examType['id'] == 1) {
                       onTap = () {
                         Get.toNamed(RouteName.wordPuzzleScreen,
                             arguments: {'unitId': unitId, 'examId': 1});
                       };
-                    } else if (examType['name'] == 'advance mode') {
+                    } else if (examType['id'] == 2) {
                       onTap = () {
                         Get.toNamed(RouteName.advanceWordPuzzleScreen,
                             arguments: {'unitId': unitId, 'examId': 2});
                       };
-                    } else if (examType['name'] == 'matching mode') {
+                    } else if (examType['id'] == 3) {
                       onTap = () {
                         Get.toNamed(RouteName.matchingModeScreen,
                             arguments: {'unitId': unitId, 'examId': 3});
@@ -145,7 +146,7 @@ class _ReviewOrTestScreenState extends State<ReviewOrTestScreen> {
                 child: Column(
                   children: [
                     ButtonWidget(
-                      label: 'Review',
+                      label: 'review'.tr,
                       onPressed: () {
                         Get.toNamed(RouteName.reviewScreen,
                             arguments: {'unitId': unitId});
@@ -153,7 +154,7 @@ class _ReviewOrTestScreenState extends State<ReviewOrTestScreen> {
                     ),
                     const SizedBox(height: 10),
                     ButtonWidget(
-                      label: 'Easy mode',
+                      label: 'easy_mode'.tr,
                       onPressed: () {
                         Get.toNamed(RouteName.wordPuzzleScreen,
                             arguments: {'unitId': unitId, 'examId': 1});
@@ -161,7 +162,7 @@ class _ReviewOrTestScreenState extends State<ReviewOrTestScreen> {
                     ),
                     const SizedBox(height: 10),
                     ButtonWidget(
-                      label: 'Advanced mode',
+                      label: 'advanced_mode'.tr,
                       onPressed: () {
                         Get.toNamed(RouteName.advanceWordPuzzleScreen,
                             arguments: {'unitId': unitId, 'examId': 2});
@@ -169,7 +170,7 @@ class _ReviewOrTestScreenState extends State<ReviewOrTestScreen> {
                     ),
                     const SizedBox(height: 10),
                     ButtonWidget(
-                      label: 'Matching mode',
+                      label: 'matching_mode'.tr,
                       onPressed: () {
                         Get.toNamed(RouteName.matchingModeScreen,
                             arguments: {'unitId': unitId, 'examId': 3});
@@ -177,7 +178,7 @@ class _ReviewOrTestScreenState extends State<ReviewOrTestScreen> {
                     ),
                     const SizedBox(height: 10),
                     ButtonWidget(
-                      label: 'Delete unit',
+                      label: 'delete_unit'.tr,
                       icon: Icons.logout,
                       backgroundColor: Colors.red,
                       textColor: Colors.white,

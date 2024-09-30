@@ -265,7 +265,7 @@ class _AddWordToWordbankScreenState extends State<AddWordToWordbankScreen> {
                                     child: ListTile(
                                       leading: const Icon(Icons.delete,
                                           color: Colors.red),
-                                      title: const Text('Delete word',
+                                      title: Text('delete_word'.tr,
                                           style: TextStyle(color: Colors.red)),
                                       onTap: () {
                                         // Call the delete function

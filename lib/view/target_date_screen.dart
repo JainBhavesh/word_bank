@@ -73,13 +73,13 @@ class _TargetDateScreenState extends State<TargetDateScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  'Target date',
+                Text(
+                  'target_date'.tr,
                   style: TextStyle(fontSize: 18),
                 ),
                 const SizedBox(height: 30),
-                const Text(
-                  'Do 8 tests before the target date.',
+                Text(
+                  'target_date_message'.tr,
                   style: TextStyle(fontSize: 18),
                 ),
                 const SizedBox(height: 30),
@@ -92,8 +92,8 @@ class _TargetDateScreenState extends State<TargetDateScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        '選擇日期',
+                      Text(
+                        'select_date'.tr,
                         style: TextStyle(
                           fontSize: 16,
                           color: Colors.black54,
@@ -151,8 +151,8 @@ class _TargetDateScreenState extends State<TargetDateScreen> {
                         children: [
                           TextButton(
                             onPressed: _clearDate,
-                            child: const Text(
-                              'Clear',
+                            child: Text(
+                              'clear'.tr,
                               style:
                                   TextStyle(color: Colors.purple, fontSize: 16),
                             ),
@@ -161,16 +161,16 @@ class _TargetDateScreenState extends State<TargetDateScreen> {
                             children: [
                               TextButton(
                                 onPressed: _cancel,
-                                child: const Text(
-                                  'Cancel',
+                                child: Text(
+                                  'cancel'.tr,
                                   style: TextStyle(
                                       color: Colors.purple, fontSize: 16),
                                 ),
                               ),
                               TextButton(
                                 onPressed: _confirm,
-                                child: const Text(
-                                  'OK',
+                                child: Text(
+                                  'ok'.tr,
                                   style: TextStyle(
                                       color: Colors.purple, fontSize: 16),
                                 ),
