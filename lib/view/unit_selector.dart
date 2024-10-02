@@ -11,6 +11,8 @@ class UnitSelector extends StatefulWidget {
   _UnitSelectorState createState() => _UnitSelectorState();
 }
 
+const double buttonSize = 90;
+
 class _UnitSelectorState extends State<UnitSelector> {
   final UnitSelectorController unitSelectorController =
       Get.put(UnitSelectorController());
@@ -18,6 +20,13 @@ class _UnitSelectorState extends State<UnitSelector> {
   int selectedUnitIndex = 0;
   final int totalUnits = 15;
   final int daysLeft = 22;
+
+  @override
+  void initState() {
+    super.initState();
+    var id = Get.arguments['id'];
+    unitSelectorController.getWordsList(id);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +37,7 @@ class _UnitSelectorState extends State<UnitSelector> {
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Get.back();
+            // Fe
             // Handle back button press
           },
         ),
@@ -66,13 +76,19 @@ class _UnitSelectorState extends State<UnitSelector> {
                               typeData['remaining_day'] == "finish")
                           ? 0 // Handle case for "finish"
                           : 0; // Default to 0 for other cases
-
+                  print("typeData======>${typeData}");
                   if (targetDate == null) {
                     return _buildUnplannedButton(typeData['id']);
                   } else if (typeData['remaining_day'] == "finish") {
                     return _buildFinishButton(); // Call your finish button function here
                   } else {
-                    return _buildDaysLeftButton(typeData['id'], remainingDays);
+                    return _buildDaysLeftButton(
+                      typeData['id'] ??
+                          0, // Provide a default value of 0 if 'id' is null
+                      remainingDays, // Provide a default value of 0 if remainingDays is null
+                      typeData['exam_count'] ??
+                          0, // Provide a default value of 0 if 'exam_count' is null
+                    );
                   }
                 });
       }),
@@ -82,30 +98,39 @@ class _UnitSelectorState extends State<UnitSelector> {
   Widget _buildFinishButton() {
     return GestureDetector(
       onTap: () {
-        // Handle finish button tap
-        print('Finish button pressed');
+        // Get.toNamed(RouteName.homeScreen);
+        Get.offAllNamed(RouteName.homeScreen);
       },
-      child: Container(
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: Colors.yellow,
-          border: Border.all(color: Colors.red, width: 4),
-        ),
-        child: Center(
-          child: Text(
-            'finish'.tr,
-            style: TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-              fontSize: 16,
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          SizedBox(
+            width: buttonSize,
+            height: buttonSize,
+            child: CircularProgressIndicator(
+              value:
+                  1, // Since this is the finish button, we assume it's complete (1.0)
+              strokeWidth: 10,
+              color: Colors.red,
+              backgroundColor: Colors.grey[300],
             ),
           ),
-        ),
+          Center(
+            child: Text(
+              'finish'.tr,
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
 
-  Widget _buildDaysLeftButton(int index, int daysLeft) {
+  Widget _buildDaysLeftButton(int index, int daysLeft, int exam_count) {
     return GestureDetector(
       onTap: () {
         setState(() {
@@ -114,37 +139,27 @@ class _UnitSelectorState extends State<UnitSelector> {
         Get.toNamed(RouteName.reviewOrTestScreen,
             arguments: {'unitId': index, 'daysLeft': daysLeft});
       },
-      child: Container(
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: Colors.white,
-          border: Border.all(
-            color: selectedUnitIndex == index ? Colors.blue : Colors.red,
-            width: 4,
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          SizedBox(
+            width: buttonSize, // Adjusted size for progress indicator
+            height: buttonSize,
+            child: CircularProgressIndicator(
+              value: exam_count / 8, // Dynamic value based on the exam_count
+              strokeWidth: 10,
+              color: Colors.red,
+              backgroundColor: Colors.grey[300],
+            ),
           ),
-        ),
-        child: Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                '$daysLeft',
-                style: const TextStyle(
-                  color: Colors.red,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 24,
-                ),
-              ),
-              Text(
-                'days_left'.tr,
-                style: TextStyle(
-                  color: Colors.red,
-                  fontSize: 14,
-                ),
-              ),
-            ],
+          Center(
+            child: Text(
+              '$daysLeft\n${'days_left'.tr}', // Using .tr for translations
+              textAlign: TextAlign.center,
+              style: const TextStyle(fontSize: 14, color: Colors.red),
+            ),
           ),
-        ),
+        ],
       ),
     );
   }
@@ -152,24 +167,33 @@ class _UnitSelectorState extends State<UnitSelector> {
   Widget _buildUnplannedButton(int index) {
     return GestureDetector(
       onTap: () {
-        Get.toNamed(RouteName.targetDateScreen, arguments: {'unitId': index});
+        Get.toNamed(RouteName.targetDateScreen,
+            arguments: {'unitId': index, "wordBankId": Get.arguments['id']});
       },
-      child: Container(
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: Colors.grey,
-          border: Border.all(color: Colors.grey.shade400, width: 4),
-        ),
-        child: Center(
-          child: Text(
-            'unplanned'.tr,
-            style: TextStyle(
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          SizedBox(
+            width: buttonSize,
+            height: buttonSize,
+            child: CircularProgressIndicator(
+              value: 0, // Placeholder value (0.5), adjust based on your logic
+              strokeWidth: 10,
               color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontSize: 14,
+              backgroundColor: Colors.grey[300],
             ),
           ),
-        ),
+          Center(
+            child: Text(
+              'unplanned'.tr,
+              style: TextStyle(
+                color: Colors.grey,
+                fontWeight: FontWeight.bold,
+                fontSize: 14,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

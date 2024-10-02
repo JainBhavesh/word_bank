@@ -95,6 +95,11 @@ class AppTranslations extends Translations {
           'easy_word_puzzle': 'Easy Word Puzzle',
           'completed_test_msg': 'You have completed the test!',
           'advance_puzzle': 'Advance Puzzle',
+          'word_list': 'Word list',
+          'word_puzzle': 'Word Puzzle',
+          'noun': 'Noun',
+          'confirm_and_quit': 'Confirm & quit',
+          'notifications': 'Notifications'
         },
         'zh': {
           'email': '電子郵件',
@@ -141,7 +146,7 @@ class AppTranslations extends Translations {
           'prev': '上一步',
           'next': '下一步',
           'quit_review': '退出复习',
-          'ai_content': 'AI 内容',
+          'ai_content': '人工智能内容',
           'check': '检查',
           'quit_test': '退出测试',
           'word_count_header': '每个单元有多少个单词',
@@ -182,10 +187,15 @@ class AppTranslations extends Translations {
           'matching_mode': '匹配方式',
           'easy_mode': '简易模式',
           'review': '审查',
-          'complete_review': 'Complete review',
+          'complete_review': '完整审查',
           'easy_word_puzzle': '简单的字谜游戏',
           'completed_test_msg': '您已完成测试！',
           'advance_puzzle': '高级拼图',
+          'word_list': '单词列表',
+          'word_puzzle': '字谜',
+          'noun': '名词',
+          'confirm_and_quit': '确认并退出',
+          'notifications': '通知'
         },
       };
 }

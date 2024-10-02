@@ -24,7 +24,7 @@ class NotificationListScreen extends StatelessWidget {
     Get.lazyPut<NotificationController>(() => NotificationController());
     return Scaffold(
       appBar: AppBar(
-        title: Text('Notifications'),
+        title: Text('notifications'.tr),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {

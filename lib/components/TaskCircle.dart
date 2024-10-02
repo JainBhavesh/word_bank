@@ -44,6 +44,7 @@
 // }
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class TaskList extends StatelessWidget {
   final List<Map<String, dynamic>> dateList;
@@ -106,8 +107,8 @@ class TaskCircle extends StatelessWidget {
                         fontSize: 20,
                         fontWeight: FontWeight.bold),
                   ),
-                  const Text(
-                    'Days left',
+                  Text(
+                    'days_left'.tr,
                     style: TextStyle(color: Colors.white, fontSize: 12),
                   ),
                 ],

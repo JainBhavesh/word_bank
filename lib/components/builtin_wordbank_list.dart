@@ -13,6 +13,7 @@ class BuiltinWordbankList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // ignore: unused_local_variable
     final AddWordbankController controller = Get.find<AddWordbankController>();
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
@@ -26,11 +27,12 @@ class BuiltinWordbankList extends StatelessWidget {
             Get.toNamed(RouteName.unitSelector,
                 arguments: {'id': wordBank['id']});
           },
-          leading: const CircleAvatar(
+          leading: CircleAvatar(
             backgroundColor: Colors.purple,
             child: Text(
-              'A',
-              style: TextStyle(color: Colors.white),
+              wordBank['name'][0].toUpperCase() ??
+                  "", // Take the first letter and convert it to uppercase
+              style: const TextStyle(color: Colors.white),
             ),
           ),
           title: Text(wordBank['name']), // Display the wordBank name

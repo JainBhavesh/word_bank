@@ -59,7 +59,7 @@ class _EditWordScreenState extends State<EditWordScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Edit word'),
+        title: Text('edit_word'.tr),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
@@ -84,8 +84,8 @@ class _EditWordScreenState extends State<EditWordScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'Notice:',
+            Text(
+              'notice'.tr,
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
@@ -93,24 +93,24 @@ class _EditWordScreenState extends State<EditWordScreen> {
               ),
             ),
             const SizedBox(height: 8),
-            const Text(
-              'Test record in this unit will be erased after editing a word.',
+            Text(
+              'notice_message'.tr,
               style: TextStyle(
                 fontSize: 16,
                 fontStyle: FontStyle.italic,
               ),
             ),
             const SizedBox(height: 20),
-            _buildTextField('Chinese', _chineseController),
+            _buildTextField('chinese'.tr, _chineseController),
             const SizedBox(height: 20),
-            _buildTextField('English', _englishController),
+            _buildTextField('english'.tr, _englishController),
             const SizedBox(height: 20),
             _buildCategoryCheckboxes(),
             const SizedBox(height: 20),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: ButtonWidget(
-                label: 'Done',
+                label: 'done'.tr,
                 onPressed: () {
                   final chineseName = _chineseController.text.trim();
                   final englishName = _englishController.text.trim();

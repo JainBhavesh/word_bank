@@ -143,29 +143,40 @@ class _WordPuzzleScreenState extends State<WordPuzzleScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Image.asset('assets/images/splash_image.png',
-                width: 100, height: 100, fit: BoxFit.cover),
+            Image.asset(
+              'assets/images/splash_image.png',
+              width: 100,
+              height: 100,
+              fit: BoxFit.cover,
+            ),
             const SizedBox(height: 20),
-            const Text('Awesome!',
-                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
+            Text(
+              'awesome'.tr,
+              style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+            ),
             const SizedBox(height: 10),
-            const Text(
-                'You just finished the test.\nHere are the points you\'ve earned.',
-                style: TextStyle(fontSize: 18)),
+            Text(
+              'game_message'.tr,
+              style: TextStyle(fontSize: 18),
+            ),
             const SizedBox(height: 20),
-            Text('EXP earned: $earnedPoint',
-                style: const TextStyle(fontSize: 18)),
-            Text('Total points: $totalPoints',
-                style: const TextStyle(fontSize: 18)),
+            Text(
+              '${'exp_earned'.tr} $earnedPoint',
+              style: const TextStyle(fontSize: 18),
+            ),
+            Text(
+              '${'total_earned'.tr} $totalPoints',
+              style: const TextStyle(fontSize: 18),
+            ),
             const SizedBox(height: 30),
             ButtonWidget(
-              label: 'Back to home',
+              label: 'back_to_home',
               icon: Icons.home,
               backgroundColor: Colors.black,
               textColor: Colors.white,
               onPressed: () {
-                Navigator.of(context).pop(); // Close the dialog
-                Navigator.of(context).pop(); // Close the screen
+                Navigator.of(context).pop();
+                Navigator.of(context).pop();
               },
             ),
           ],
@@ -232,7 +243,7 @@ class _WordPuzzleScreenState extends State<WordPuzzleScreen> {
 
       return Scaffold(
         appBar: AppBar(
-          title: const Text('Word Puzzle',
+          title: Text('word_puzzle'.tr,
               style: TextStyle(color: Colors.black, fontSize: 18)),
           backgroundColor: Colors.white,
           elevation: 0,
@@ -276,9 +287,10 @@ class _WordPuzzleScreenState extends State<WordPuzzleScreen> {
                       },
                     ),
                     const SizedBox(height: 10),
-                    Text('$chineseName (noun)',
-                        style:
-                            const TextStyle(fontSize: 24, color: Colors.black)),
+                    Text(
+                      '$chineseName (${'noun'.tr})',
+                      style: const TextStyle(fontSize: 24, color: Colors.black),
+                    ),
                   ],
                 ),
                 const SizedBox(height: 30),
@@ -363,10 +375,10 @@ class _WordPuzzleScreenState extends State<WordPuzzleScreen> {
                       showDialog(
                         context: context,
                         builder: (context) => ShowConfirmationPopup(
-                          title: "Quit test?",
+                          title: "quit_test".tr,
                           message: "這次的作答記錄和積分都會取消，確定要離開測驗？",
-                          confirmButtonText: "Confirm & quit",
-                          cancelButtonText: "Cancel",
+                          confirmButtonText: "confirm_and_quit".tr,
+                          cancelButtonText: "cancel".tr,
                           confirmIcon: Icons.exit_to_app,
                           onConfirm: () {
                             Navigator.of(context).pop();

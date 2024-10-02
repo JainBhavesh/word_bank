@@ -236,9 +236,9 @@ class CircularCountdownWidget extends StatelessWidget {
         ),
         // Dynamically display daysLeft in the Text widget
         Text(
-          '$daysLeft\nDays left', // Replace the hardcoded value with daysLeft
+          '$daysLeft\n${'days_left'.tr}', // Using .tr for translations
           textAlign: TextAlign.center,
-          style: const TextStyle(fontSize: 24, color: Colors.red),
+          style: const TextStyle(fontSize: 14, color: Colors.red),
         ),
       ],
     );

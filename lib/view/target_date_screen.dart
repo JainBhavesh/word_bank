@@ -30,6 +30,8 @@ class _TargetDateScreenState extends State<TargetDateScreen> {
   void _confirm() async {
     if (selectedDate != null) {
       var unitId = Get.arguments['unitId'];
+      var wordBankId = Get.arguments['wordBankId'];
+
       var formattedDate = DateFormat('yyyy-MM-dd').format(selectedDate!);
 
       await unitSelectorController.updateWordsUnit(unitId, formattedDate);
@@ -38,7 +40,7 @@ class _TargetDateScreenState extends State<TargetDateScreen> {
         // ignore: use_build_context_synchronously
         Navigator.of(context).pop();
         Get.back();
-        unitSelectorController.getWordsList();
+        unitSelectorController.getWordsList(wordBankId);
         // Navigate back after the update
       }
     }

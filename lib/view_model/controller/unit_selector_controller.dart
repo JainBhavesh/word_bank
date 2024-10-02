@@ -13,12 +13,14 @@ class UnitSelectorController extends GetxController {
   void onInit() {
     super.onInit();
     id = Get.arguments['id'];
-    getWordsList();
+    print("id is------>$id");
+    getWordsList(id);
   }
 
-  void getWordsList() async {
-    isLoading(true);
+  void getWordsList(int id) async {
     try {
+      isLoading(true);
+
       print("id---------->$id");
       var res = await ApiCall().getWordsUnits(id);
 
@@ -53,6 +55,7 @@ class UnitSelectorController extends GetxController {
         Get.snackbar('Error', errorMsg, snackPosition: SnackPosition.TOP);
       }
     } catch (e) {
+      isLoading(false);
       Get.snackbar('Network Error',
           'Unable to reach the server. Please check your internet connection.',
           snackPosition: SnackPosition.TOP);

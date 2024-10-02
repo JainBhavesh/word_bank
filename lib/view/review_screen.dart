@@ -158,34 +158,36 @@ class _ReviewScreenState extends State<ReviewScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  ElevatedButton.icon(
-                    onPressed: _prev,
-                    icon: const Icon(
-                      Icons.star,
-                      color: Colors.white,
-                    ),
-                    label:
-                        Text('prev'.tr, style: TextStyle(color: Colors.white)),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.black,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
+                  if (currentIndex > 0)
+                    ElevatedButton.icon(
+                      onPressed: _prev,
+                      icon: const Icon(
+                        Icons.star,
+                        color: Colors.white,
+                      ),
+                      label: Text('prev'.tr,
+                          style: TextStyle(color: Colors.white)),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.black,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
                       ),
                     ),
-                  ),
-                  ElevatedButton(
-                    onPressed: _next,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.black,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
+                  if (currentIndex < reviewTestController.reviewData.length - 1)
+                    ElevatedButton(
+                      onPressed: _next,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.black,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      child: Text(
+                        'next'.tr,
+                        style: const TextStyle(color: Colors.white),
                       ),
                     ),
-                    child: Text(
-                      'next'.tr,
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
                 ],
               ),
               const SizedBox(height: 10),

@@ -47,6 +47,7 @@ class NotificationController extends GetxController {
 
   void getNotification() async {
     isLoading(true);
+
     try {
       var res = await ApiCall().getNotification();
 
@@ -76,6 +77,7 @@ class NotificationController extends GetxController {
 
   void getTodayTask() async {
     isLoading(true);
+
     print("getTodayTask api calll============>");
     try {
       var res = await ApiCall().getTodayTask();

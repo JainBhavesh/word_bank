@@ -28,11 +28,12 @@ class ListItemWidget extends StatelessWidget {
             Get.toNamed(RouteName.unitSelector,
                 arguments: {'id': wordBank['id']});
           },
-          leading: const CircleAvatar(
+          leading: CircleAvatar(
             backgroundColor: Colors.purple,
             child: Text(
-              'A',
-              style: TextStyle(color: Colors.white),
+              wordBank['name'][0].toUpperCase() ??
+                  "", // Take the first letter and convert it to uppercase
+              style: const TextStyle(color: Colors.white),
             ),
           ),
           title: Text(wordBank['name']), // Display the wordBank name

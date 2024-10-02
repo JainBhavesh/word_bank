@@ -47,8 +47,8 @@ class WordListPopup extends StatelessWidget {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
                 alignment: Alignment.centerLeft,
-                child: const Text(
-                  'Word list',
+                child: Text(
+                  'word_list'.tr,
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -81,19 +81,19 @@ class WordListPopup extends StatelessWidget {
                         },
                         itemBuilder: (BuildContext context) =>
                             <PopupMenuEntry<String>>[
-                          const PopupMenuItem<String>(
+                          PopupMenuItem<String>(
                             value: 'edit',
                             child: ListTile(
                               leading: Icon(Icons.edit),
-                              title: Text('Edit word'),
+                              title: Text('edit_word'.tr),
                             ),
                           ),
-                          const PopupMenuItem<String>(
+                          PopupMenuItem<String>(
                             value: 'delete',
                             child: ListTile(
                               leading: Icon(Icons.delete, color: Colors.red),
                               title: Text(
-                                'Delete word',
+                                'delete_word'.tr,
                                 style: TextStyle(color: Colors.red),
                               ),
                             ),
