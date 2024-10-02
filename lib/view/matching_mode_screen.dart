@@ -222,6 +222,7 @@ class _MatchingModeScreenState extends State<MatchingModeScreen> {
                     Get.offAndToNamed(RouteName.unitSelector,
                         arguments: {'id': mainUnitId});
                   });
+                  Navigator.of(context).pop();
                 } else {
                   Navigator.of(context).pop();
                   Navigator.of(context).pop();

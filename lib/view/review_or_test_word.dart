@@ -63,10 +63,6 @@ class _ReviewOrTestScreenState extends State<ReviewOrTestScreen> {
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Get.back();
-            // Future.delayed(Duration.zero, () {
-            //   Get.offAndToNamed(RouteName.unitSelector,
-            //       arguments: {'id': mainUnitId});
-            // });
           },
         ),
         actions: const [
@@ -173,8 +169,11 @@ class _ReviewOrTestScreenState extends State<ReviewOrTestScreen> {
                     ButtonWidget(
                       label: 'easy_mode'.tr,
                       onPressed: () {
-                        Get.toNamed(RouteName.wordPuzzleScreen,
-                            arguments: {'unitId': unitId, 'examId': 1});
+                        Get.toNamed(RouteName.wordPuzzleScreen, arguments: {
+                          'unitId': unitId,
+                          'examId': 1,
+                          'mainUnitId': mainUnitId
+                        });
                       },
                     ),
                     const SizedBox(height: 10),
@@ -182,15 +181,22 @@ class _ReviewOrTestScreenState extends State<ReviewOrTestScreen> {
                       label: 'advanced_mode'.tr,
                       onPressed: () {
                         Get.toNamed(RouteName.advanceWordPuzzleScreen,
-                            arguments: {'unitId': unitId, 'examId': 2});
+                            arguments: {
+                              'unitId': unitId,
+                              'examId': 2,
+                              'mainUnitId': mainUnitId
+                            });
                       },
                     ),
                     const SizedBox(height: 10),
                     ButtonWidget(
                       label: 'matching_mode'.tr,
                       onPressed: () {
-                        Get.toNamed(RouteName.matchingModeScreen,
-                            arguments: {'unitId': unitId, 'examId': 3});
+                        Get.toNamed(RouteName.matchingModeScreen, arguments: {
+                          'unitId': unitId,
+                          'examId': 3,
+                          'mainUnitId': mainUnitId
+                        });
                       },
                     ),
                     const SizedBox(height: 10),

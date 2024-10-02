@@ -171,6 +171,7 @@ class _AdvanceWordPuzzleScreenState extends State<AdvanceWordPuzzleScreen> {
                     Get.offAndToNamed(RouteName.unitSelector,
                         arguments: {'id': mainUnitId});
                   });
+                  Navigator.of(context).pop();
                 } else {
                   Navigator.of(context).pop();
                   Navigator.of(context).pop();
@@ -195,6 +196,12 @@ class _AdvanceWordPuzzleScreenState extends State<AdvanceWordPuzzleScreen> {
             color: Colors.black,
             fontSize: 18,
           ),
+        ),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Get.back();
+          },
         ),
         backgroundColor: Colors.white,
         elevation: 0,

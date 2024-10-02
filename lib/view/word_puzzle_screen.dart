@@ -187,6 +187,7 @@ class _WordPuzzleScreenState extends State<WordPuzzleScreen> {
                     Get.offAndToNamed(RouteName.unitSelector,
                         arguments: {'id': mainUnitId});
                   });
+                  Navigator.of(context).pop();
                 } else {
                   Navigator.of(context).pop();
                   Navigator.of(context).pop();

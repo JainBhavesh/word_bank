@@ -46,8 +46,6 @@ class _UnitSelectorState extends State<UnitSelector> {
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Get.back();
-            // Fe
-            // Handle back button press
           },
         ),
         actions: const [
@@ -95,7 +93,7 @@ class _UnitSelectorState extends State<UnitSelector> {
                           0, // Provide a default value of 0 if 'id' is null
                       remainingDays, // Provide a default value of 0 if remainingDays is null
                       typeData['exam_count'] ?? 0,
-                      unitId ?? 0,
+                      unitId,
                       // Provide a default value of 0 if 'exam_count' is null
                     );
                   }
