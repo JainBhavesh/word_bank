@@ -209,7 +209,7 @@ class _MatchingModeScreenState extends State<MatchingModeScreen> {
             ),
             const SizedBox(height: 30),
             ButtonWidget(
-              label: 'back_to_home',
+              label: 'back_to_home'.tr,
               icon: Icons.home,
               backgroundColor: Colors.black,
               textColor: Colors.white,
