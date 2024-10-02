@@ -249,7 +249,7 @@ class ReviewTestController extends GetxController {
     try {
       var res = await ApiCall().gameResult(requestBody);
       var body = json.decode(res.body);
-      print("body game result=====>$body");
+      print("res game result=====>$body");
 
       if (res.statusCode == 200) {
         if (body['status'] == true || body['status'] == "true") {

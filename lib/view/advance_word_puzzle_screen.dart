@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 
 import '../components/button_widget.dart';
 import '../components/showConfirmationPopup.dart';
+import '../routes/routes_name.dart';
 import '../view_model/controller/review_test_controller.dart';
 
 class AdvanceWordPuzzleScreen extends StatefulWidget {
@@ -24,6 +25,7 @@ class _AdvanceWordPuzzleScreenState extends State<AdvanceWordPuzzleScreen> {
   late int unitId;
   late int examId;
   late int notification_id;
+  late int mainUnitId;
   @override
   void initState() {
     super.initState();
@@ -31,6 +33,7 @@ class _AdvanceWordPuzzleScreenState extends State<AdvanceWordPuzzleScreen> {
     unitId = arguments['unitId'] ?? 0;
     examId = arguments['examId'] ?? 0;
     notification_id = arguments['notification_id'] ?? 0;
+    mainUnitId = arguments['mainUnitId'];
     reviewTestController.exam(unit_id: unitId, exam_id: examId).then((_) {
       loadWord();
     });
@@ -113,6 +116,7 @@ class _AdvanceWordPuzzleScreenState extends State<AdvanceWordPuzzleScreen> {
   }
 
   Widget _buildSuccessPopup(BuildContext context) {
+    print("unitId===>$unitId");
     final earnedPoint =
         reviewTestController.gameResultData['earned_point'] ?? 0;
     final totalPoints = reviewTestController.gameResultData['total'] ?? 0;
@@ -162,8 +166,15 @@ class _AdvanceWordPuzzleScreenState extends State<AdvanceWordPuzzleScreen> {
               backgroundColor: Colors.black,
               textColor: Colors.white,
               onPressed: () {
-                Navigator.of(context).pop();
-                Navigator.of(context).pop();
+                if (reviewTestController.gameResultData['exam'] == 'finish') {
+                  Future.delayed(Duration.zero, () {
+                    Get.offAndToNamed(RouteName.unitSelector,
+                        arguments: {'id': mainUnitId});
+                  });
+                } else {
+                  Navigator.of(context).pop();
+                  Navigator.of(context).pop();
+                }
               },
             ),
           ],
@@ -204,8 +215,7 @@ class _AdvanceWordPuzzleScreenState extends State<AdvanceWordPuzzleScreen> {
               reviewTestController.examData[currentStep]["ans"];
           String chineseName =
               reviewTestController.examData[currentStep]["chinese_name"];
-          print(
-              'reviewTestController.examData====>${reviewTestController.examData}');
+
           return SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.all(16.0),
@@ -316,6 +326,7 @@ class _AdvanceWordPuzzleScreenState extends State<AdvanceWordPuzzleScreen> {
                             confirmIcon: Icons.exit_to_app,
                             onConfirm: () {
                               Navigator.of(context).pop();
+                              Get.back();
                             },
                             onCancel: () {
                               Navigator.of(context).pop();

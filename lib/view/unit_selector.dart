@@ -20,13 +20,22 @@ class _UnitSelectorState extends State<UnitSelector> {
   int selectedUnitIndex = 0;
   final int totalUnits = 15;
   final int daysLeft = 22;
-
+  late int unitId = 0;
   @override
   void initState() {
     super.initState();
-    var id = Get.arguments['id'];
-    unitSelectorController.getWordsList(id);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      var id = Get.arguments['id'];
+      unitId = id;
+      unitSelectorController.getWordsList(id);
+    });
   }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   var id = Get.arguments['id'];
+  //   unitSelectorController.getWordsList(id);
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +85,6 @@ class _UnitSelectorState extends State<UnitSelector> {
                               typeData['remaining_day'] == "finish")
                           ? 0 // Handle case for "finish"
                           : 0; // Default to 0 for other cases
-                  print("typeData======>${typeData}");
                   if (targetDate == null) {
                     return _buildUnplannedButton(typeData['id']);
                   } else if (typeData['remaining_day'] == "finish") {
@@ -86,8 +94,9 @@ class _UnitSelectorState extends State<UnitSelector> {
                       typeData['id'] ??
                           0, // Provide a default value of 0 if 'id' is null
                       remainingDays, // Provide a default value of 0 if remainingDays is null
-                      typeData['exam_count'] ??
-                          0, // Provide a default value of 0 if 'exam_count' is null
+                      typeData['exam_count'] ?? 0,
+                      unitId ?? 0,
+                      // Provide a default value of 0 if 'exam_count' is null
                     );
                   }
                 });
@@ -98,8 +107,7 @@ class _UnitSelectorState extends State<UnitSelector> {
   Widget _buildFinishButton() {
     return GestureDetector(
       onTap: () {
-        // Get.toNamed(RouteName.homeScreen);
-        Get.offAllNamed(RouteName.homeScreen);
+        // Get.offAllNamed(RouteName.homeScreen);
       },
       child: Stack(
         alignment: Alignment.center,
@@ -130,14 +138,18 @@ class _UnitSelectorState extends State<UnitSelector> {
     );
   }
 
-  Widget _buildDaysLeftButton(int index, int daysLeft, int exam_count) {
+  Widget _buildDaysLeftButton(
+      int index, int daysLeft, int exam_count, int mainUnitId) {
     return GestureDetector(
       onTap: () {
         setState(() {
           selectedUnitIndex = index;
         });
-        Get.toNamed(RouteName.reviewOrTestScreen,
-            arguments: {'unitId': index, 'daysLeft': daysLeft});
+        Get.toNamed(RouteName.reviewOrTestScreen, arguments: {
+          'unitId': index,
+          'daysLeft': daysLeft,
+          'mainUnitId': mainUnitId
+        });
       },
       child: Stack(
         alignment: Alignment.center,

@@ -3,6 +3,7 @@ import 'package:easy_stepper/easy_stepper.dart';
 import 'package:get/get.dart';
 import 'package:word_bank/components/showConfirmationPopup.dart';
 import '../components/button_widget.dart';
+import '../routes/routes_name.dart';
 import '../view_model/controller/review_test_controller.dart';
 
 class WordPuzzleScreen extends StatefulWidget {
@@ -21,6 +22,7 @@ class _WordPuzzleScreenState extends State<WordPuzzleScreen> {
   late int unitId;
   late int examId;
   late int notification_id;
+  late int mainUnitId;
   bool isError = false;
 
   @override
@@ -29,6 +31,9 @@ class _WordPuzzleScreenState extends State<WordPuzzleScreen> {
     final arguments = Get.arguments;
     unitId = arguments['unitId'] ?? 0;
     examId = arguments['examId'] ?? 0;
+    mainUnitId = arguments['mainUnitId'];
+
+    print("mainUnitId easy===>$mainUnitId");
     notification_id = arguments['notification_id'] ?? 0;
     // Fetch data and then load the first word
     reviewTestController.exam(unit_id: unitId, exam_id: examId).then((_) {
@@ -126,6 +131,8 @@ class _WordPuzzleScreenState extends State<WordPuzzleScreen> {
   }
 
   Widget _buildSuccessPopup(BuildContext context) {
+    print("mainUnitId easy ww===>$mainUnitId");
+
     final earnedPoint =
         reviewTestController.gameResultData['earned_point'] ?? 0;
     final totalPoints = reviewTestController.gameResultData['total'] ?? 0;
@@ -175,8 +182,15 @@ class _WordPuzzleScreenState extends State<WordPuzzleScreen> {
               backgroundColor: Colors.black,
               textColor: Colors.white,
               onPressed: () {
-                Navigator.of(context).pop();
-                Navigator.of(context).pop();
+                if (reviewTestController.gameResultData['exam'] == 'finish') {
+                  Future.delayed(Duration.zero, () {
+                    Get.offAndToNamed(RouteName.unitSelector,
+                        arguments: {'id': mainUnitId});
+                  });
+                } else {
+                  Navigator.of(context).pop();
+                  Navigator.of(context).pop();
+                }
               },
             ),
           ],
@@ -382,6 +396,7 @@ class _WordPuzzleScreenState extends State<WordPuzzleScreen> {
                           confirmIcon: Icons.exit_to_app,
                           onConfirm: () {
                             Navigator.of(context).pop();
+                            Get.back();
                           },
                           onCancel: () {
                             Navigator.of(context).pop();

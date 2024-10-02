@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:word_bank/components/button_widget.dart';
 import '../components/showConfirmationPopup.dart';
+import '../routes/routes_name.dart';
 import '../view_model/controller/review_test_controller.dart';
 import 'dart:math';
 
@@ -30,6 +31,7 @@ class _MatchingModeScreenState extends State<MatchingModeScreen> {
   List<int> originalMeaningIndexes = [];
   bool allAnswersCorrect = false;
   late int notification_id;
+  late int mainUnitId;
   @override
   void initState() {
     super.initState();
@@ -37,6 +39,7 @@ class _MatchingModeScreenState extends State<MatchingModeScreen> {
     unitId = arguments['unitId'] ?? 0;
     examId = arguments['examId'] ?? 0;
     notification_id = arguments['notification_id'] ?? 0;
+    mainUnitId = arguments['mainUnitId'];
     print("notification_id==>$notification_id");
     // Fetch data
     reviewTestController.exam(unit_id: unitId, exam_id: examId).then((_) {
@@ -214,8 +217,15 @@ class _MatchingModeScreenState extends State<MatchingModeScreen> {
               backgroundColor: Colors.black,
               textColor: Colors.white,
               onPressed: () {
-                Navigator.of(context).pop();
-                Navigator.of(context).pop();
+                if (reviewTestController.gameResultData['exam'] == 'finish') {
+                  Future.delayed(Duration.zero, () {
+                    Get.offAndToNamed(RouteName.unitSelector,
+                        arguments: {'id': mainUnitId});
+                  });
+                } else {
+                  Navigator.of(context).pop();
+                  Navigator.of(context).pop();
+                }
               },
             ),
           ],

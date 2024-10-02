@@ -25,6 +25,7 @@ class _ReviewOrTestScreenState extends State<ReviewOrTestScreen> {
   late final ReviewTestController _controller;
   late int unitId;
   late int daysLeft;
+  late int mainUnitId;
 
   @override
   void initState() {
@@ -34,6 +35,9 @@ class _ReviewOrTestScreenState extends State<ReviewOrTestScreen> {
     final arguments = Get.arguments;
     unitId = arguments['unitId'] ?? 0;
     daysLeft = arguments['daysLeft'] ?? 0;
+    mainUnitId = arguments['mainUnitId'] ?? 0;
+    print('mainUnitId-==>$mainUnitId');
+
     _controller.getExamTypeList(unit_id: unitId);
     // _controller.getUnitWordsList(unit_id: unitId);
   }
@@ -59,6 +63,10 @@ class _ReviewOrTestScreenState extends State<ReviewOrTestScreen> {
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Get.back();
+            // Future.delayed(Duration.zero, () {
+            //   Get.offAndToNamed(RouteName.unitSelector,
+            //       arguments: {'id': mainUnitId});
+            // });
           },
         ),
         actions: const [
@@ -100,7 +108,6 @@ class _ReviewOrTestScreenState extends State<ReviewOrTestScreen> {
             }),
             const SizedBox(height: 20),
             Obx(() {
-              print("examType==>${_controller.examTypeList}");
               return Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -113,18 +120,28 @@ class _ReviewOrTestScreenState extends State<ReviewOrTestScreen> {
                     VoidCallback? onTap;
                     if (examType['id'] == 1) {
                       onTap = () {
-                        Get.toNamed(RouteName.wordPuzzleScreen,
-                            arguments: {'unitId': unitId, 'examId': 1});
+                        Get.toNamed(RouteName.wordPuzzleScreen, arguments: {
+                          'unitId': unitId,
+                          'examId': 1,
+                          'mainUnitId': mainUnitId
+                        });
                       };
                     } else if (examType['id'] == 2) {
                       onTap = () {
                         Get.toNamed(RouteName.advanceWordPuzzleScreen,
-                            arguments: {'unitId': unitId, 'examId': 2});
+                            arguments: {
+                              'unitId': unitId,
+                              'examId': 2,
+                              'mainUnitId': mainUnitId
+                            });
                       };
                     } else if (examType['id'] == 3) {
                       onTap = () {
-                        Get.toNamed(RouteName.matchingModeScreen,
-                            arguments: {'unitId': unitId, 'examId': 3});
+                        Get.toNamed(RouteName.matchingModeScreen, arguments: {
+                          'unitId': unitId,
+                          'examId': 3,
+                          'mainUnitId': mainUnitId
+                        });
                       };
                     }
 
@@ -193,6 +210,7 @@ class _ReviewOrTestScreenState extends State<ReviewOrTestScreen> {
                             cancelButtonText: "Cancel",
                             confirmIcon: Icons.exit_to_app,
                             onConfirm: () {
+                              Navigator.of(context).pop();
                               Navigator.of(context).pop();
                             },
                             onCancel: () {

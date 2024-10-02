@@ -7,21 +7,22 @@ import 'package:word_bank/apis/api_call.dart';
 class UnitSelectorController extends GetxController {
   var isLoading = false.obs;
   var dateList = <dynamic>[].obs;
-  int id = 0;
+  // int id = 0;
 
-  @override
-  void onInit() {
-    super.onInit();
-    id = Get.arguments['id'];
-    print("id is------>$id");
-    getWordsList(id);
-  }
+  // @override
+  // void onInit() {
+  //   super.onInit();
+  //   id = Get.arguments['id'];
+  //   print("id is------>$id");
+  //   getWordsList(id);
+  // }
 
   void getWordsList(int id) async {
+    print("call api====>$id");
     try {
       isLoading(true);
 
-      print("id---------->$id");
+      print("get unit id---------->$id");
       var res = await ApiCall().getWordsUnits(id);
 
       if (res.statusCode == 200) {
