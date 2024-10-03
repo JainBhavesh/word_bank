@@ -56,7 +56,8 @@ class NotificationListScreen extends StatelessWidget {
                   arguments: {
                     'unitId': notification['unit_id'],
                     'examId': 1,
-                    "notification_id": notification['notification_id']
+                    "notification_id": notification['notification_id'],
+                    'mainUnitId': 0
                   },
                 );
               };
@@ -67,7 +68,8 @@ class NotificationListScreen extends StatelessWidget {
                   arguments: {
                     'unitId': notification['unit_id'],
                     'examId': 2,
-                    "notification_id": notification['notification_id']
+                    "notification_id": notification['notification_id'],
+                    'mainUnitId': 0
                   },
                 );
               };
@@ -78,7 +80,8 @@ class NotificationListScreen extends StatelessWidget {
                   arguments: {
                     'unitId': notification['unit_id'],
                     'examId': 3,
-                    "notification_id": notification['notification_id']
+                    "notification_id": notification['notification_id'],
+                    'mainUnitId': 0
                   },
                 );
               };

@@ -166,15 +166,20 @@ class _AdvanceWordPuzzleScreenState extends State<AdvanceWordPuzzleScreen> {
               backgroundColor: Colors.black,
               textColor: Colors.white,
               onPressed: () {
-                if (reviewTestController.gameResultData['exam'] == 'finish') {
-                  Future.delayed(Duration.zero, () {
-                    Get.offAndToNamed(RouteName.unitSelector,
-                        arguments: {'id': mainUnitId});
-                  });
+                if (mainUnitId == 0) {
+                  Navigator.of(context).pop();
                   Navigator.of(context).pop();
                 } else {
-                  Navigator.of(context).pop();
-                  Navigator.of(context).pop();
+                  if (reviewTestController.gameResultData['exam'] == 'finish') {
+                    Future.delayed(Duration.zero, () {
+                      Get.offAndToNamed(RouteName.unitSelector,
+                          arguments: {'id': mainUnitId});
+                    });
+                    Navigator.of(context).pop();
+                  } else {
+                    Navigator.of(context).pop();
+                    Navigator.of(context).pop();
+                  }
                 }
               },
             ),
