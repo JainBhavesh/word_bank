@@ -199,11 +199,10 @@ class ReviewTestController extends GetxController {
   }
 
   // ignore: non_constant_identifier_names
-  Future aiDataGenerate({required String word}) async {
-    print("word=====>$word");
+  Future aiDataGenerate({required aiBody}) async {
     isLoading(true);
     try {
-      var res = await ApiCall().aiDataHandler(word);
+      var res = await ApiCall().aiDataHandler(aiBody);
       var body = json.decode(res.body);
 
       if (res.statusCode == 200) {
@@ -243,13 +242,11 @@ class ReviewTestController extends GetxController {
     if (notification_id != null && notification_id != 0) {
       requestBody["notification_id"] = notification_id;
     }
-    print("body game requestBody=====>$requestBody");
 
     isLoading(true);
     try {
       var res = await ApiCall().gameResult(requestBody);
       var body = json.decode(res.body);
-      print("res game result=====>$body");
 
       if (res.statusCode == 200) {
         if (body['status'] == true || body['status'] == "true") {
@@ -274,41 +271,6 @@ class ReviewTestController extends GetxController {
       isLoading(false);
     }
   }
-
-  // Future<void> gameResult(
-  //     {required int unit_id,
-  //     required int exam_id,
-  //     int? notification_id}) async {
-  //   var requestBody = {"unit_id": unit_id, "exam_id": exam_id};
-  //   isLoading(true);
-  //   try {
-  //     var res = await ApiCall().gameResult(requestBody);
-  //     var body = json.decode(res.body);
-  //     print("body game result=====>$body");
-
-  //     if (res.statusCode == 200) {
-  //       if (body['status'] == true || body['status'] == "true") {
-  //         // Assign the data map to gameResultData using assignAll to preserve reactivity
-  //         gameResultData.assignAll(body['data']);
-  //         getExamTypeList(unit_id: unit_id);
-  //       } else {
-  //         Get.snackbar('Error', body['message'] ?? 'Unknown error occurred',
-  //             snackPosition: SnackPosition.TOP);
-  //       }
-  //     } else {
-  //       var errorResponse = json.decode(res.body);
-  //       String errorMsg = errorResponse['message'] ?? 'Unknown error occurred';
-  //       Get.snackbar('Error', errorMsg, snackPosition: SnackPosition.TOP);
-  //     }
-  //   } catch (e) {
-  //     Get.snackbar('Network Error',
-  //         'Unable to reach the server. Please check your internet connection.',
-  //         snackPosition: SnackPosition.TOP);
-  //     print('Network error: $e'); // Debugging
-  //   } finally {
-  //     isLoading(false);
-  //   }
-  // }
 
   Future<void> editWord({
     required int word_id,

@@ -102,10 +102,8 @@ class ApiCall {
     return await ApiManager().getData(url);
   }
 
-  aiDataHandler(word) async {
-    final String url = '${AppUrl.generatesentence}?word=$word';
-    print("get ai data url---->$url");
-    return await ApiManager().postData(url, {});
+  aiDataHandler(body) async {
+    return await ApiManager().postData(AppUrl.generatesentence, body);
   }
 
   gameResult(body) async {

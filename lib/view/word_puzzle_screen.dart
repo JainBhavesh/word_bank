@@ -124,9 +124,9 @@ class _WordPuzzleScreenState extends State<WordPuzzleScreen> {
       Get.snackbar('', 'Wrong Answer.', snackPosition: SnackPosition.TOP);
 
       // Update the UI state to show the error
-      setState(() {
-        isError = true; // Show error
-      });
+      // setState(() {
+      //   isError = true; // Show error
+      // });
     }
   }
 
@@ -377,12 +377,12 @@ class _WordPuzzleScreenState extends State<WordPuzzleScreen> {
                 ),
                 const SizedBox(height: 20),
                 // Show error message if the answer is incorrect
-                if (isError)
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 40),
-                    child: Text('Incorrect answer, please try again.',
-                        style: TextStyle(color: Colors.red, fontSize: 16)),
-                  ),
+                // if (isError)
+                //   const Padding(
+                //     padding: EdgeInsets.symmetric(horizontal: 40),
+                //     child: Text('Incorrect answer, please try again.',
+                //         style: TextStyle(color: Colors.red, fontSize: 16)),
+                //   ),
                 const SizedBox(height: 20),
                 // "Quit test" button
                 Padding(

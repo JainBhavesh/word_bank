@@ -85,7 +85,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('拼了', style: TextStyle(color: Colors.orange)),
+        // title: const Text('拼了', style: TextStyle(color: Colors.orange)),
         backgroundColor: Colors.white,
         actions: [
           IconButton(
@@ -251,9 +251,11 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
 
                         if (targetDate == null) {
                           return _buildUnplannedButton(typeData['id']);
-                        } else if (typeData['remaining_day'] == "finish") {
-                          return _buildFinishButton(); // Call your finish button function here
-                        } else {
+                        }
+                        // else if (typeData['remaining_day'] == "finish") {
+                        //   return _buildFinishButton(); // Call your finish button function here
+                        // }
+                        else {
                           return _buildDaysLeftButton(
                             typeData['id'] ??
                                 0, // Provide a default value of 0 if 'id' is null

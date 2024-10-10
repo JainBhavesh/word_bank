@@ -99,26 +99,26 @@ class _LoginScreenState extends State<LoginScreen> {
                         obscureText: true,
                       ),
                       const SizedBox(height: 16),
-                      Row(
-                        children: [
-                          Obx(
-                            () => Checkbox(
-                              value: controller.agreeToTerms.value,
-                              onChanged: (value) {
-                                controller.agreeToTerms.value = value!;
-                              },
-                            ),
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text('agree_to_terms'.tr),
-                              Text('description'.tr,
-                                  style: const TextStyle(fontSize: 12)),
-                            ],
-                          ),
-                        ],
-                      ),
+                      // Row(
+                      //   children: [
+                      //     Obx(
+                      //       () => Checkbox(
+                      //         value: controller.agreeToTerms.value,
+                      //         onChanged: (value) {
+                      //           controller.agreeToTerms.value = value!;
+                      //         },
+                      //       ),
+                      //     ),
+                      //     Column(
+                      //       crossAxisAlignment: CrossAxisAlignment.start,
+                      //       children: [
+                      //         Text('agree_to_terms'.tr),
+                      //         Text('description'.tr,
+                      //             style: const TextStyle(fontSize: 12)),
+                      //       ],
+                      //     ),
+                      //   ],
+                      // ),
                       const SizedBox(height: 16),
                       SizedBox(
                         width: double.infinity,

@@ -85,9 +85,11 @@ class _UnitSelectorState extends State<UnitSelector> {
                           : 0; // Default to 0 for other cases
                   if (targetDate == null) {
                     return _buildUnplannedButton(typeData['id']);
-                  } else if (typeData['remaining_day'] == "finish") {
-                    return _buildFinishButton(); // Call your finish button function here
-                  } else {
+                  }
+                  // else if (typeData['remaining_day'] == "finish") {
+                  //   return _buildFinishButton(); // Call your finish button function here
+                  // }
+                  else {
                     return _buildDaysLeftButton(
                       typeData['id'] ??
                           0, // Provide a default value of 0 if 'id' is null

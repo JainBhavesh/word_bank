@@ -51,9 +51,11 @@ class _ReviewScreenState extends State<ReviewScreen> {
   // New method to handle AI content
   void _generateAIContent() {
     final content = reviewTestController.reviewData[currentIndex];
-    reviewTestController
-        .aiDataGenerate(word: content['english_word'])
-        .then((_) {
+    var requestBody = {
+      "word": content['english_word'],
+      "types": content['types']
+    };
+    reviewTestController.aiDataGenerate(aiBody: requestBody).then((_) {
       // Check if AI content is generated
       if (reviewTestController.aiData.value['english_sentence'] != null &&
           reviewTestController.aiData.value['chinese_sentence'] != null) {
@@ -74,7 +76,8 @@ class _ReviewScreenState extends State<ReviewScreen> {
       appBar: AppBar(
         title: Obx(() {
           return Text(
-              'Review ${currentIndex + 1}/${reviewTestController.reviewData.length}');
+            '${'review'.tr} ${currentIndex + 1}/${reviewTestController.reviewData.length}',
+          );
         }),
         actions: const [
           Padding(
@@ -165,8 +168,10 @@ class _ReviewScreenState extends State<ReviewScreen> {
                         Icons.star,
                         color: Colors.white,
                       ),
-                      label: Text('prev'.tr,
-                          style: TextStyle(color: Colors.white)),
+                      label: Text(
+                        'prev'.tr,
+                        style: TextStyle(color: Colors.white),
+                      ),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.black,
                         shape: RoundedRectangleBorder(
@@ -174,7 +179,10 @@ class _ReviewScreenState extends State<ReviewScreen> {
                         ),
                       ),
                     ),
-                  if (currentIndex < reviewTestController.reviewData.length - 1)
+                  const SizedBox(
+                      height: 10), // Add some space between the buttons
+                  if (currentIndex !=
+                      reviewTestController.reviewData.length - 1)
                     ElevatedButton(
                       onPressed: _next,
                       style: ElevatedButton.styleFrom(

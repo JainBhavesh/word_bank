@@ -86,7 +86,7 @@ class _ReviewOrTestScreenState extends State<ReviewOrTestScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  'check_word'.tr,
+                  'view_words'.tr,
                   style: TextStyle(fontSize: 18),
                 ),
                 IconButton(
@@ -146,7 +146,7 @@ class _ReviewOrTestScreenState extends State<ReviewOrTestScreen> {
                       count: examType['count'] ?? 0,
                       color: colors[
                           index % colors.length], // Assign color based on index
-                      onTap: onTap,
+                      // onTap: onTap,
                     );
                   }).toList(),
                 ],
@@ -209,11 +209,10 @@ class _ReviewOrTestScreenState extends State<ReviewOrTestScreen> {
                         showDialog(
                           context: context,
                           builder: (context) => ShowConfirmationPopup(
-                            title: "Delete test?",
-                            message:
-                                "This will cancel your test record and score. Are you sure you want to exit the test?",
-                            confirmButtonText: "Confirm & delete",
-                            cancelButtonText: "Cancel",
+                            title: 'delete_test'.tr,
+                            message: 'delete_msg'.tr,
+                            confirmButtonText: 'confirm_delete'.tr,
+                            cancelButtonText: "cancel".tr,
                             confirmIcon: Icons.exit_to_app,
                             onConfirm: () {
                               Navigator.of(context).pop();

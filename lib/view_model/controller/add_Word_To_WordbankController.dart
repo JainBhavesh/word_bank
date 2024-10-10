@@ -13,14 +13,14 @@ class AddWordToWordbankbankController extends GetxController {
 
   // Word Types with default unchecked
   final List<String> wordTypes =
-      ['noun', 'verb', 'prep', 'conj', 'adj', 'adv'].obs;
+      ['noun'.tr, 'verb'.tr, 'prep'.tr, 'conj'.tr, 'adj'.tr, 'adv'.tr].obs;
   late Map<String, bool> selectedTypes = {
-    'noun': false,
-    'verb': false,
-    'prep': false,
-    'conj': false,
-    'adj': false,
-    'adv': false,
+    'noun'.tr: false,
+    'verb'.tr: false,
+    'prep'.tr: false,
+    'conj'.tr: false,
+    'adj'.tr: false,
+    'adv'.tr: false,
   }.obs;
 
   // List to store added words temporarily

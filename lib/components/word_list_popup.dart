@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:word_bank/components/showConfirmationPopup.dart';
 import 'package:word_bank/view/edit_word.dart';
 import 'package:word_bank/view_model/controller/review_test_controller.dart';
 
@@ -71,12 +72,30 @@ class WordListPopup extends StatelessWidget {
                           if (value == 'edit') {
                             _navigateToEditWordScreen(context, word, unitId);
                           } else if (value == 'delete') {
-                            reviewTestController
-                                .deletWord(id: word['id'])
-                                .then((_) {
-                              reviewTestController.getUnitWordsList(
-                                  unit_id: unitId);
-                            }); // Correctly pass word ID
+                            showDialog(
+                              context: context,
+                              builder: (context) => ShowConfirmationPopup(
+                                title: 'delete_word_title'.tr,
+                                message: 'delete_word_msg'.tr,
+                                confirmButtonText: 'ok_delete'.tr,
+                                cancelButtonText: "cancel".tr,
+                                confirmIcon: Icons.exit_to_app,
+                                onConfirm: () {
+                                  reviewTestController
+                                      .deletWord(id: word['id'])
+                                      .then((_) {
+                                    reviewTestController.getUnitWordsList(
+                                        unit_id: unitId);
+                                  });
+                                  Navigator.pop(context);
+                                  FocusScope.of(context).unfocus();
+                                },
+                                onCancel: () {
+                                  Navigator.pop(context);
+                                  FocusScope.of(context).unfocus();
+                                },
+                              ),
+                            );
                           }
                         },
                         itemBuilder: (BuildContext context) =>

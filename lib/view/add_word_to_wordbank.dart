@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:word_bank/components/showConfirmationPopup.dart';
 import 'package:word_bank/view/words_in_unit_screen.dart';
 import '../view_model/controller/add_Word_To_WordbankController.dart';
 import '../view_model/controller/word_controller.dart';
@@ -57,13 +58,13 @@ class _AddWordToWordbankScreenState extends State<AddWordToWordbankScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'chinese'.tr,
+                        'english'.tr,
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.w500),
                       ),
                       const SizedBox(height: 5),
                       TextField(
-                        controller: addWordController.chineseController,
+                        controller: addWordController.englishController,
                         decoration: InputDecoration(
                           labelText: 'value'.tr,
                           border: OutlineInputBorder(
@@ -75,13 +76,13 @@ class _AddWordToWordbankScreenState extends State<AddWordToWordbankScreen> {
                       ),
                       const SizedBox(height: 15),
                       Text(
-                        'english'.tr,
+                        'chinese'.tr,
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.w500),
                       ),
                       const SizedBox(height: 5),
                       TextField(
-                        controller: addWordController.englishController,
+                        controller: addWordController.chineseController,
                         decoration: InputDecoration(
                           labelText: 'value'.tr,
                           border: OutlineInputBorder(
@@ -171,8 +172,14 @@ class _AddWordToWordbankScreenState extends State<AddWordToWordbankScreen> {
                                 ),
                                 onPressed: () {
                                   if (wordsController.wordList.length >= 6) {
-                                    Get.to(() => WordsInUnitScreen(
-                                        wordbankId: widget.wordbankId));
+                                    addWordController
+                                        .addWordToWordbank(
+                                            wordbankId: widget.wordbankId)
+                                        .then((_) {
+                                      wordsController.getWordsList();
+                                      Get.to(() => WordsInUnitScreen(
+                                          wordbankId: widget.wordbankId));
+                                    });
                                   } else {
                                     Get.snackbar('Error', 'add_word_message'.tr,
                                         snackPosition: SnackPosition.TOP);
@@ -269,12 +276,31 @@ class _AddWordToWordbankScreenState extends State<AddWordToWordbankScreen> {
                                           style: TextStyle(color: Colors.red)),
                                       onTap: () {
                                         // Call the delete function
-                                        Navigator.pop(context);
-
-                                        addWordController.deletWordToWordbank(
-                                            id: word['id']);
-
-                                        // Close the menu
+                                        showDialog(
+                                          context: context,
+                                          builder: (context) =>
+                                              ShowConfirmationPopup(
+                                            title: 'delete_word_title'.tr,
+                                            message: 'delete_word_msg'.tr,
+                                            confirmButtonText: 'ok_delete'.tr,
+                                            cancelButtonText: "cancel".tr,
+                                            confirmIcon: Icons.exit_to_app,
+                                            onConfirm: () {
+                                              addWordController
+                                                  .deletWordToWordbank(
+                                                      id: word['id']);
+                                              Navigator.of(context).pop();
+                                              Navigator.of(context).pop();
+                                              Navigator.pop(context);
+                                              FocusScope.of(context).unfocus();
+                                            },
+                                            onCancel: () {
+                                              Navigator.of(context).pop();
+                                              Navigator.pop(context);
+                                              FocusScope.of(context).unfocus();
+                                            },
+                                          ),
+                                        );
                                       },
                                     ),
                                   ),
