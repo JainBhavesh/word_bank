@@ -78,22 +78,26 @@ class NotificationController extends GetxController {
   void getTodayTask() async {
     isLoading(true);
 
-    print("getTodayTask api calll============>");
+    print("getTodayTask API call============>");
     try {
       var res = await ApiCall().getTodayTask();
 
       if (res.statusCode == 200) {
         var body = json.decode(res.body);
+
         if (body['status'] == true || body['status'] == "true") {
           var data = body['data'].map((item) {
-            var remainingDay = item['remaining_day'];
+            var unit = item['unit'];
+            var remainingDay = unit['remaining_day'];
 
-            if (remainingDay is String) {
-              item['remaining_day'] = remainingDay == "finish"
-                  ? remainingDay
-                  : int.tryParse(remainingDay) ?? 0;
-            } else if (remainingDay is double) {
-              item['remaining_day'] = remainingDay.toInt();
+            if (remainingDay != null) {
+              if (remainingDay is String) {
+                unit['remaining_day'] = remainingDay == "finish"
+                    ? remainingDay
+                    : int.tryParse(remainingDay) ?? 0;
+              } else if (remainingDay is double) {
+                unit['remaining_day'] = remainingDay.toInt();
+              }
             }
 
             return item;

@@ -196,7 +196,7 @@ class _AdvanceWordPuzzleScreenState extends State<AdvanceWordPuzzleScreen> {
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
         title: Text(
-          'advance_puzzle'.tr,
+          'advanced_mode'.tr,
           style: TextStyle(
             color: Colors.black,
             fontSize: 18,

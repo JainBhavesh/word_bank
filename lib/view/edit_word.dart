@@ -101,9 +101,9 @@ class _EditWordScreenState extends State<EditWordScreen> {
               ),
             ),
             const SizedBox(height: 20),
-            _buildTextField('chinese'.tr, _chineseController),
-            const SizedBox(height: 20),
             _buildTextField('english'.tr, _englishController),
+            const SizedBox(height: 20),
+            _buildTextField('chinese'.tr, _chineseController),
             const SizedBox(height: 20),
             _buildCategoryCheckboxes(),
             const SizedBox(height: 20),
@@ -115,11 +115,6 @@ class _EditWordScreenState extends State<EditWordScreen> {
                   final chineseName = _chineseController.text.trim();
                   final englishName = _englishController.text.trim();
                   final selectedCategories = _selectedCategories.toList();
-                  print("_selectedCategories==>$selectedCategories");
-                  print("chineseName==>$chineseName");
-                  print("englishName==>${englishName}");
-                  print("widget.word_id==>${widget.word_id}");
-                  print("widget.unit_id==>${widget.unit_id}");
 
                   if (chineseName.isEmpty || englishName.isEmpty) {
                     // Handle the error: both fields must be filled
@@ -184,7 +179,14 @@ class _EditWordScreenState extends State<EditWordScreen> {
   }
 
   Widget _buildCategoryCheckboxes() {
-    const categories = ['noun', 'verb', 'prep', 'conj', 'adj', 'adv'];
+    final List<String> categories = [
+      'noun'.tr,
+      'verb'.tr,
+      'prep'.tr,
+      'conj'.tr,
+      'adj'.tr,
+      'adv'.tr,
+    ];
     return Wrap(
       spacing: 10.0,
       runSpacing: 10.0,

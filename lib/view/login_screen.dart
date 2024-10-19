@@ -25,18 +25,18 @@ class _LoginScreenState extends State<LoginScreen> {
           },
         ),
         title: Text('login'.tr), // Translated 'Login'
-        actions: const [
-          Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                Icon(Icons.create),
-                SizedBox(width: 5),
-                Text('38812'),
-              ],
-            ),
-          ),
-        ],
+        // actions: const [
+        //   Padding(
+        //     padding: EdgeInsets.all(8.0),
+        //     child: Row(
+        //       children: [
+        //         Icon(Icons.create),
+        //         SizedBox(width: 5),
+        //         Text('38812'),
+        //       ],
+        //     ),
+        //   ),
+        // ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

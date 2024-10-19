@@ -43,6 +43,7 @@ class MyApp extends StatelessWidget {
       // Add your theme (optional)
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        scaffoldBackgroundColor: const Color(0xFFF2F2F2),
       ),
     );
   }

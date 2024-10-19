@@ -237,7 +237,10 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                       ),
                       itemCount: notificationController.dateList.length,
                       itemBuilder: (context, index) {
-                        var typeData = notificationController.dateList[index];
+                        var todayTaskData =
+                            notificationController.dateList[index];
+                        var typeData = todayTaskData['unit'];
+                        print("type data===>$typeData");
                         DateTime? targetDate = notificationController
                             .parseDate(typeData['target_date']);
 
@@ -251,11 +254,14 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
 
                         if (targetDate == null) {
                           return _buildUnplannedButton(typeData['id']);
-                        }
-                        // else if (typeData['remaining_day'] == "finish") {
-                        //   return _buildFinishButton(); // Call your finish button function here
-                        // }
-                        else {
+                        } else if (typeData['remaining_day'] == "finish") {
+                          return _buildFinishButton(
+                              typeData['id'] ??
+                                  0, // Provide a default value of 0 if 'id' is null
+                              remainingDays, // Provide a default value of 0 if remainingDays is null
+                              typeData['exam_count'] ??
+                                  0); // Call your finish button function here
+                        } else {
                           return _buildDaysLeftButton(
                             typeData['id'] ??
                                 0, // Provide a default value of 0 if 'id' is null
@@ -272,31 +278,49 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
     );
   }
 
-  Widget _buildFinishButton() {
+  Widget _buildFinishButton(int index, int daysLeft, int exam_count) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        setState(() {
+          selectedUnitIndex = index;
+        });
+        Get.toNamed(RouteName.reviewOrTestScreen, arguments: {
+          'unitId': index,
+          'daysLeft': daysLeft,
+        });
+      },
       child: Stack(
         alignment: Alignment.center,
         children: [
+          // Circle with dynamic background color based on daysLeft
+          Container(
+            width: buttonSize, // Same size as progress indicator
+            height: buttonSize,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: daysLeft == 0
+                  ? const Color(
+                      0xFFF8EF1E) // Yellow background when daysLeft == 0
+                  : const Color(0xFFF2F2F2), // Default background color
+            ),
+          ),
           SizedBox(
-            width: buttonSize,
+            width: buttonSize, // Adjusted size for progress indicator
             height: buttonSize,
             child: CircularProgressIndicator(
-              value:
-                  1, // Since this is the finish button, we assume it's complete (1.0)
+              value: exam_count / 8, // Dynamic value based on the exam_count
               strokeWidth: 10,
-              color: Colors.red,
-              backgroundColor: Colors.grey[300],
+              color: Colors.red, // The color of the progress
+              backgroundColor: Colors.red,
             ),
           ),
           Center(
             child: Text(
-              'finish'.tr,
-              style: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-                fontSize: 16,
-              ),
+              daysLeft == 0
+                  ? 'finish'.tr
+                  : '$daysLeft\n${'days_left'.tr}', // Using .tr for translations
+              textAlign: TextAlign.center,
+              style: const TextStyle(fontSize: 14, color: Colors.black),
             ),
           ),
         ],
@@ -316,25 +340,61 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
       child: Stack(
         alignment: Alignment.center,
         children: [
+          // Circle with dynamic background color based on daysLeft
+          Container(
+            width: buttonSize, // Same size as progress indicator
+            height: buttonSize,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: const Color(0xFFBC120F), // Red background for other cases
+            ),
+          ),
           SizedBox(
             width: buttonSize, // Adjusted size for progress indicator
             height: buttonSize,
             child: CircularProgressIndicator(
               value: exam_count / 8, // Dynamic value based on the exam_count
               strokeWidth: 10,
-              color: Colors.red,
-              backgroundColor: Colors.grey[300],
+              color: Colors.red, // The color of the progress
+              backgroundColor:
+                  Colors.white, // Background of the circle progress
             ),
           ),
           Center(
             child: Text(
-              '$daysLeft\n${'days_left'.tr}', // Using .tr for translations
+              daysLeft == 0
+                  ? 'finish'.tr
+                  : '$daysLeft\n${'days_left'.tr}', // Using .tr for translations
               textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 14, color: Colors.red),
+              style: const TextStyle(
+                  fontSize: 14,
+                  color: Colors.white), // White text on red background
             ),
           ),
         ],
       ),
+      // child: Stack(
+      //   alignment: Alignment.center,
+      //   children: [
+      //     SizedBox(
+      //       width: buttonSize, // Adjusted size for progress indicator
+      //       height: buttonSize,
+      //       child: CircularProgressIndicator(
+      //         value: exam_count / 8, // Dynamic value based on the exam_count
+      //         strokeWidth: 10,
+      //         color: Colors.red,
+      //         backgroundColor: Colors.grey[300],
+      //       ),
+      //     ),
+      //     Center(
+      //       child: Text(
+      //         '$daysLeft\n${'days_left'.tr}', // Using .tr for translations
+      //         textAlign: TextAlign.center,
+      //         style: const TextStyle(fontSize: 14, color: Colors.red),
+      //       ),
+      //     ),
+      //   ],
+      // ),
     );
   }
 
@@ -347,6 +407,14 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
       child: Stack(
         alignment: Alignment.center,
         children: [
+          Container(
+            width: buttonSize, // Same size as progress indicator
+            height: buttonSize,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: const Color(0xFFBDBDBD), // Red background for other cases
+            ),
+          ),
           SizedBox(
             width: buttonSize,
             height: buttonSize,
@@ -354,14 +422,14 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
               value: 0, // Placeholder value (0.5), adjust based on your logic
               strokeWidth: 10,
               color: Colors.white,
-              backgroundColor: Colors.grey[300],
+              backgroundColor: Colors.white,
             ),
           ),
           Center(
             child: Text(
               'unplanned'.tr,
               style: TextStyle(
-                color: Colors.grey,
+                color: Colors.white,
                 fontWeight: FontWeight.bold,
                 fontSize: 14,
               ),

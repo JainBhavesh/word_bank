@@ -85,11 +85,15 @@ class _UnitSelectorState extends State<UnitSelector> {
                           : 0; // Default to 0 for other cases
                   if (targetDate == null) {
                     return _buildUnplannedButton(typeData['id']);
-                  }
-                  // else if (typeData['remaining_day'] == "finish") {
-                  //   return _buildFinishButton(); // Call your finish button function here
-                  // }
-                  else {
+                  } else if (typeData['remaining_day'] == "finish") {
+                    return _buildFinishButton(
+                      typeData['id'] ??
+                          0, // Provide a default value of 0 if 'id' is null
+                      remainingDays, // Provide a default value of 0 if remainingDays is null
+                      typeData['exam_count'] ?? 0,
+                      unitId,
+                    ); // Call your finish button function here
+                  } else {
                     return _buildDaysLeftButton(
                       typeData['id'] ??
                           0, // Provide a default value of 0 if 'id' is null
@@ -104,33 +108,86 @@ class _UnitSelectorState extends State<UnitSelector> {
     );
   }
 
-  Widget _buildFinishButton() {
+  // Widget _buildFinishButton() {
+  //   return GestureDetector(
+  //     onTap: () {
+  //       // Get.offAllNamed(RouteName.homeScreen);
+  //     },
+  //     child: Stack(
+  //       alignment: Alignment.center,
+  //       children: [
+  //         SizedBox(
+  //           width: buttonSize,
+  //           height: buttonSize,
+  //           child: CircularProgressIndicator(
+  //             value:
+  //                 1, // Since this is the finish button, we assume it's complete (1.0)
+  //             strokeWidth: 10,
+  //             color: Colors.red,
+  //             backgroundColor: Colors.grey[300],
+  //           ),
+  //         ),
+  //         Center(
+  //           child: Text(
+  //             'finish'.tr,
+  //             style: TextStyle(
+  //               color: Colors.black,
+  //               fontWeight: FontWeight.bold,
+  //               fontSize: 16,
+  //             ),
+  //           ),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
+
+  Widget _buildFinishButton(
+      int index, int daysLeft, int exam_count, int mainUnitId) {
     return GestureDetector(
       onTap: () {
-        // Get.offAllNamed(RouteName.homeScreen);
+        setState(() {
+          selectedUnitIndex = index;
+        });
+        Get.toNamed(RouteName.reviewOrTestScreen, arguments: {
+          'unitId': index,
+          'daysLeft': daysLeft,
+          'mainUnitId': mainUnitId
+        });
       },
       child: Stack(
         alignment: Alignment.center,
         children: [
+          // Circle with dynamic background color based on daysLeft
+          Container(
+            width: buttonSize, // Same size as progress indicator
+            height: buttonSize,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: daysLeft == 0
+                  ? const Color(
+                      0xFFF8EF1E) // Yellow background when daysLeft == 0
+                  : const Color(0xFFF2F2F2), // Default background color
+            ),
+          ),
           SizedBox(
-            width: buttonSize,
+            width: buttonSize, // Adjusted size for progress indicator
             height: buttonSize,
             child: CircularProgressIndicator(
-              value:
-                  1, // Since this is the finish button, we assume it's complete (1.0)
+              value: exam_count / 8, // Dynamic value based on the exam_count
               strokeWidth: 10,
-              color: Colors.red,
-              backgroundColor: Colors.grey[300],
+              color: Colors.red, // The color of the progress
+              backgroundColor:
+                  Colors.transparent, // Keep progress background transparent
             ),
           ),
           Center(
             child: Text(
-              'finish'.tr,
-              style: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-                fontSize: 16,
-              ),
+              daysLeft == 0
+                  ? 'finish'.tr
+                  : '$daysLeft\n${'days_left'.tr}', // Using .tr for translations
+              textAlign: TextAlign.center,
+              style: const TextStyle(fontSize: 14, color: Colors.black),
             ),
           ),
         ],
@@ -154,21 +211,35 @@ class _UnitSelectorState extends State<UnitSelector> {
       child: Stack(
         alignment: Alignment.center,
         children: [
+          // Circle with dynamic background color based on daysLeft
+          Container(
+            width: buttonSize, // Same size as progress indicator
+            height: buttonSize,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: const Color(0xFFBC120F), // Red background for other cases
+            ),
+          ),
           SizedBox(
             width: buttonSize, // Adjusted size for progress indicator
             height: buttonSize,
             child: CircularProgressIndicator(
               value: exam_count / 8, // Dynamic value based on the exam_count
               strokeWidth: 10,
-              color: Colors.red,
-              backgroundColor: Colors.grey[300],
+              color: Colors.red, // The color of the progress
+              backgroundColor:
+                  Colors.white, // Background of the circle progress
             ),
           ),
           Center(
             child: Text(
-              '$daysLeft\n${'days_left'.tr}', // Using .tr for translations
+              daysLeft == 0
+                  ? 'finish'.tr
+                  : '$daysLeft\n${'days_left'.tr}', // Using .tr for translations
               textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 14, color: Colors.red),
+              style: const TextStyle(
+                  fontSize: 14,
+                  color: Colors.white), // White text on red background
             ),
           ),
         ],
@@ -185,6 +256,14 @@ class _UnitSelectorState extends State<UnitSelector> {
       child: Stack(
         alignment: Alignment.center,
         children: [
+          Container(
+            width: buttonSize, // Same size as progress indicator
+            height: buttonSize,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: const Color(0xFFBDBDBD), // Red background for other cases
+            ),
+          ),
           SizedBox(
             width: buttonSize,
             height: buttonSize,
@@ -192,14 +271,14 @@ class _UnitSelectorState extends State<UnitSelector> {
               value: 0, // Placeholder value (0.5), adjust based on your logic
               strokeWidth: 10,
               color: Colors.white,
-              backgroundColor: Colors.grey[300],
+              backgroundColor: Colors.white,
             ),
           ),
           Center(
             child: Text(
               'unplanned'.tr,
               style: TextStyle(
-                color: Colors.grey,
+                color: Colors.white,
                 fontWeight: FontWeight.bold,
                 fontSize: 14,
               ),

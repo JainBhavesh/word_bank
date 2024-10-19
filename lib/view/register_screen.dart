@@ -23,18 +23,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
           },
         ),
         title: Text('register'.tr),
-        actions: const [
-          Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                Icon(Icons.create),
-                SizedBox(width: 5),
-                Text('38812'),
-              ],
-            ),
-          ),
-        ],
+        // actions: const [
+        //   Padding(
+        //     padding: EdgeInsets.all(8.0),
+        //     child: Row(
+        //       children: [
+        //         Icon(Icons.create),
+        //         SizedBox(width: 5),
+        //         Text('38812'),
+        //       ],
+        //     ),
+        //   ),
+        // ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -70,7 +70,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                           contentPadding:
                               const EdgeInsets.symmetric(horizontal: 10),
-                          hintText: 'enter_name'.tr,
+                          hintText: 'name'.tr,
                         ),
                       ),
                       const SizedBox(height: 16),

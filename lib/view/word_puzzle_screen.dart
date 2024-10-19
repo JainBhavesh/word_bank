@@ -212,7 +212,7 @@ class _WordPuzzleScreenState extends State<WordPuzzleScreen> {
       if (reviewTestController.isLoading.value) {
         return Scaffold(
           appBar: AppBar(
-              title: Text('easy_word_puzzle'.tr),
+              title: Text('easy_mode'.tr),
               backgroundColor: Colors.white,
               elevation: 0),
           body: Center(child: CircularProgressIndicator()),
@@ -223,7 +223,7 @@ class _WordPuzzleScreenState extends State<WordPuzzleScreen> {
       if (reviewTestController.easyExamData.isEmpty) {
         return Scaffold(
           appBar: AppBar(
-              title: Text('easy_word_puzzle'.tr),
+              title: Text('easy_mode'.tr),
               backgroundColor: Colors.white,
               elevation: 0),
           body: Center(
@@ -239,7 +239,7 @@ class _WordPuzzleScreenState extends State<WordPuzzleScreen> {
       if (currentStep >= reviewTestController.easyExamData.length) {
         return Scaffold(
           appBar: AppBar(
-            title: Text('easy_word_puzzle'.tr),
+            title: Text('easy_mode'.tr),
             backgroundColor: Colors.white,
             elevation: 0,
           ),
