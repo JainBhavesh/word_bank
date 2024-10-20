@@ -1,13 +1,13 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:word_bank/view/login_screen.dart';
 import '../../apis/api_call.dart';
 import '../../utils/preference.dart';
 import '../../view/home_screen.dart';
 import '../../view/insta_view_login.dart';
-import '../services/auth_service.dart';
+// import '../services/auth_service.dart';
 // import '../../view/insta_view_login.dart';
 
 class RegisterController extends GetxController {
@@ -20,7 +20,7 @@ class RegisterController extends GetxController {
   var instagramUsername = ''.obs;
   var agreeToTerms = false.obs;
 
-  final AuthService _authService = AuthService();
+  // final AuthService _authService = AuthService();
 
   // Method for validating email
   String? validateEmail(String value) {
@@ -203,42 +203,42 @@ class RegisterController extends GetxController {
   }
 
   // Method for Google sign-in
-  Future<void> signInWithGoogle() async {
-    // Show the loader
-    showLoader();
+  // Future<void> signInWithGoogle() async {
+  //   // Show the loader
+  //   showLoader();
 
-    User? user = await _authService.signInWithGoogle();
+  //   User? user = await _authService.signInWithGoogle();
 
-    // Hide the loader
-    hideLoader();
-    print("sign in user inf-->${user}");
-    if (user != null) {
-      Get.snackbar('Success', 'Signed in as ${user.displayName}',
-          snackPosition: SnackPosition.TOP);
-    } else {
-      Get.snackbar('Error', 'Google sign-in failed',
-          snackPosition: SnackPosition.TOP);
-    }
-  }
+  //   // Hide the loader
+  //   hideLoader();
+  //   print("sign in user inf-->${user}");
+  //   if (user != null) {
+  //     Get.snackbar('Success', 'Signed in as ${user.displayName}',
+  //         snackPosition: SnackPosition.TOP);
+  //   } else {
+  //     Get.snackbar('Error', 'Google sign-in failed',
+  //         snackPosition: SnackPosition.TOP);
+  //   }
+  // }
 
-  // Method for Facebook sign-in
-  Future<void> signInWithFacebook() async {
-    // Show the loader
-    showLoader();
+  // // Method for Facebook sign-in
+  // Future<void> signInWithFacebook() async {
+  //   // Show the loader
+  //   showLoader();
 
-    User? user = await _authService.signInWithFacebook();
-    print("signInWithFacebook user inf-->${user}");
-    // Hide the loader
-    hideLoader();
+  //   User? user = await _authService.signInWithFacebook();
+  //   print("signInWithFacebook user inf-->${user}");
+  //   // Hide the loader
+  //   hideLoader();
 
-    if (user != null) {
-      Get.snackbar('Success', 'Signed in as ${user.displayName}',
-          snackPosition: SnackPosition.TOP);
-    } else {
-      Get.snackbar('Error', 'Facebook sign-in failed',
-          snackPosition: SnackPosition.TOP);
-    }
-  }
+  //   if (user != null) {
+  //     Get.snackbar('Success', 'Signed in as ${user.displayName}',
+  //         snackPosition: SnackPosition.TOP);
+  //   } else {
+  //     Get.snackbar('Error', 'Facebook sign-in failed',
+  //         snackPosition: SnackPosition.TOP);
+  //   }
+  // }
 
   // Method for email and password sign-in
   // Future<void> signIn() async {
