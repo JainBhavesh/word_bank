@@ -47,43 +47,84 @@ class NotificationListScreen extends StatelessWidget {
           itemBuilder: (context, index) {
             final notification = controller.notificationList[index];
             // Determine onTap behavior based on exam_name
-            VoidCallback onTap;
 
-            if (notification['exam_name'] == 'Easy Mode') {
+            VoidCallback onTap;
+            var typeData = notification['unit'];
+            // DateTime? targetDate =
+            //     controller.parseDate(typeData['target_date']);
+
+            // Ensure remaining_days is an integer or 0 if not an int
+            int remainingDays = (typeData['remaining_day'] is int)
+                ? typeData['remaining_day']
+                : (typeData['remaining_day'] is String &&
+                        typeData['remaining_day'] == "finish")
+                    ? 0 // Handle case for "finish"
+                    : 0;
+            if (notification['exam_id'] == 1) {
               onTap = () {
                 Get.toNamed(
-                  RouteName.wordPuzzleScreen,
+                  RouteName.examBoardScreen,
                   arguments: {
                     'unitId': notification['unit_id'],
                     'examId': 1,
                     "notification_id": notification['notification_id'],
-                    'mainUnitId': 0
+                    'mainUnitId': 0,
+                    'daysLeft': remainingDays,
                   },
                 );
+                // Get.toNamed(
+                //   RouteName.wordPuzzleScreen,
+                //   arguments: {
+                //     'unitId': notification['unit_id'],
+                //     'examId': 1,
+                //     "notification_id": notification['notification_id'],
+                //     'mainUnitId': 0
+                //   },
+                // );
               };
-            } else if (notification['exam_name'] == 'Advance Mode') {
+            } else if (notification['exam_id'] == 2) {
               onTap = () {
                 Get.toNamed(
-                  RouteName.advanceWordPuzzleScreen,
+                  RouteName.examBoardScreen,
                   arguments: {
                     'unitId': notification['unit_id'],
                     'examId': 2,
                     "notification_id": notification['notification_id'],
-                    'mainUnitId': 0
+                    'mainUnitId': 0,
+                    'daysLeft': remainingDays,
                   },
                 );
+                // Get.toNamed(
+                //   RouteName.advanceWordPuzzleScreen,
+                //   arguments: {
+                //     'unitId': notification['unit_id'],
+                //     'examId': 2,
+                //     "notification_id": notification['notification_id'],
+                //     'mainUnitId': 0
+                //   },
+                // );
               };
-            } else if (notification['exam_name'] == 'Matching Mode') {
+            } else if (notification['exam_id'] == 3) {
               onTap = () {
                 Get.toNamed(
-                  RouteName.matchingModeScreen,
+                  RouteName.examBoardScreen,
                   arguments: {
                     'unitId': notification['unit_id'],
                     'examId': 3,
                     "notification_id": notification['notification_id'],
-                    'mainUnitId': 0
+                    'mainUnitId': 0,
+                    'daysLeft': remainingDays,
                   },
                 );
+                // Get.toNamed(
+                //   RouteName.matchingModeScreen,
+                //   arguments: {
+                //     'unitId': notification['unit_id'],
+                //     'examId': 3,
+                //     "notification_id": notification['notification_id'],
+                //     'mainUnitId': 0
+                //   },
+                // );
               };
             } else {
               // Default action if none of the conditions match

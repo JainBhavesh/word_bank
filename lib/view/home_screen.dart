@@ -21,7 +21,13 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
   int selectedUnitIndex = 0;
   void _onBottomNavTapped(int index) {
     if (index == 0) {
-      _showSettingsModal();
+      Get.toNamed(RouteName.settings);
+    } else if (index == 1) {
+      Get.toNamed(RouteName.member);
+    } else if (index == 2) {
+      Get.toNamed(RouteName.achievement);
+    } else if (index == 3) {
+      Get.toNamed(RouteName.about);
     } else {
       setState(() {
         _selectedIndex = index;
@@ -43,33 +49,6 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
     notificationController.getTodayTask();
   }
 
-  void _showSettingsModal() {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      builder: (context) {
-        return DraggableScrollableSheet(
-          expand: false,
-          builder: (context, scrollController) {
-            return SettingsScreen(
-              scrollController: scrollController,
-              onClose: () {
-                Navigator.of(context).pop();
-                setState(() {
-                  _selectedIndex = 0;
-                });
-              },
-            );
-          },
-        );
-      },
-    ).whenComplete(() {
-      setState(() {
-        _selectedIndex = 0;
-      });
-    });
-  }
-
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -88,6 +67,18 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
         // title: const Text('拼了', style: TextStyle(color: Colors.orange)),
         backgroundColor: Colors.white,
         actions: [
+          Obx(
+            () => Row(
+              children: [
+                Icon(
+                  Icons.create,
+                  size: 20,
+                ),
+                SizedBox(width: 5),
+                Text('${notificationController.totalCount.value}'),
+              ],
+            ),
+          ),
           IconButton(
             icon: const Icon(Icons.person, color: Colors.purple),
             onPressed: () {
@@ -240,7 +231,6 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                         var todayTaskData =
                             notificationController.dateList[index];
                         var typeData = todayTaskData['unit'];
-                        print("type data===>$typeData");
                         DateTime? targetDate = notificationController
                             .parseDate(typeData['target_date']);
 
@@ -255,22 +245,28 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                         if (targetDate == null) {
                           return _buildUnplannedButton(typeData['id']);
                         } else if (typeData['remaining_day'] == "finish") {
-                          return _buildFinishButton(
-                              typeData['id'] ??
-                                  0, // Provide a default value of 0 if 'id' is null
-                              remainingDays, // Provide a default value of 0 if remainingDays is null
-                              typeData['exam_count'] ??
-                                  0); // Call your finish button function here
+                          return _buildFinishButton(todayTaskData);
+                          // return _buildFinishButton(
+                          //     typeData['id'] ??
+                          //         0, // Provide a default value of 0 if 'id' is null
+                          //     remainingDays, // Provide a default value of 0 if remainingDays is null
+                          //     typeData['exam_count'] ??
+                          //         0); // Call your finish button function here
                         } else {
-                          return _buildDaysLeftButton(
-                            typeData['id'] ??
-                                0, // Provide a default value of 0 if 'id' is null
-                            remainingDays, // Provide a default value of 0 if remainingDays is null
-                            typeData['exam_count'] ??
-                                0, // Provide a default value of 0 if 'exam_count' is null
-                          );
+                          return _buildDaysLeftButton(todayTaskData);
+                          // return _buildDaysLeftButton(
+                          //   typeData['id'] ??
+                          //       0, // Provide a default value of 0 if 'id' is null
+                          //   remainingDays, // Provide a default value of 0 if remainingDays is null
+                          //   typeData['exam_count'] ??
+                          //       0, // Provide a default value of 0 if 'exam_count' is null
+                          // );
                         }
                       })),
+              CustomBottomNavigationBar(
+                currentIndex: _selectedIndex,
+                onTap: _onBottomNavTapped,
+              )
             ],
           ),
         );
@@ -278,16 +274,34 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
     );
   }
 
-  Widget _buildFinishButton(int index, int daysLeft, int exam_count) {
+  Widget _buildFinishButton(todayTaskData) {
+    var typeData = todayTaskData['unit'];
+    int remainingDays = (typeData['remaining_day'] is int)
+        ? typeData['remaining_day']
+        : (typeData['remaining_day'] is String &&
+                typeData['remaining_day'] == "finish")
+            ? 0 // Handle case for "finish"
+            : 0;
     return GestureDetector(
       onTap: () {
         setState(() {
-          selectedUnitIndex = index;
+          selectedUnitIndex = typeData['id'];
         });
-        Get.toNamed(RouteName.reviewOrTestScreen, arguments: {
-          'unitId': index,
-          'daysLeft': daysLeft,
-        });
+        // Get.toNamed(RouteName.reviewOrTestScreen, arguments: {
+        //   'unitId': index,
+        //   'daysLeft': daysLeft,
+        // });
+        print('todayTaskData data===>${todayTaskData}');
+        Get.toNamed(
+          RouteName.examBoardScreen,
+          arguments: {
+            'unitId': typeData['id'],
+            'examId': todayTaskData['exam_id'],
+            "notification_id": todayTaskData['notification_id'],
+            'mainUnitId': 0,
+            'daysLeft': remainingDays,
+          },
+        );
       },
       child: Stack(
         alignment: Alignment.center,
@@ -298,7 +312,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
             height: buttonSize,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: daysLeft == 0
+              color: remainingDays == 0
                   ? const Color(
                       0xFFF8EF1E) // Yellow background when daysLeft == 0
                   : const Color(0xFFF2F2F2), // Default background color
@@ -308,7 +322,8 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
             width: buttonSize, // Adjusted size for progress indicator
             height: buttonSize,
             child: CircularProgressIndicator(
-              value: exam_count / 8, // Dynamic value based on the exam_count
+              value: typeData['exam_count'] ??
+                  0 / 8, // Dynamic value based on the exam_count
               strokeWidth: 10,
               color: Colors.red, // The color of the progress
               backgroundColor: Colors.red,
@@ -316,9 +331,9 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
           ),
           Center(
             child: Text(
-              daysLeft == 0
+              remainingDays == 0
                   ? 'finish'.tr
-                  : '$daysLeft\n${'days_left'.tr}', // Using .tr for translations
+                  : '$remainingDays\n${'days_left'.tr}', // Using .tr for translations
               textAlign: TextAlign.center,
               style: const TextStyle(fontSize: 14, color: Colors.black),
             ),
@@ -328,14 +343,31 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
     );
   }
 
-  Widget _buildDaysLeftButton(int index, int daysLeft, int exam_count) {
+  Widget _buildDaysLeftButton(todayTaskData) {
+    var typeData = todayTaskData['unit'];
+    int remainingDays = (typeData['remaining_day'] is int)
+        ? typeData['remaining_day']
+        : (typeData['remaining_day'] is String &&
+                typeData['remaining_day'] == "finish")
+            ? 0 // Handle case for "finish"
+            : 0;
     return GestureDetector(
       onTap: () {
         setState(() {
-          selectedUnitIndex = index;
+          selectedUnitIndex = typeData['id'];
         });
-        Get.toNamed(RouteName.reviewOrTestScreen,
-            arguments: {'unitId': index, 'daysLeft': daysLeft});
+        // Get.toNamed(RouteName.reviewOrTestScreen,
+        //     arguments: {'unitId': index, 'daysLeft': daysLeft});
+        Get.toNamed(
+          RouteName.examBoardScreen,
+          arguments: {
+            'unitId': typeData['id'],
+            'examId': todayTaskData['exam_id'],
+            "notification_id": todayTaskData['notification_id'],
+            'mainUnitId': 0,
+            'daysLeft': remainingDays,
+          },
+        );
       },
       child: Stack(
         alignment: Alignment.center,
@@ -353,7 +385,8 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
             width: buttonSize, // Adjusted size for progress indicator
             height: buttonSize,
             child: CircularProgressIndicator(
-              value: exam_count / 8, // Dynamic value based on the exam_count
+              value: typeData['exam_count'] ??
+                  0 / 8, // Dynamic value based on the exam_count
               strokeWidth: 10,
               color: Colors.red, // The color of the progress
               backgroundColor:
@@ -362,9 +395,9 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
           ),
           Center(
             child: Text(
-              daysLeft == 0
+              remainingDays == 0
                   ? 'finish'.tr
-                  : '$daysLeft\n${'days_left'.tr}', // Using .tr for translations
+                  : '$remainingDays\n${'days_left'.tr}', // Using .tr for translations
               textAlign: TextAlign.center,
               style: const TextStyle(
                   fontSize: 14,
@@ -373,28 +406,6 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
           ),
         ],
       ),
-      // child: Stack(
-      //   alignment: Alignment.center,
-      //   children: [
-      //     SizedBox(
-      //       width: buttonSize, // Adjusted size for progress indicator
-      //       height: buttonSize,
-      //       child: CircularProgressIndicator(
-      //         value: exam_count / 8, // Dynamic value based on the exam_count
-      //         strokeWidth: 10,
-      //         color: Colors.red,
-      //         backgroundColor: Colors.grey[300],
-      //       ),
-      //     ),
-      //     Center(
-      //       child: Text(
-      //         '$daysLeft\n${'days_left'.tr}', // Using .tr for translations
-      //         textAlign: TextAlign.center,
-      //         style: const TextStyle(fontSize: 14, color: Colors.red),
-      //       ),
-      //     ),
-      //   ],
-      // ),
     );
   }
 

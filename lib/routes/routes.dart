@@ -1,10 +1,18 @@
 import 'package:get/get.dart';
+import 'package:word_bank/components/about.dart';
+import 'package:word_bank/components/achievement.dart';
+import 'package:word_bank/components/member.dart';
+import 'package:word_bank/components/settings.dart';
 import 'package:word_bank/routes/routes_name.dart';
 import 'package:word_bank/view/add_word_to_wordbank.dart';
 import 'package:word_bank/view/add_wordbank.dart';
 import 'package:word_bank/view/advance_word_puzzle_screen.dart';
 import 'package:word_bank/view/builtin_wordbank_screen.dart';
+import 'package:word_bank/view/change_password.dart';
+import 'package:word_bank/view/edit_user.dart';
 import 'package:word_bank/view/edit_word.dart';
+import 'package:word_bank/view/exam_board_screen.dart';
+import 'package:word_bank/view/forgot_password.dart';
 import 'package:word_bank/view/home_screen.dart';
 import 'package:word_bank/view/insta_view_login.dart';
 import 'package:word_bank/view/login_screen.dart';
@@ -13,6 +21,7 @@ import 'package:word_bank/view/notification_list.dart';
 import 'package:word_bank/view/personal_wordbank_screen.dart';
 import 'package:word_bank/view/push_test_screen.dart';
 import 'package:word_bank/view/register_screen.dart';
+import 'package:word_bank/view/reset_password.dart';
 import 'package:word_bank/view/review_or_test_word.dart';
 import 'package:word_bank/view/review_screen.dart';
 import 'package:word_bank/view/splash_screen.dart';
@@ -147,6 +156,60 @@ class AppRoutes {
         GetPage(
           name: RouteName.noticationScreen,
           page: () => NotificationListScreen(),
+          transitionDuration: const Duration(microseconds: 250),
+          transition: Transition.leftToRightWithFade,
+        ),
+        GetPage(
+          name: RouteName.editUser,
+          page: () => const EditUser(),
+          transitionDuration: const Duration(microseconds: 250),
+          transition: Transition.leftToRightWithFade,
+        ),
+        GetPage(
+          name: RouteName.forgotPassword,
+          page: () => const ForgotPassword(),
+          transitionDuration: const Duration(microseconds: 250),
+          transition: Transition.leftToRightWithFade,
+        ),
+        GetPage(
+          name: RouteName.resetPassword,
+          page: () => const ResetPassword(),
+          transitionDuration: const Duration(microseconds: 250),
+          transition: Transition.leftToRightWithFade,
+        ),
+        GetPage(
+          name: RouteName.changePassword,
+          page: () => const ChangePassword(),
+          transitionDuration: const Duration(microseconds: 250),
+          transition: Transition.leftToRightWithFade,
+        ),
+        GetPage(
+          name: RouteName.settings,
+          page: () => Settings(),
+          transitionDuration: const Duration(microseconds: 250),
+          transition: Transition.leftToRightWithFade,
+        ),
+        GetPage(
+          name: RouteName.member,
+          page: () => Member(),
+          transitionDuration: const Duration(microseconds: 250),
+          transition: Transition.leftToRightWithFade,
+        ),
+        GetPage(
+          name: RouteName.achievement,
+          page: () => Achievement(),
+          transitionDuration: const Duration(microseconds: 250),
+          transition: Transition.leftToRightWithFade,
+        ),
+        GetPage(
+          name: RouteName.about,
+          page: () => About(),
+          transitionDuration: const Duration(microseconds: 250),
+          transition: Transition.leftToRightWithFade,
+        ),
+        GetPage(
+          name: RouteName.examBoardScreen,
+          page: () => ExamBoardScreen(),
           transitionDuration: const Duration(microseconds: 250),
           transition: Transition.leftToRightWithFade,
         ),

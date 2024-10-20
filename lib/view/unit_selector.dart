@@ -3,6 +3,8 @@ import 'package:word_bank/routes/routes_name.dart';
 import 'package:get/get.dart';
 import 'package:word_bank/view_model/controller/unit_selector_controller.dart';
 
+import '../view_model/controller/notification_controller.dart';
+
 class UnitSelector extends StatefulWidget {
   const UnitSelector({super.key});
 
@@ -16,6 +18,8 @@ const double buttonSize = 90;
 class _UnitSelectorState extends State<UnitSelector> {
   final UnitSelectorController unitSelectorController =
       Get.put(UnitSelectorController());
+  final NotificationController notificationController =
+      Get.put(NotificationController());
 
   int selectedUnitIndex = 0;
   final int totalUnits = 15;
@@ -48,11 +52,23 @@ class _UnitSelectorState extends State<UnitSelector> {
             Get.back();
           },
         ),
-        actions: const [
+        actions: [
           Padding(
             padding: EdgeInsets.all(8.0),
-            child: Center(child: Text('38812')),
+            child: Obx(
+              () => Row(
+                children: [
+                  Icon(
+                    Icons.create,
+                    size: 20,
+                  ),
+                  SizedBox(width: 5),
+                  Text('${notificationController.totalCount.value}'),
+                ],
+              ),
+            ),
           ),
+          SizedBox(width: 15), // Add margin left
         ],
       ),
       body: Obx(() {

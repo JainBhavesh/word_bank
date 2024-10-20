@@ -20,4 +20,14 @@ class AppUrl {
   static const String todayTask = "todayTask";
   static const String notificationCount = "notificationCount";
   static const String getNotification = "getNotification";
+  //
+  static const String getTotalPoint = "getTotalPoint";
+  static const String editUser = "updateUser/";
+  static const String getAchievement = "getAchievement";
+  static const String aboutData = "aboutData";
+  static const String getSetting = "getSetting";
+  static const String updateSetting = "updateSetting/";
+  static const String getUserData = "getUserData";
+  static const String changePassword = "changePassword";
+  static const String logout = "logout";
 }

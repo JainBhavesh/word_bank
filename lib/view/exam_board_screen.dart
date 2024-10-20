@@ -3,21 +3,20 @@ import 'package:get/get.dart';
 import 'package:word_bank/components/word_list_popup.dart';
 import 'package:word_bank/routes/routes_name.dart';
 import '../components/button_widget.dart';
-import '../components/showConfirmationPopup.dart';
 import '../view_model/controller/notification_controller.dart';
 import '../view_model/controller/review_test_controller.dart';
 
-class ReviewOrTestScreen extends StatefulWidget {
-  const ReviewOrTestScreen({super.key});
+class ExamBoardScreen extends StatefulWidget {
+  const ExamBoardScreen({super.key});
 
   @override
   // ignore: library_private_types_in_public_api
-  _ReviewOrTestScreenState createState() => _ReviewOrTestScreenState();
+  _ExamBoardScreenState createState() => _ExamBoardScreenState();
 }
 
 const double buttonSize = 120;
 
-class _ReviewOrTestScreenState extends State<ReviewOrTestScreen> {
+class _ExamBoardScreenState extends State<ExamBoardScreen> {
   final List<Color> colors = [
     Color(0xFFf2c94c),
     Color(0xFFf2994a),
@@ -30,6 +29,7 @@ class _ReviewOrTestScreenState extends State<ReviewOrTestScreen> {
   late int unitId;
   late int daysLeft;
   late int mainUnitId;
+  late int examId;
 
   @override
   void initState() {
@@ -40,7 +40,8 @@ class _ReviewOrTestScreenState extends State<ReviewOrTestScreen> {
     unitId = arguments['unitId'] ?? 0;
     daysLeft = arguments['daysLeft'] ?? 0;
     mainUnitId = arguments['mainUnitId'] ?? 0;
-    print('mainUnitId-==>$mainUnitId');
+    examId = arguments['examId'] ?? 0;
+    print("exami -->$examId");
 
     _controller.getExamTypeList(unit_id: unitId);
     // _controller.getUnitWordsList(unit_id: unitId);
@@ -169,77 +170,61 @@ class _ReviewOrTestScreenState extends State<ReviewOrTestScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 40),
                 child: Column(
                   children: [
-                    ButtonWidget(
-                      label: 'review'.tr,
-                      onPressed: () {
-                        Get.toNamed(RouteName.reviewScreen,
-                            arguments: {'unitId': unitId});
-                      },
-                    ),
-                    const SizedBox(height: 10),
-                    ButtonWidget(
-                      label: 'easy_mode'.tr,
-                      onPressed: () {
-                        Get.toNamed(RouteName.wordPuzzleScreen, arguments: {
-                          'unitId': unitId,
-                          'examId': 1,
-                          'mainUnitId': mainUnitId
-                        });
-                      },
-                    ),
-                    const SizedBox(height: 10),
-                    ButtonWidget(
-                      label: 'advanced_mode'.tr,
-                      onPressed: () {
-                        Get.toNamed(RouteName.advanceWordPuzzleScreen,
-                            arguments: {
-                              'unitId': unitId,
-                              'examId': 2,
-                              'mainUnitId': mainUnitId
-                            });
-                      },
-                    ),
-                    const SizedBox(height: 10),
-                    ButtonWidget(
-                      label: 'matching_mode'.tr,
-                      onPressed: () {
-                        Get.toNamed(RouteName.matchingModeScreen, arguments: {
-                          'unitId': unitId,
-                          'examId': 3,
-                          'mainUnitId': mainUnitId
-                        });
-                      },
-                    ),
-                    const SizedBox(height: 10),
-                    ButtonWidget(
-                      label: 'delete_unit'.tr,
-                      icon: Icons.logout,
-                      backgroundColor: Colors.red,
-                      textColor: Colors.white,
-                      onPressed: () {
-                        showDialog(
-                          context: context,
-                          builder: (context) => ShowConfirmationPopup(
-                            title: 'delete_test'.tr,
-                            message: 'delete_msg'.tr,
-                            confirmButtonText: 'confirm_delete'.tr,
-                            cancelButtonText: "cancel".tr,
-                            confirmIcon: Icons.exit_to_app,
-                            onConfirm: () {
-                              Navigator.of(context).pop();
-                              Navigator.of(context).pop();
-                            },
-                            onCancel: () {
-                              Navigator.of(context).pop();
-                            },
-                          ),
-                        );
-                      },
-                    ),
+                    // Conditionally render the buttons based on examId
+                    if (examId == 1) ...[
+                      ButtonWidget(
+                        label: 'easy_mode'.tr,
+                        onPressed: () {
+                          Get.toNamed(RouteName.wordPuzzleScreen, arguments: {
+                            'unitId': unitId,
+                            'examId': 1,
+                            'mainUnitId': mainUnitId
+                          });
+                        },
+                      ),
+                      const SizedBox(height: 10),
+                    ] else if (examId == 2) ...[
+                      ButtonWidget(
+                        label: 'advanced_mode'.tr,
+                        onPressed: () {
+                          Get.toNamed(RouteName.advanceWordPuzzleScreen,
+                              arguments: {
+                                'unitId': unitId,
+                                'examId': 2,
+                                'mainUnitId': mainUnitId
+                              });
+                        },
+                      ),
+                      const SizedBox(height: 10),
+                    ] else if (examId == 3) ...[
+                      ButtonWidget(
+                        label: 'matching_mode'.tr,
+                        onPressed: () {
+                          Get.toNamed(RouteName.matchingModeScreen, arguments: {
+                            'unitId': unitId,
+                            'examId': 3,
+                            'mainUnitId': mainUnitId
+                          });
+                        },
+                      ),
+                      const SizedBox(height: 10),
+                    ],
+                    // const SizedBox(height: 30),
                   ],
                 ),
               ),
             ),
+            SingleChildScrollView(
+              child: Column(
+                children: [
+                  Text(
+                    'quiz_msg'.tr,
+                    style: TextStyle(fontSize: 18, height: 2),
+                  ),
+                  // Add other widgets here if needed
+                ],
+              ),
+            )
           ],
         ),
       ),

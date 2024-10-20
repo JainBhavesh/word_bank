@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import '../components/button_widget.dart';
 import '../components/showConfirmationPopup.dart';
 import '../routes/routes_name.dart';
+import '../view_model/controller/notification_controller.dart';
 import '../view_model/controller/review_test_controller.dart';
 
 class AdvanceWordPuzzleScreen extends StatefulWidget {
@@ -19,6 +20,8 @@ class _AdvanceWordPuzzleScreenState extends State<AdvanceWordPuzzleScreen> {
   int currentStep = 0;
   final ReviewTestController reviewTestController =
       Get.put(ReviewTestController());
+  final NotificationController notificationController =
+      Get.put(NotificationController());
   List<TextEditingController> controllers = [];
   List<FocusNode> focusNodes = [];
   bool isError = false; // To show error feedback
@@ -134,11 +137,14 @@ class _AdvanceWordPuzzleScreenState extends State<AdvanceWordPuzzleScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Image.asset(
-              'assets/images/splash_image.png',
-              width: 100,
-              height: 100,
-              fit: BoxFit.cover,
+            Center(
+              child: Image.asset(
+                'assets/images/earn_point.png',
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height *
+                    0.3, // 30% of screen height
+                fit: BoxFit.contain,
+              ),
             ),
             const SizedBox(height: 20),
             Text(
@@ -210,6 +216,24 @@ class _AdvanceWordPuzzleScreenState extends State<AdvanceWordPuzzleScreen> {
         ),
         backgroundColor: Colors.white,
         elevation: 0,
+        actions: [
+          Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Obx(
+              () => Row(
+                children: [
+                  Icon(
+                    Icons.create,
+                    size: 20,
+                  ),
+                  SizedBox(width: 5),
+                  Text('${notificationController.totalCount.value}'),
+                ],
+              ),
+            ),
+          ),
+          SizedBox(width: 15), // Add margin left
+        ],
       ),
       body: SafeArea(
         child: Obx(() {

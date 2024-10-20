@@ -88,6 +88,8 @@ flutter:
       - assets/images/sp.svg 
       - assets/images/splash_img.png 
       - assets/images/boy.png 
+      - assets/images/earn_point.png 
+
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

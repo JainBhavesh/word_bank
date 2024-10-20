@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:word_bank/components/showConfirmationPopup.dart';
 import 'package:word_bank/view/words_in_unit_screen.dart';
 import '../view_model/controller/add_Word_To_WordbankController.dart';
+import '../view_model/controller/notification_controller.dart';
 import '../view_model/controller/word_controller.dart';
 
 class AddWordToWordbankScreen extends StatefulWidget {
@@ -19,7 +21,8 @@ class AddWordToWordbankScreen extends StatefulWidget {
 class _AddWordToWordbankScreenState extends State<AddWordToWordbankScreen> {
   final AddWordToWordbankbankController addWordController =
       Get.put(AddWordToWordbankbankController());
-
+  final NotificationController notificationController =
+      Get.put(NotificationController());
   // Initialize WordsController to fetch the words from the word bank
   late final WordsController wordsController;
 
@@ -40,7 +43,26 @@ class _AddWordToWordbankScreenState extends State<AddWordToWordbankScreen> {
           icon: const Icon(Icons.arrow_back),
           onPressed: () => Get.back(),
         ),
+        actions: [
+          Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Obx(
+              () => Row(
+                children: [
+                  Icon(
+                    Icons.create,
+                    size: 20,
+                  ),
+                  SizedBox(width: 5),
+                  Text('${notificationController.totalCount.value}'),
+                ],
+              ),
+            ),
+          ),
+          SizedBox(width: 15), // Add margin left
+        ],
       ),
+
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -73,6 +95,10 @@ class _AddWordToWordbankScreenState extends State<AddWordToWordbankScreen> {
                           contentPadding: const EdgeInsets.symmetric(
                               vertical: 10.0, horizontal: 10.0),
                         ),
+                        inputFormatters: [
+                          FilteringTextInputFormatter.allow(RegExp(
+                              r'[^ \-\.\s]')), // Allow all except space, dash, and dot
+                        ],
                       ),
                       const SizedBox(height: 15),
                       Text(
@@ -91,6 +117,10 @@ class _AddWordToWordbankScreenState extends State<AddWordToWordbankScreen> {
                           contentPadding: const EdgeInsets.symmetric(
                               vertical: 10.0, horizontal: 10.0),
                         ),
+                        inputFormatters: [
+                          FilteringTextInputFormatter.allow(RegExp(
+                              r'[^ \-\.\s]')), // Allow all except space, dash, and dot
+                        ],
                       ),
                       const SizedBox(height: 15),
                       Wrap(

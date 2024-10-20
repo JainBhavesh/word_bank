@@ -40,17 +40,23 @@ class _BuiltInWordbankScreenState extends State<BuiltInWordbankScreen> {
           },
         ),
         title: Text('built_in_wordbank'.tr),
-        actions: const [
+        actions: [
           Padding(
             padding: EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                Icon(Icons.create),
-                SizedBox(width: 5),
-                Text('38812'),
-              ],
+            child: Obx(
+              () => Row(
+                children: [
+                  Icon(
+                    Icons.create,
+                    size: 20,
+                  ),
+                  SizedBox(width: 5),
+                  Text('${notificationController.totalCount.value}'),
+                ],
+              ),
             ),
           ),
+          SizedBox(width: 15), // Add margin left
         ],
       ),
       body: Obx(() {

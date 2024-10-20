@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:word_bank/components/button_widget.dart';
 
+import '../view_model/controller/notification_controller.dart';
 import '../view_model/controller/review_test_controller.dart';
 
 class EditWordScreen extends StatefulWidget {
@@ -30,6 +32,9 @@ class _EditWordScreenState extends State<EditWordScreen> {
   late Set<String> _selectedCategories;
   final ReviewTestController reviewTestController =
       Get.put(ReviewTestController());
+  final NotificationController notificationController =
+      Get.put(NotificationController());
+
   @override
   void initState() {
     super.initState();
@@ -66,16 +71,23 @@ class _EditWordScreenState extends State<EditWordScreen> {
             Navigator.of(context).pop();
           },
         ),
-        actions: const [
+        actions: [
           Padding(
-            padding: EdgeInsets.only(right: 16.0),
-            child: Center(
-              child: Text(
-                '38812',
-                style: TextStyle(fontSize: 18),
+            padding: EdgeInsets.all(8.0),
+            child: Obx(
+              () => Row(
+                children: [
+                  Icon(
+                    Icons.create,
+                    size: 20,
+                  ),
+                  SizedBox(width: 5),
+                  Text('${notificationController.totalCount.value}'),
+                ],
               ),
             ),
           ),
+          SizedBox(width: 15), // Add margin left
         ],
       ),
       body: SingleChildScrollView(
@@ -173,6 +185,10 @@ class _EditWordScreenState extends State<EditWordScreen> {
             fillColor: Colors.grey[200], // Background color
             filled: true,
           ),
+          inputFormatters: [
+            FilteringTextInputFormatter.allow(
+                RegExp(r'[^ \-\.\s]')), // Allow all except space, dash, and dot
+          ],
         ),
       ],
     );

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
+import '../view_model/controller/notification_controller.dart';
 import '../view_model/controller/unit_selector_controller.dart';
 
 class TargetDateScreen extends StatefulWidget {
@@ -16,6 +17,8 @@ class _TargetDateScreenState extends State<TargetDateScreen> {
   DateTime? selectedDate = DateTime.now();
   final UnitSelectorController unitSelectorController =
       Get.find<UnitSelectorController>();
+  final NotificationController notificationController =
+      Get.put(NotificationController());
 
   void _clearDate() {
     setState(() {
@@ -56,16 +59,23 @@ class _TargetDateScreenState extends State<TargetDateScreen> {
             Navigator.of(context).pop();
           },
         ),
-        actions: const [
+        actions: [
           Padding(
-            padding: EdgeInsets.only(right: 16.0),
-            child: Center(
-              child: Text(
-                '38812',
-                style: TextStyle(fontSize: 18),
+            padding: EdgeInsets.all(8.0),
+            child: Obx(
+              () => Row(
+                children: [
+                  Icon(
+                    Icons.create,
+                    size: 20,
+                  ),
+                  SizedBox(width: 5),
+                  Text('${notificationController.totalCount.value}'),
+                ],
               ),
             ),
           ),
+          SizedBox(width: 15), // Add margin left
         ],
       ),
       body: Stack(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:word_bank/components/button_widget.dart';
 import 'package:word_bank/view_model/controller/word_in_unit_controller.dart';
+import '../view_model/controller/notification_controller.dart';
 import '../view_model/controller/word_controller.dart';
 
 class WordsInUnitScreen extends StatefulWidget {
@@ -18,6 +19,8 @@ class _WordsInUnitScreenState extends State<WordsInUnitScreen> {
   late final WordsController wordsController;
   final WordInUnitController wordInUnitController =
       Get.put(WordInUnitController());
+  final NotificationController notificationController =
+      Get.put(NotificationController());
 
   @override
   void initState() {
@@ -57,16 +60,23 @@ class _WordsInUnitScreenState extends State<WordsInUnitScreen> {
             Navigator.of(context).pop();
           },
         ),
-        actions: const [
+        actions: [
           Padding(
-            padding: EdgeInsets.only(right: 16.0),
-            child: Center(
-              child: Text(
-                '38812',
-                style: TextStyle(fontSize: 18),
+            padding: EdgeInsets.all(8.0),
+            child: Obx(
+              () => Row(
+                children: [
+                  Icon(
+                    Icons.create,
+                    size: 20,
+                  ),
+                  SizedBox(width: 5),
+                  Text('${notificationController.totalCount.value}'),
+                ],
               ),
             ),
           ),
+          SizedBox(width: 15), // Add margin left
         ],
       ),
       body: Padding(

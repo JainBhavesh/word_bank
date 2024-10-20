@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:word_bank/apis/api_call.dart';
 
 class NotificationController extends GetxController {
+  RxInt totalCount = 0.obs; // Reactive count using GetX
   var isLoading = false.obs;
   var dateList = <dynamic>[].obs;
   RxInt notificationCount = 0.obs; // Reactive count using GetX
@@ -14,10 +15,11 @@ class NotificationController extends GetxController {
     getNotificationCount();
     getTodayTask();
     getNotification();
+    getTotalCount();
   }
 
   void getNotificationCount() async {
-    isLoading(true);
+    // isLoading(true);
     try {
       var res = await ApiCall().notificationCount();
 
@@ -25,7 +27,6 @@ class NotificationController extends GetxController {
         var body = json.decode(res.body);
         if (body['status'] == true || body['status'] == "true") {
           notificationCount.value = body["data"];
-          print('get notification-->$body');
         } else {
           Get.snackbar('Error', body['message'] ?? 'Unknown error occurred',
               snackPosition: SnackPosition.TOP);
@@ -43,6 +44,32 @@ class NotificationController extends GetxController {
     } finally {
       isLoading(false);
     }
+  }
+
+  void getTotalCount() async {
+    try {
+      var res = await ApiCall().getTotalPointApi();
+
+      if (res.statusCode == 200) {
+        var body = json.decode(res.body);
+        if (body['status'] == true || body['status'] == "true") {
+          totalCount.value = body['data'];
+          print('get total point-->$body');
+        } else {
+          Get.snackbar('Error', body['message'] ?? 'Unknown error occurred',
+              snackPosition: SnackPosition.TOP);
+        }
+      } else {
+        var errorResponse = json.decode(res.body);
+        String errorMsg = errorResponse['message'] ?? 'Unknown error occurred';
+        Get.snackbar('Error', errorMsg, snackPosition: SnackPosition.TOP);
+      }
+    } catch (e) {
+      Get.snackbar('Network Error',
+          'Unable to reach the server. Please check your internet connection.',
+          snackPosition: SnackPosition.TOP);
+      print('Network error: $e'); // Debugging
+    } finally {}
   }
 
   void getNotification() async {

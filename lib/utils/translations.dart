@@ -119,7 +119,26 @@ class AppTranslations extends Translations {
           'conj': 'conj',
           'verb': 'verb',
           'adj': 'adj',
-          'adv': 'adv'
+          'adv': 'adv',
+          'settings': 'settings',
+          'member': 'member',
+          'achievement': 'achievement',
+          'about': 'about',
+          'logged_in_user': 'Now Logged-in as:',
+          'log_out': 'Log out',
+          'log_out_msg': 'Are you sure you want to log out?',
+          'change_password': 'Change password',
+          'Edit_nickname': 'Edit nickname',
+          'confirm_password': 'Confirm password',
+          'submit': 'Submit',
+          'starter': '起動機',
+          'medium': 'Medium',
+          'advanced': 'Advanced',
+          'encouraging': 'Encouraging',
+          'humor': 'Humor',
+          'ironic': 'Ironic',
+          'quiz_msg':
+              'What is a push quiz?To strengthen your memory of the words, we will ask you to review the words at certain intervals, even after you have completed the self-test.'
         },
         'zh': {
           'email': '電子郵件',
@@ -232,7 +251,20 @@ class AppTranslations extends Translations {
           'conj': '連接詞',
           'verb': '動詞',
           'adj': '形容詞',
-          'adv': '副詞'
+          'adv': '副詞',
+          'settings': '設定',
+          'member': '會員',
+          'achievement': '成就',
+          'about': '關於',
+          'logged_in_user': '現在登入的 Ina 是：',
+          'log_out': '退出',
+          'log_out_msg': '您確定要退出嗎？',
+          'change_password': '更改密碼',
+          'Edit_nickname': '編輯暱稱',
+          'confirm_password': '確認密碼',
+          'submit': '提交',
+          'starter': '起動機',
+          'quiz_msg': '什麼是推播測驗？要強化單字的記憶，我們會要求你在一定的間隔期間複習這些單字，既使你已經完成自主測驗也一樣。'
         },
       };
 }

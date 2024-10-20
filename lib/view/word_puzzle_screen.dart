@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:word_bank/components/showConfirmationPopup.dart';
 import '../components/button_widget.dart';
 import '../routes/routes_name.dart';
+import '../view_model/controller/notification_controller.dart';
 import '../view_model/controller/review_test_controller.dart';
 
 class WordPuzzleScreen extends StatefulWidget {
@@ -17,6 +18,8 @@ class _WordPuzzleScreenState extends State<WordPuzzleScreen> {
   int currentStep = 0;
   final ReviewTestController reviewTestController =
       Get.put(ReviewTestController());
+  final NotificationController notificationController =
+      Get.put(NotificationController());
   List<TextEditingController> controllers = [];
   List<FocusNode> focusNodes = [];
   late int unitId;
@@ -33,7 +36,6 @@ class _WordPuzzleScreenState extends State<WordPuzzleScreen> {
     examId = arguments['examId'] ?? 0;
     mainUnitId = arguments['mainUnitId'];
 
-    print("mainUnitId easy===>$mainUnitId");
     notification_id = arguments['notification_id'] ?? 0;
     // Fetch data and then load the first word
     reviewTestController.exam(unit_id: unitId, exam_id: examId).then((_) {
@@ -122,7 +124,9 @@ class _WordPuzzleScreenState extends State<WordPuzzleScreen> {
     } else {
       // Show an error message
       Get.snackbar('', 'Wrong Answer.', snackPosition: SnackPosition.TOP);
-
+      for (var controller in controllers) {
+        controller.clear(); // Clear the text in each controller
+      }
       // Update the UI state to show the error
       // setState(() {
       //   isError = true; // Show error
@@ -131,8 +135,6 @@ class _WordPuzzleScreenState extends State<WordPuzzleScreen> {
   }
 
   Widget _buildSuccessPopup(BuildContext context) {
-    print("mainUnitId easy ww===>$mainUnitId");
-
     final earnedPoint =
         reviewTestController.gameResultData['earned_point'] ?? 0;
     final totalPoints = reviewTestController.gameResultData['total'] ?? 0;
@@ -150,11 +152,14 @@ class _WordPuzzleScreenState extends State<WordPuzzleScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Image.asset(
-              'assets/images/splash_image.png',
-              width: 100,
-              height: 100,
-              fit: BoxFit.cover,
+            Center(
+              child: Image.asset(
+                'assets/images/earn_point.png',
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height *
+                    0.3, // 30% of screen height
+                fit: BoxFit.contain,
+              ),
             ),
             const SizedBox(height: 20),
             Text(
@@ -203,6 +208,18 @@ class _WordPuzzleScreenState extends State<WordPuzzleScreen> {
         ),
       ),
     );
+  }
+
+  void handleLetterPress(String letter) {
+    // Find the first empty TextField and insert the letter
+    for (int i = 0; i < controllers.length; i++) {
+      if (controllers[i].text.isEmpty) {
+        controllers[i].text = letter;
+        FocusScope.of(context)
+            .requestFocus(focusNodes[i]); // Move to next field
+        break;
+      }
+    }
   }
 
   @override
@@ -260,7 +277,6 @@ class _WordPuzzleScreenState extends State<WordPuzzleScreen> {
           .replaceAll(" ", "");
       String chineseName =
           reviewTestController.easyExamData[currentStep]["chinese_name"];
-
       return Scaffold(
         appBar: AppBar(
           title: Text('word_puzzle'.tr,
@@ -270,6 +286,24 @@ class _WordPuzzleScreenState extends State<WordPuzzleScreen> {
           leading: IconButton(
               icon: const Icon(Icons.arrow_back, color: Colors.black),
               onPressed: () => Get.back()),
+          actions: [
+            Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Obx(
+                () => Row(
+                  children: [
+                    Icon(
+                      Icons.create,
+                      size: 20,
+                    ),
+                    SizedBox(width: 5),
+                    Text('${notificationController.totalCount.value}'),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(width: 15), // Add margin left
+          ],
         ),
         body: SafeArea(
           child: SingleChildScrollView(
@@ -345,9 +379,9 @@ class _WordPuzzleScreenState extends State<WordPuzzleScreen> {
                         decoration: InputDecoration(
                           counterText: '',
                           border: OutlineInputBorder(),
-                          errorText: isError && controllers[index].text.isEmpty
-                              ? 'Error'
-                              : null,
+                          // errorText: isError && controllers[index].text.isEmpty
+                          //     ? 'Error'
+                          //     : null,
                         ),
                       ),
                     );
@@ -359,12 +393,19 @@ class _WordPuzzleScreenState extends State<WordPuzzleScreen> {
                   spacing: 8.0,
                   runSpacing: 8.0,
                   children: shuffledWord.split('').map((letter) {
-                    return Chip(
-                      label: Text(letter.toUpperCase(),
-                          style: const TextStyle(color: Colors.blue)),
+                    return GestureDetector(
+                      onTap: () {
+                        // Handle the letter tap here, and fill the TextField with this letter
+                        handleLetterPress(letter);
+                      },
+                      child: Chip(
+                        label: Text(letter.toUpperCase(),
+                            style: const TextStyle(color: Colors.blue)),
+                      ),
                     );
                   }).toList(),
                 ),
+
                 const SizedBox(height: 20),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 40),

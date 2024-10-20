@@ -19,6 +19,10 @@ class ApiCall {
     return await ApiManager().postData(AppUrl.resetPassword, data);
   }
 
+  changePassword(data) async {
+    return await ApiManager().postData(AppUrl.changePassword, data);
+  }
+
 //word
   addWordToWordksbank(id, data) async {
     final String url = '${AppUrl.words}?user_id=$id';
@@ -127,5 +131,40 @@ class ApiCall {
 
   getNotification() async {
     return await ApiManager().getData(AppUrl.getNotification);
+  }
+
+  //
+  getUserData() async {
+    return await ApiManager().getData(AppUrl.getUserData);
+  }
+
+  getAboutData() async {
+    return await ApiManager().getData(AppUrl.aboutData);
+  }
+
+  getAchievementApi() async {
+    return await ApiManager().getData(AppUrl.getAchievement);
+  }
+
+  getSettingApi() async {
+    return await ApiManager().getData(AppUrl.getSetting);
+  }
+
+  getTotalPointApi() async {
+    return await ApiManager().getData(AppUrl.getTotalPoint);
+  }
+
+  editUserApi(body, id) async {
+    final String url = '${AppUrl.editUser}${id}';
+    return await ApiManager().updateData(url, body);
+  }
+
+  updateSettingApi(body, id) async {
+    final String url = '${AppUrl.updateSetting}${id}';
+    return await ApiManager().updateData(url, body);
+  }
+
+  logout() async {
+    return await ApiManager().getData(AppUrl.logout);
   }
 }

@@ -20,4 +20,13 @@ class RouteName {
   static const String advanceWordPuzzleScreen =
       "/advance_word_puzzle_screen.dart";
   static const String noticationScreen = "/notification_list.dart";
+  static const String forgotPassword = "/forgot_password.dart";
+  static const String resetPassword = "/reset_password.dart";
+  static const String editUser = "/edit_user.dart";
+  static const String changePassword = "/change_password.dart";
+  static const String settings = "/settings.dart";
+  static const String about = "/about.dart";
+  static const String achievement = "/achievement.dart";
+  static const String member = "/member.dart";
+  static const String examBoardScreen = "/exam_board_screen.dart";
 }

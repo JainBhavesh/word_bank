@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import '../view_model/controller/add_wordsbank_controller.dart';
+import '../view_model/controller/notification_controller.dart';
 
 class AddWordbankScreen extends StatelessWidget {
   final bool isRename;
@@ -14,7 +16,8 @@ class AddWordbankScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final AddWordbankController controller = Get.put(AddWordbankController());
-
+    final NotificationController notificationController =
+        Get.put(NotificationController());
     // Clear the text controllers if this is not a rename operation (i.e., adding a new wordbank)
     if (!isRename) {
       controller.nameController.clear();
@@ -35,17 +38,23 @@ class AddWordbankScreen extends StatelessWidget {
           },
         ),
         title: Text(isRename ? 'rename_wordbank'.tr : 'add_wordbank'.tr),
-        actions: const [
+        actions: [
           Padding(
             padding: EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                Icon(Icons.create),
-                SizedBox(width: 5),
-                Text('38812'), // Sample text, replace as needed
-              ],
+            child: Obx(
+              () => Row(
+                children: [
+                  Icon(
+                    Icons.create,
+                    size: 20,
+                  ),
+                  SizedBox(width: 5),
+                  Text('${notificationController.totalCount.value}'),
+                ],
+              ),
             ),
           ),
+          SizedBox(width: 15), // Add margin left
         ],
       ),
       body: Padding(
@@ -85,6 +94,10 @@ class AddWordbankScreen extends StatelessWidget {
                     filled: true,
                     hintText: 'enter_name'.tr,
                   ),
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(RegExp(
+                        r'[^ \-\.\s]')), // Allow all except space, dash, and dot
+                  ],
                 ),
                 const SizedBox(height: 20),
                 Text(
@@ -115,6 +128,10 @@ class AddWordbankScreen extends StatelessWidget {
                     hintText: 'footnote_hint'.tr, // Placeholder text
                     hintStyle: TextStyle(color: Colors.grey[600]),
                   ),
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(RegExp(
+                        r'[^ \-\.\s]')), // Allow all except space, dash, and dot
+                  ],
                 ),
                 const SizedBox(height: 20),
                 SizedBox(
