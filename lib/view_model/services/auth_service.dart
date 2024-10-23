@@ -39,24 +39,43 @@ class AuthService {
   }
 
   // Method for Google sign-in
-  Future<User?> signInWithGoogle() async {
+  // Future<User?> signInWithGoogle() async {
+  //   try {
+  //     final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+  //     if (googleUser == null) {
+  //       return null; // User cancelled the sign-in
+  //     }
+  //     final GoogleSignInAuthentication googleAuth =
+  //         await googleUser.authentication;
+  //     final credential = GoogleAuthProvider.credential(
+  //       accessToken: googleAuth.accessToken,
+  //       idToken: googleAuth.idToken,
+  //     );
+  //     print("credential===>$credential");
+  //     UserCredential userCredential =
+  //         await _auth.signInWithCredential(credential);
+  //     return userCredential.user;
+  //   } catch (e) {
+  //     print("Error signing in with Google: $e");
+  //     return null;
+  //   }
+  // }
+  Future<dynamic> signInWithGoogle() async {
     try {
-      final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
-      if (googleUser == null) {
-        return null; // User cancelled the sign-in
-      }
-      final GoogleSignInAuthentication googleAuth =
-          await googleUser.authentication;
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+      final GoogleSignInAuthentication? googleAuth =
+          await googleUser?.authentication;
+
       final credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth.accessToken,
-        idToken: googleAuth.idToken,
+        accessToken: googleAuth?.accessToken,
+        idToken: googleAuth?.idToken,
       );
-      UserCredential userCredential =
-          await _auth.signInWithCredential(credential);
-      return userCredential.user;
-    } catch (e) {
-      print("Error signing in with Google: $e");
-      return null;
+      print("signInWithGoogle==>$credential");
+      return await FirebaseAuth.instance.signInWithCredential(credential);
+    } on Exception catch (e) {
+      // TODO
+      print('exception->$e');
     }
   }
 

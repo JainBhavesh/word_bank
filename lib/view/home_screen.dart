@@ -45,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
   }
 
   void fetchData() {
-    notificationController.getNotificationCount();
+    // notificationController.getNotificationCount();
     notificationController.getTodayTask();
   }
 
@@ -53,9 +53,8 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
   void didChangeDependencies() {
     super.didChangeDependencies();
     // Fetch data again whenever dependencies change (e.g., coming back to this screen)
-    notificationController.getNotificationCount();
+    // notificationController.getNotificationCount();
     notificationController.getTodayTask();
-    print("api ------------------------");
   }
 
   @override
@@ -85,45 +84,45 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
               // Navigate to Profile Screen
             },
           ),
-          Stack(
-            children: [
-              IconButton(
-                icon: const Icon(Icons.notifications_on_sharp,
-                    color: Colors.purple),
-                onPressed: () {
-                  Get.toNamed(RouteName.noticationScreen);
-                  // Navigate to Notification Screen
-                },
-              ),
-              Positioned(
-                right: 11,
-                top: 11,
-                child: Obx(() {
-                  return notificationController.notificationCount.value > 0
-                      ? Container(
-                          padding: const EdgeInsets.all(2),
-                          decoration: BoxDecoration(
-                            color: Colors.red,
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          constraints: const BoxConstraints(
-                            minWidth: 14,
-                            minHeight: 14,
-                          ),
-                          child: Text(
-                            '${notificationController.notificationCount.value}',
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 10,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                        )
-                      : const SizedBox(); // Hide if count is 0
-                }),
-              ),
-            ],
-          ),
+          // Stack(
+          //   children: [
+          //     IconButton(
+          //       icon: const Icon(Icons.notifications_on_sharp,
+          //           color: Colors.purple),
+          //       onPressed: () {
+          //         Get.toNamed(RouteName.noticationScreen);
+          //         // Navigate to Notification Screen
+          //       },
+          //     ),
+          //     Positioned(
+          //       right: 11,
+          //       top: 11,
+          //       child: Obx(() {
+          //         return notificationController.notificationCount.value > 0
+          //             ? Container(
+          //                 padding: const EdgeInsets.all(2),
+          //                 decoration: BoxDecoration(
+          //                   color: Colors.red,
+          //                   borderRadius: BorderRadius.circular(20),
+          //                 ),
+          //                 constraints: const BoxConstraints(
+          //                   minWidth: 14,
+          //                   minHeight: 14,
+          //                 ),
+          //                 child: Text(
+          //                   '${notificationController.notificationCount.value}',
+          //                   style: const TextStyle(
+          //                     color: Colors.white,
+          //                     fontSize: 10,
+          //                   ),
+          //                   textAlign: TextAlign.center,
+          //                 ),
+          //               )
+          //             : const SizedBox(); // Hide if count is 0
+          //       }),
+          //     ),
+          //   ],
+          // ),
         ],
         elevation: 0,
       ),
@@ -241,26 +240,13 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                                     typeData['remaining_day'] == "finish")
                                 ? 0 // Handle case for "finish"
                                 : 0; // Default to 0 for other cases
-
+                        print("targetDate------>${targetDate}");
                         if (targetDate == null) {
                           return _buildUnplannedButton(typeData['id']);
                         } else if (typeData['remaining_day'] == "finish") {
                           return _buildFinishButton(todayTaskData);
-                          // return _buildFinishButton(
-                          //     typeData['id'] ??
-                          //         0, // Provide a default value of 0 if 'id' is null
-                          //     remainingDays, // Provide a default value of 0 if remainingDays is null
-                          //     typeData['exam_count'] ??
-                          //         0); // Call your finish button function here
                         } else {
                           return _buildDaysLeftButton(todayTaskData);
-                          // return _buildDaysLeftButton(
-                          //   typeData['id'] ??
-                          //       0, // Provide a default value of 0 if 'id' is null
-                          //   remainingDays, // Provide a default value of 0 if remainingDays is null
-                          //   typeData['exam_count'] ??
-                          //       0, // Provide a default value of 0 if 'exam_count' is null
-                          // );
                         }
                       })),
               CustomBottomNavigationBar(
@@ -321,13 +307,13 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
           SizedBox(
             width: buttonSize, // Adjusted size for progress indicator
             height: buttonSize,
-            child: CircularProgressIndicator(
-              value: typeData['exam_count'] ??
-                  0 / 8, // Dynamic value based on the exam_count
-              strokeWidth: 10,
-              color: Colors.red, // The color of the progress
-              backgroundColor: Colors.red,
-            ),
+            // child: CircularProgressIndicator(
+            //   value: typeData['exam_count'] ??
+            //       0 / 8, // Dynamic value based on the exam_count
+            //   strokeWidth: 10,
+            //   color: Colors.red, // The color of the progress
+            //   backgroundColor: Colors.red,
+            // ),
           ),
           Center(
             child: Text(
@@ -344,6 +330,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
   }
 
   Widget _buildDaysLeftButton(todayTaskData) {
+    print("todayTaskData==>$todayTaskData");
     var typeData = todayTaskData['unit'];
     int remainingDays = (typeData['remaining_day'] is int)
         ? typeData['remaining_day']
@@ -385,8 +372,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
             width: buttonSize, // Adjusted size for progress indicator
             height: buttonSize,
             child: CircularProgressIndicator(
-              value: typeData['exam_count'] ??
-                  0 / 8, // Dynamic value based on the exam_count
+              value: (typeData['exam_count']?.toDouble() ?? 0) / 8,
               strokeWidth: 10,
               color: Colors.red, // The color of the progress
               backgroundColor:

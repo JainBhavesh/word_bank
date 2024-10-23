@@ -264,7 +264,8 @@ class AppTranslations extends Translations {
           'confirm_password': '確認密碼',
           'submit': '提交',
           'starter': '起動機',
-          'quiz_msg': '什麼是推播測驗？要強化單字的記憶，我們會要求你在一定的間隔期間複習這些單字，既使你已經完成自主測驗也一樣。'
+          'quiz_msg':
+              '什麼是推播測驗？\n 要強化單字的記憶，我們會要求你在一定的間隔期 間複習這些單字，既使你已經完成自主測驗也一 樣。'
         },
       };
 }

@@ -1,4 +1,4 @@
-package com.example.word_bank
+package com.example.edu_app
 
 import io.flutter.embedding.android.FlutterActivity
 

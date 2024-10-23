@@ -11,6 +11,24 @@ class EditUser extends StatefulWidget {
 
 class _LoginScreenState extends State<EditUser> {
   final BottomController controller = Get.put(BottomController());
+  late TextEditingController _nameController;
+
+  @override
+  void initState() {
+    super.initState();
+    // Initialize the TextEditingController with the current name from controller.userData
+    _nameController = TextEditingController(
+      text: controller.userData["name"] ??
+          '', // Set to an empty string if name is null
+    );
+  }
+
+  @override
+  void dispose() {
+    // Dispose the controller when the widget is disposed
+    _nameController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,6 +66,7 @@ class _LoginScreenState extends State<EditUser> {
                       ),
                       const SizedBox(height: 8),
                       TextField(
+                        controller: _nameController,
                         onChanged: (value) =>
                             controller.editNickName.value = value,
                         decoration: InputDecoration(

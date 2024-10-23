@@ -24,7 +24,7 @@ class _PersonalWordbankScreenState extends State<PersonalWordbankScreen> {
   }
 
   void fetchData() {
-    notificationController.getNotificationCount();
+    // notificationController.getNotificationCount();
     notificationController.getTodayTask();
   }
 

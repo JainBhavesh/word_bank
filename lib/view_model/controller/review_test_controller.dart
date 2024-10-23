@@ -242,7 +242,7 @@ class ReviewTestController extends GetxController {
     if (notification_id != null && notification_id != 0) {
       requestBody["notification_id"] = notification_id;
     }
-
+    print("result body-->$requestBody");
     isLoading(true);
     try {
       var res = await ApiCall().gameResult(requestBody);

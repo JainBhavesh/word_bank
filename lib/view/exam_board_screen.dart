@@ -30,6 +30,7 @@ class _ExamBoardScreenState extends State<ExamBoardScreen> {
   late int daysLeft;
   late int mainUnitId;
   late int examId;
+  late int notification_id;
 
   @override
   void initState() {
@@ -41,6 +42,8 @@ class _ExamBoardScreenState extends State<ExamBoardScreen> {
     daysLeft = arguments['daysLeft'] ?? 0;
     mainUnitId = arguments['mainUnitId'] ?? 0;
     examId = arguments['examId'] ?? 0;
+    notification_id = arguments['notification_id'] ?? 0;
+
     print("exami -->$examId");
 
     _controller.getExamTypeList(unit_id: unitId);
@@ -167,7 +170,7 @@ class _ExamBoardScreenState extends State<ExamBoardScreen> {
             const SizedBox(height: 20),
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 40),
+                padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: Column(
                   children: [
                     // Conditionally render the buttons based on examId
@@ -178,7 +181,8 @@ class _ExamBoardScreenState extends State<ExamBoardScreen> {
                           Get.toNamed(RouteName.wordPuzzleScreen, arguments: {
                             'unitId': unitId,
                             'examId': 1,
-                            'mainUnitId': mainUnitId
+                            'mainUnitId': mainUnitId,
+                            'notification_id': notification_id
                           });
                         },
                       ),
@@ -191,7 +195,8 @@ class _ExamBoardScreenState extends State<ExamBoardScreen> {
                               arguments: {
                                 'unitId': unitId,
                                 'examId': 2,
-                                'mainUnitId': mainUnitId
+                                'mainUnitId': mainUnitId,
+                                'notification_id': notification_id
                               });
                         },
                       ),
@@ -203,28 +208,29 @@ class _ExamBoardScreenState extends State<ExamBoardScreen> {
                           Get.toNamed(RouteName.matchingModeScreen, arguments: {
                             'unitId': unitId,
                             'examId': 3,
-                            'mainUnitId': mainUnitId
+                            'mainUnitId': mainUnitId,
+                            'notification_id': notification_id
                           });
                         },
                       ),
                       const SizedBox(height: 10),
                     ],
                     // const SizedBox(height: 30),
+                    SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          Text(
+                            'quiz_msg'.tr,
+                            style: TextStyle(fontSize: 15, height: 2),
+                          ),
+                          // Add other widgets here if needed
+                        ],
+                      ),
+                    )
                   ],
                 ),
               ),
             ),
-            SingleChildScrollView(
-              child: Column(
-                children: [
-                  Text(
-                    'quiz_msg'.tr,
-                    style: TextStyle(fontSize: 18, height: 2),
-                  ),
-                  // Add other widgets here if needed
-                ],
-              ),
-            )
           ],
         ),
       ),

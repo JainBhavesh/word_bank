@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:word_bank/view/login_screen.dart';
 import '../../apis/api_call.dart';
 import '../../utils/preference.dart';
@@ -20,7 +21,7 @@ class RegisterController extends GetxController {
   var instagramUsername = ''.obs;
   var agreeToTerms = false.obs;
 
-  // final AuthService _authService = AuthService();
+  final GoogleSignIn googleSignIn = GoogleSignIn();
 
   // Method for validating email
   String? validateEmail(String value) {
@@ -202,22 +203,36 @@ class RegisterController extends GetxController {
     }
   }
 
-  // Method for Google sign-in
   // Future<void> signInWithGoogle() async {
-  //   // Show the loader
-  //   showLoader();
+  //   try {
+  //     // Trigger the Google Authentication flow
+  //     GoogleSignInAccount? googleUser = await googleSignIn.signIn();
 
-  //   User? user = await _authService.signInWithGoogle();
+  //     // Obtain the auth details from the request
+  //     GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
 
-  //   // Hide the loader
-  //   hideLoader();
-  //   print("sign in user inf-->${user}");
-  //   if (user != null) {
-  //     Get.snackbar('Success', 'Signed in as ${user.displayName}',
-  //         snackPosition: SnackPosition.TOP);
-  //   } else {
-  //     Get.snackbar('Error', 'Google sign-in failed',
-  //         snackPosition: SnackPosition.TOP);
+  //     // Create a new user object
+  //     if (googleUser != null && googleAuth != null) {
+  //       // Get user details
+  //       String displayName = googleUser.displayName ?? "No Name";
+  //       String email = googleUser.email;
+  //       String photoUrl = googleUser.photoUrl ?? "No Photo URL";
+  //       String id = googleUser.id;
+
+  //       // Create a user object
+  //       Map<String, dynamic> user = {
+  //         'id': id,
+  //         'displayName': displayName,
+  //         'email': email,
+  //         'photoUrl': photoUrl,
+  //         'accessToken': googleAuth.accessToken,
+  //         'idToken': googleAuth.idToken,
+  //       };
+
+  //       print('User Info: $user');
+  //     }
+  //   } catch (error) {
+  //     print('Error signing in: $error');
   //   }
   // }
 

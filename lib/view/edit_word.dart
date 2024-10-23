@@ -185,10 +185,6 @@ class _EditWordScreenState extends State<EditWordScreen> {
             fillColor: Colors.grey[200], // Background color
             filled: true,
           ),
-          inputFormatters: [
-            FilteringTextInputFormatter.allow(
-                RegExp(r'[^ \-\.\s]')), // Allow all except space, dash, and dot
-          ],
         ),
       ],
     );

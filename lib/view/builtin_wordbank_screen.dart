@@ -24,7 +24,7 @@ class _BuiltInWordbankScreenState extends State<BuiltInWordbankScreen> {
   }
 
   void fetchData() {
-    notificationController.getNotificationCount();
+    // notificationController.getNotificationCount();
     notificationController.getTodayTask();
   }
 

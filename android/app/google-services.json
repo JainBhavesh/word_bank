@@ -1,33 +1,78 @@
 {
   "project_info": {
-    "project_number": "49739396525",
-    "project_id": "wordbank-8c162",
-    "storage_bucket": "wordbank-8c162.appspot.com"
+    "project_number": "385964143644",
+    "project_id": "edu-app-cfcce",
+    "storage_bucket": "edu-app-cfcce.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:49739396525:android:d28b702dcdda6641731d24",
+        "mobilesdk_app_id": "1:385964143644:android:af331e080bef22d458dbd9",
         "android_client_info": {
-          "package_name": "com.example.word_bank"
+          "package_name": "com.example.edu_app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "49739396525-r07vce3h94ncmn839hs63u16eda579r7.apps.googleusercontent.com",
+          "client_id": "385964143644-lv3tpfktrstb2otj13o5vvcd1bg83hjg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.edu_app",
+            "certificate_hash": "605002f677758e2b9e8462a5d0bf450b0bda51e4"
+          }
+        },
+        {
+          "client_id": "385964143644-ip9d8c68mcaub79lrd7pqvt1bu7rarlo.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyD0gif9uFKrDcy0aqnFGCx7-Ge-jmBj1wU"
+          "current_key": "AIzaSyDA2SUz1a5Civ2NhRh0fXVqG2oJA7Fi3Ok"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "49739396525-r07vce3h94ncmn839hs63u16eda579r7.apps.googleusercontent.com",
+              "client_id": "385964143644-ip9d8c68mcaub79lrd7pqvt1bu7rarlo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:385964143644:android:cd211960b14a83a258dbd9",
+        "android_client_info": {
+          "package_name": "com.example.word_bank"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "385964143644-qojsi9vidbd2efono2kh6pica1pb3g8e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.word_bank",
+            "certificate_hash": "d7937db5546e424ade5205dc2fe227deeb7b94ce"
+          }
+        },
+        {
+          "client_id": "385964143644-ip9d8c68mcaub79lrd7pqvt1bu7rarlo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDA2SUz1a5Civ2NhRh0fXVqG2oJA7Fi3Ok"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "385964143644-ip9d8c68mcaub79lrd7pqvt1bu7rarlo.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

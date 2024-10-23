@@ -94,10 +94,6 @@ class AddWordbankScreen extends StatelessWidget {
                     filled: true,
                     hintText: 'enter_name'.tr,
                   ),
-                  inputFormatters: [
-                    FilteringTextInputFormatter.allow(RegExp(
-                        r'[^ \-\.\s]')), // Allow all except space, dash, and dot
-                  ],
                 ),
                 const SizedBox(height: 20),
                 Text(
@@ -128,10 +124,6 @@ class AddWordbankScreen extends StatelessWidget {
                     hintText: 'footnote_hint'.tr, // Placeholder text
                     hintStyle: TextStyle(color: Colors.grey[600]),
                   ),
-                  inputFormatters: [
-                    FilteringTextInputFormatter.allow(RegExp(
-                        r'[^ \-\.\s]')), // Allow all except space, dash, and dot
-                  ],
                 ),
                 const SizedBox(height: 20),
                 SizedBox(

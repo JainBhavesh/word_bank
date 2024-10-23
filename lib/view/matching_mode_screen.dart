@@ -222,6 +222,7 @@ class _MatchingModeScreenState extends State<MatchingModeScreen> {
               backgroundColor: Colors.black,
               textColor: Colors.white,
               onPressed: () {
+                notificationController.getTotalCount();
                 if (mainUnitId == 0) {
                   Navigator.of(context).pop();
                   Navigator.of(context).pop();
