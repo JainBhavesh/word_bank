@@ -1,7 +1,8 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get/get.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:word_bank/view/login_screen.dart';
 import '../../apis/api_call.dart';
@@ -22,6 +23,7 @@ class RegisterController extends GetxController {
   var agreeToTerms = false.obs;
 
   final GoogleSignIn googleSignIn = GoogleSignIn();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   // Method for validating email
   String? validateEmail(String value) {
@@ -203,57 +205,61 @@ class RegisterController extends GetxController {
     }
   }
 
-  // Future<void> signInWithGoogle() async {
-  //   try {
-  //     // Trigger the Google Authentication flow
-  //     GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+  Future<void> signInWithGoogle() async {
+    try {
+      // Trigger the Google Authentication flow
+      GoogleSignInAccount? googleUser = await googleSignIn.signIn();
 
-  //     // Obtain the auth details from the request
-  //     GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+      // Obtain the auth details from the request
+      GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
 
-  //     // Create a new user object
-  //     if (googleUser != null && googleAuth != null) {
-  //       // Get user details
-  //       String displayName = googleUser.displayName ?? "No Name";
-  //       String email = googleUser.email;
-  //       String photoUrl = googleUser.photoUrl ?? "No Photo URL";
-  //       String id = googleUser.id;
+      // Create a new user object
+      if (googleUser != null && googleAuth != null) {
+        // Get user details
+        String displayName = googleUser.displayName ?? "No Name";
+        String email = googleUser.email;
+        String photoUrl = googleUser.photoUrl ?? "No Photo URL";
+        String id = googleUser.id;
 
-  //       // Create a user object
-  //       Map<String, dynamic> user = {
-  //         'id': id,
-  //         'displayName': displayName,
-  //         'email': email,
-  //         'photoUrl': photoUrl,
-  //         'accessToken': googleAuth.accessToken,
-  //         'idToken': googleAuth.idToken,
-  //       };
+        // Create a user object
+        Map<String, dynamic> user = {
+          'id': id,
+          'displayName': displayName,
+          'email': email,
+          'photoUrl': photoUrl,
+          'accessToken': googleAuth.accessToken,
+          'idToken': googleAuth.idToken,
+        };
 
-  //       print('User Info: $user');
-  //     }
-  //   } catch (error) {
-  //     print('Error signing in: $error');
-  //   }
-  // }
+        print('User Info: $user');
+      }
+    } catch (error) {
+      print('Error signing in: $error');
+    }
+  }
 
   // // Method for Facebook sign-in
-  // Future<void> signInWithFacebook() async {
-  //   // Show the loader
-  //   showLoader();
-
-  //   User? user = await _authService.signInWithFacebook();
-  //   print("signInWithFacebook user inf-->${user}");
-  //   // Hide the loader
-  //   hideLoader();
-
-  //   if (user != null) {
-  //     Get.snackbar('Success', 'Signed in as ${user.displayName}',
-  //         snackPosition: SnackPosition.TOP);
-  //   } else {
-  //     Get.snackbar('Error', 'Facebook sign-in failed',
-  //         snackPosition: SnackPosition.TOP);
-  //   }
-  // }
+  Future<void> signInWithFacebook() async {
+    try {
+      final LoginResult result = await FacebookAuth.instance.login();
+      print("result signInWithFacebook---->$result");
+      if (result.status == LoginStatus.success) {
+        final AccessToken? accessToken = result.accessToken;
+        if (accessToken != null) {
+          final OAuthCredential facebookAuthCredential =
+              FacebookAuthProvider.credential(accessToken.tokenString);
+          UserCredential userCredential =
+              await _auth.signInWithCredential(facebookAuthCredential);
+          print("userCredential===>$userCredential");
+        }
+      } else {
+        print("Facebook sign-in failed------>: ${result.status}");
+      }
+    } catch (e) {
+      print("Error signing in with Facebook: $e");
+      return null;
+    }
+  }
 
   // Method for email and password sign-in
   // Future<void> signIn() async {

@@ -16,9 +16,9 @@
         <item name="android:windowBackground">?android:colorBackground</item>
     </style>
      <string name="app_name">Wordbank</string>
-    <string name="facebook_app_id">863841044575181</string>
-    <string name="fb_login_protocol_scheme">fb863841044575181</string>
-    <string name="facebook_client_token">8886efb6be862cc57a907dc9964abe63</string>
+    <string name="facebook_app_id">1262176281724104</string>
+    <string name="fb_login_protocol_scheme">fb1262176281724104</string>
+    <string name="facebook_client_token">2469055d74597f538bb6cf6ae0e592b9</string>
 
 
 </resources>

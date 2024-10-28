@@ -171,7 +171,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 textColor: Colors.black,
                 icon: Icons.g_mobiledata,
                 onPressed: () {
-                  // controller.signInWithGoogle();
+                  controller.signInWithGoogle();
                 },
               ),
               const SizedBox(height: 16),
@@ -181,7 +181,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 textColor: Colors.white,
                 icon: Icons.facebook,
                 onPressed: () {
-                  // controller.signInWithFacebook();
+                  controller.signInWithFacebook();
                 },
               ),
               const SizedBox(height: 16),

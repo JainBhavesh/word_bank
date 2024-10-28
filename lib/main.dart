@@ -1,4 +1,4 @@
-// import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart'; // Import Get for translations
 import 'package:flutter_localizations/flutter_localizations.dart'; // Import localization support
@@ -8,12 +8,12 @@ import 'routes/routes.dart';
 import 'utils/translations.dart';
 
 void main() async {
-  // WidgetsFlutterBinding.ensureInitialized();
-  // try {
-  //   await Firebase.initializeApp();
-  // } catch (e) {
-  //   print("Error initializing Firebase: $e");
-  // }
+  WidgetsFlutterBinding.ensureInitialized();
+  try {
+    await Firebase.initializeApp();
+  } catch (e) {
+    print("Error initializing Firebase: $e");
+  }
   runApp(const MyApp());
 }
 

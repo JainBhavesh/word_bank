@@ -174,7 +174,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 icon: Icons.g_mobiledata,
                 onPressed: () {
                   // Handle Google registration
-                  // controller.signInWithGoogle();
+                  controller.signInWithGoogle();
                   // Get.snackbar('Google', 'Google registration pressed');
                 },
               ),
@@ -186,7 +186,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 icon: Icons.facebook,
                 onPressed: () {
                   // Handle Facebook registration
-                  // controller.signInWithFacebook();
+                  controller.signInWithFacebook();
                   // Get.snackbar('Facebook', 'Facebook registration pressed');
                 },
               ),

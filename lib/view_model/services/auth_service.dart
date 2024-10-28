@@ -38,28 +38,6 @@ class AuthService {
     }
   }
 
-  // Method for Google sign-in
-  // Future<User?> signInWithGoogle() async {
-  //   try {
-  //     final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
-  //     if (googleUser == null) {
-  //       return null; // User cancelled the sign-in
-  //     }
-  //     final GoogleSignInAuthentication googleAuth =
-  //         await googleUser.authentication;
-  //     final credential = GoogleAuthProvider.credential(
-  //       accessToken: googleAuth.accessToken,
-  //       idToken: googleAuth.idToken,
-  //     );
-  //     print("credential===>$credential");
-  //     UserCredential userCredential =
-  //         await _auth.signInWithCredential(credential);
-  //     return userCredential.user;
-  //   } catch (e) {
-  //     print("Error signing in with Google: $e");
-  //     return null;
-  //   }
-  // }
   Future<dynamic> signInWithGoogle() async {
     try {
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
@@ -83,7 +61,7 @@ class AuthService {
   Future<User?> signInWithFacebook() async {
     try {
       final LoginResult result = await FacebookAuth.instance.login();
-      print("result signInWithFacebook---->$result");
+      // print("result signInWithFacebook---->$result");
       if (result.status == LoginStatus.success) {
         final AccessToken? accessToken = result.accessToken;
         if (accessToken != null) {
