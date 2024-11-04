@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart'; // Import Get for translations
 import 'package:flutter_localizations/flutter_localizations.dart'; // Import localization support
 import 'package:word_bank/view/splash_screen.dart';
@@ -9,6 +10,7 @@ import 'utils/translations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   try {
     await Firebase.initializeApp();
   } catch (e) {

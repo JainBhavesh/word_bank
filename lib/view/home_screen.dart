@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../components/CustomBottomNavigationBar.dart';
-import '../components/SettingsTab.dart';
 import '../routes/routes_name.dart';
 import '../view_model/controller/notification_controller.dart';
 

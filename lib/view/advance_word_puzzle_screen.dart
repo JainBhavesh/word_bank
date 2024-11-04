@@ -29,6 +29,7 @@ class _AdvanceWordPuzzleScreenState extends State<AdvanceWordPuzzleScreen> {
   late int examId;
   late int notification_id;
   late int mainUnitId;
+  late int daysLeft;
   @override
   void initState() {
     super.initState();
@@ -37,6 +38,7 @@ class _AdvanceWordPuzzleScreenState extends State<AdvanceWordPuzzleScreen> {
     examId = arguments['examId'] ?? 0;
     notification_id = arguments['notification_id'] ?? 0;
     mainUnitId = arguments['mainUnitId'];
+    daysLeft = arguments['daysLeft'] ?? 0;
     reviewTestController.exam(unit_id: unitId, exam_id: examId).then((_) {
       loadWord();
     });
@@ -176,6 +178,11 @@ class _AdvanceWordPuzzleScreenState extends State<AdvanceWordPuzzleScreen> {
                 if (mainUnitId == 0) {
                   Navigator.of(context).pop();
                   Navigator.of(context).pop();
+                  Get.offNamed(RouteName.reviewOrTestScreen, arguments: {
+                    'unitId': unitId,
+                    'daysLeft': daysLeft,
+                    'mainUnitId': mainUnitId
+                  });
                 } else {
                   if (reviewTestController.gameResultData['exam'] == 'finish') {
                     Future.delayed(Duration.zero, () {

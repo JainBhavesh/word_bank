@@ -53,7 +53,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'name'.tr,
+                        'Name'.tr,
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.bold),
                       ),

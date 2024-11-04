@@ -138,7 +138,9 @@ class AppTranslations extends Translations {
           'humor': 'Humor',
           'ironic': 'Ironic',
           'quiz_msg':
-              'What is a push quiz?To strengthen your memory of the words, we will ask you to review the words at certain intervals, even after you have completed the self-test.'
+              'What is a push quiz?To strengthen your memory of the words, we will ask you to review the words at certain intervals, even after you have completed the self-test.',
+          'add_new_voc': 'Add new vocabulary -> Add single word bin',
+          'Name': 'Name'
         },
         'zh': {
           'email': '電子郵件',
@@ -160,7 +162,7 @@ class AppTranslations extends Translations {
           'agree_condition': '我同意該協議',
           'add_wordbank': '新增詞庫',
           'create_wordbank': '新增單字倉',
-          'name': '姓名',
+          'name': '名稱',
           'footnote': '備註',
           'footnote_hint': '輸入備註文字',
           'value': '數值',
@@ -265,7 +267,9 @@ class AppTranslations extends Translations {
           'submit': '提交',
           'starter': '起動機',
           'quiz_msg':
-              '什麼是推播測驗？\n 要強化單字的記憶，我們會要求你在一定的間隔期 間複習這些單字，既使你已經完成自主測驗也一 樣。'
+              '什麼是推播測驗？\n 要強化單字的記憶，我們會要求你在一定的間隔期 間複習這些單字，既使你已經完成自主測驗也一 樣。',
+          'add_new_voc': '新增詞庫->新增單字倉',
+          'Name': '姓名'
         },
       };
 }

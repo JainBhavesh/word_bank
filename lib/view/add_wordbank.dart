@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-
 import '../view_model/controller/add_wordsbank_controller.dart';
 import '../view_model/controller/notification_controller.dart';
 
@@ -37,7 +35,7 @@ class AddWordbankScreen extends StatelessWidget {
             Get.back();
           },
         ),
-        title: Text(isRename ? 'rename_wordbank'.tr : 'add_wordbank'.tr),
+        title: Text(isRename ? 'rename_wordbank'.tr : 'add_new_voc'.tr),
         actions: [
           Padding(
             padding: EdgeInsets.all(8.0),

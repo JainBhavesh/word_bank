@@ -182,7 +182,8 @@ class _ExamBoardScreenState extends State<ExamBoardScreen> {
                             'unitId': unitId,
                             'examId': 1,
                             'mainUnitId': mainUnitId,
-                            'notification_id': notification_id
+                            'notification_id': notification_id,
+                            'daysLeft': daysLeft
                           });
                         },
                       ),
@@ -196,7 +197,8 @@ class _ExamBoardScreenState extends State<ExamBoardScreen> {
                                 'unitId': unitId,
                                 'examId': 2,
                                 'mainUnitId': mainUnitId,
-                                'notification_id': notification_id
+                                'notification_id': notification_id,
+                                'daysLeft': daysLeft
                               });
                         },
                       ),
@@ -209,7 +211,8 @@ class _ExamBoardScreenState extends State<ExamBoardScreen> {
                             'unitId': unitId,
                             'examId': 3,
                             'mainUnitId': mainUnitId,
-                            'notification_id': notification_id
+                            'notification_id': notification_id,
+                            'daysLeft': daysLeft
                           });
                         },
                       ),

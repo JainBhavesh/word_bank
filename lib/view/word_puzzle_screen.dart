@@ -26,6 +26,7 @@ class _WordPuzzleScreenState extends State<WordPuzzleScreen> {
   late int examId;
   late int notification_id;
   late int mainUnitId;
+  late int daysLeft;
   bool isError = false;
 
   @override
@@ -35,7 +36,7 @@ class _WordPuzzleScreenState extends State<WordPuzzleScreen> {
     unitId = arguments['unitId'] ?? 0;
     examId = arguments['examId'] ?? 0;
     mainUnitId = arguments['mainUnitId'];
-
+    daysLeft = arguments['daysLeft'] ?? 0;
     notification_id = arguments['notification_id'] ?? 0;
     // Fetch data and then load the first word
     reviewTestController.exam(unit_id: unitId, exam_id: examId).then((_) {
@@ -191,6 +192,11 @@ class _WordPuzzleScreenState extends State<WordPuzzleScreen> {
                 if (mainUnitId == 0) {
                   Navigator.of(context).pop();
                   Navigator.of(context).pop();
+                  Get.offNamed(RouteName.reviewOrTestScreen, arguments: {
+                    'unitId': unitId,
+                    'daysLeft': daysLeft,
+                    'mainUnitId': mainUnitId
+                  });
                 } else {
                   if (reviewTestController.gameResultData['exam'] == 'finish') {
                     Future.delayed(Duration.zero, () {

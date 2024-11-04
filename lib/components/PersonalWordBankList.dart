@@ -46,10 +46,20 @@ class ListItemWidget extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               if (wordBank['unit_count'] != null && wordBank['unit_count'] != 0)
-                Badge(
-                  value: wordBank['unit_count'].toString(),
-                  color: Colors.red,
-                ),
+                wordBank['unit_count'] == 'finish'
+                    ? Padding(
+                        padding: const EdgeInsets.only(
+                            top: 10.0), // Add top margin of 30
+                        child: Image.asset(
+                          'assets/images/medal.png', // Path to your medal image
+                          width: 50.0,
+                          height: 50.0,
+                          fit: BoxFit.contain,
+                        ))
+                    : Badge(
+                        value: wordBank['unit_count'].toString(),
+                        color: Colors.red,
+                      ),
               const SizedBox(width: 8),
               PopupMenuButton<String>(
                 icon: const Icon(Icons.more_horiz),

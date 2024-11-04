@@ -34,6 +34,7 @@ class _MatchingModeScreenState extends State<MatchingModeScreen> {
   bool allAnswersCorrect = false;
   late int notification_id;
   late int mainUnitId;
+  late int daysLeft;
   @override
   void initState() {
     super.initState();
@@ -42,7 +43,7 @@ class _MatchingModeScreenState extends State<MatchingModeScreen> {
     examId = arguments['examId'] ?? 0;
     notification_id = arguments['notification_id'] ?? 0;
     mainUnitId = arguments['mainUnitId'];
-    print("notification_id==>$notification_id");
+    daysLeft = arguments['daysLeft'] ?? 0;
     // Fetch data
     reviewTestController.exam(unit_id: unitId, exam_id: examId).then((_) {
       if (reviewTestController.matchingModeData.isNotEmpty) {
@@ -226,6 +227,11 @@ class _MatchingModeScreenState extends State<MatchingModeScreen> {
                 if (mainUnitId == 0) {
                   Navigator.of(context).pop();
                   Navigator.of(context).pop();
+                  Get.offNamed(RouteName.reviewOrTestScreen, arguments: {
+                    'unitId': unitId,
+                    'daysLeft': daysLeft,
+                    'mainUnitId': mainUnitId
+                  });
                 } else {
                   if (reviewTestController.gameResultData['exam'] == 'finish') {
                     Future.delayed(Duration.zero, () {
