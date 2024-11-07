@@ -70,7 +70,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                           contentPadding:
                               const EdgeInsets.symmetric(horizontal: 10),
-                          hintText: 'name'.tr,
+                          hintText: 'Name'.tr,
                         ),
                       ),
                       const SizedBox(height: 16),
@@ -167,40 +167,40 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 style: TextStyle(fontSize: 12),
               ),
               const SizedBox(height: 16),
-              SocialMediaButton(
-                text: '用 Google 帳號註冊',
-                color: Colors.white,
-                textColor: Colors.black,
-                icon: Icons.g_mobiledata,
-                onPressed: () {
-                  // Handle Google registration
-                  controller.signInWithGoogle();
-                  // Get.snackbar('Google', 'Google registration pressed');
-                },
-              ),
-              const SizedBox(height: 16),
-              SocialMediaButton(
-                text: '用 facebook 帳號註冊',
-                color: Colors.blue,
-                textColor: Colors.white,
-                icon: Icons.facebook,
-                onPressed: () {
-                  // Handle Facebook registration
-                  controller.signInWithFacebook();
-                  // Get.snackbar('Facebook', 'Facebook registration pressed');
-                },
-              ),
-              const SizedBox(height: 16),
-              SocialMediaButton(
-                text: '用 instagram 帳號註冊',
-                color: Colors.pink,
-                textColor: Colors.white,
-                icon: Icons.camera_alt,
-                onPressed: () {
-                  // controller.signInWithInstagram();
-                  // Get.snackbar('Instagram', 'Instagram registration pressed');
-                },
-              ),
+              // SocialMediaButton(
+              //   text: '用 Google 帳號註冊',
+              //   color: Colors.white,
+              //   textColor: Colors.black,
+              //   icon: Icons.g_mobiledata,
+              //   onPressed: () {
+              //     // Handle Google registration
+              //     controller.signInWithGoogle();
+              //     // Get.snackbar('Google', 'Google registration pressed');
+              //   },
+              // ),
+              // const SizedBox(height: 16),
+              // SocialMediaButton(
+              //   text: '用 facebook 帳號註冊',
+              //   color: Colors.blue,
+              //   textColor: Colors.white,
+              //   icon: Icons.facebook,
+              //   onPressed: () {
+              //     // Handle Facebook registration
+              //     controller.signInWithFacebook();
+              //     // Get.snackbar('Facebook', 'Facebook registration pressed');
+              //   },
+              // ),
+              // const SizedBox(height: 16),
+              // SocialMediaButton(
+              //   text: '用 instagram 帳號註冊',
+              //   color: Colors.pink,
+              //   textColor: Colors.white,
+              //   icon: Icons.camera_alt,
+              //   onPressed: () {
+              //     // controller.signInWithInstagram();
+              //     // Get.snackbar('Instagram', 'Instagram registration pressed');
+              //   },
+              // ),
             ],
           ),
         ),

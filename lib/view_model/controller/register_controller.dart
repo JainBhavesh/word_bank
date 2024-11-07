@@ -205,6 +205,11 @@ class RegisterController extends GetxController {
     }
   }
 
+  void printWrapped(dynamic text) {
+    final pattern = RegExp('.{1,800}'); // 800 is the size of each chunk
+    pattern.allMatches(text).forEach((match) => print(match.group(0)));
+  }
+
   Future<void> signInWithGoogle() async {
     try {
       // Trigger the Google Authentication flow
@@ -230,8 +235,10 @@ class RegisterController extends GetxController {
           'accessToken': googleAuth.accessToken,
           'idToken': googleAuth.idToken,
         };
+        String userDataString = jsonEncode(user);
+        print("user info google auth--->$userDataString");
 
-        print('User Info: $user');
+        socialLogin("google", userDataString);
       }
     } catch (error) {
       print('Error signing in: $error');
@@ -251,6 +258,8 @@ class RegisterController extends GetxController {
           UserCredential userCredential =
               await _auth.signInWithCredential(facebookAuthCredential);
           print("userCredential===>$userCredential");
+          String userDataString = jsonEncode(userCredential);
+          socialLogin("facebook", userDataString);
         }
       } else {
         print("Facebook sign-in failed------>: ${result.status}");
@@ -258,6 +267,52 @@ class RegisterController extends GetxController {
     } catch (e) {
       print("Error signing in with Facebook: $e");
       return null;
+    }
+  }
+
+  void socialLogin(type, obj) async {
+    if (obj == null) {
+      Get.snackbar('Validation Error', "Need to send all data",
+          snackPosition: SnackPosition.TOP);
+      return;
+    }
+
+    showLoader();
+    var requestBody = {
+      "type": type,
+      "data": obj,
+    };
+    print("social body====>${requestBody}");
+
+    try {
+      var res = await ApiCall().login(requestBody);
+      hideLoader();
+      var body = json.decode(res.body);
+      print("scoil response---->$body");
+      if (res.statusCode == 200) {
+        if (body['status'] == true || body['status'] == "true") {
+          await Preference.saveString('token', body['token']);
+          await Preference.saveInt('userId', body['user']['id']);
+          Get.snackbar('Success', 'Login successful',
+              snackPosition: SnackPosition.TOP);
+          Get.offAll(() => const HomeScreen());
+        } else {
+          errorMessage.value = body['message'] ?? 'Unknown error occurred';
+          Get.snackbar('Error', body['message'] ?? 'Unknown error occurred',
+              snackPosition: SnackPosition.TOP);
+        }
+      } else {
+        var errorResponse = json.decode(res.body);
+        String errorMsg = errorResponse['message'] ?? 'Unknown error occurred';
+        Get.snackbar('Error', errorMsg, snackPosition: SnackPosition.TOP);
+      }
+      // ignore: non_constant_identifier_names
+    } catch (SocketException) {
+      // Handle network error
+      hideLoader();
+      Get.snackbar('Network Error',
+          'Unable to reach the server. Please check your internet connection.',
+          snackPosition: SnackPosition.TOP);
     }
   }
 
@@ -290,7 +345,6 @@ class RegisterController extends GetxController {
   Future<void> signInWithInstagram() async {
     try {
       // Show the loader
-      showLoader();
 
       final result = await Get.to(() => const InstaLoginScreen(
             instaAppId: '215643524910532',
@@ -300,8 +354,9 @@ class RegisterController extends GetxController {
           ));
 
       // Hide the loader
-      hideLoader();
       print("signInWithInstagram user inf-->${result}");
+      String userDataString = jsonEncode(result);
+      socialLogin("instagram", userDataString);
 
       if (result != null) {
         // Handle the result from the screen

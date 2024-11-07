@@ -99,6 +99,7 @@ class _UnitSelectorState extends State<UnitSelector> {
                               typeData['remaining_day'] == "finish")
                           ? 0 // Handle case for "finish"
                           : 0; // Default to 0 for other cases
+                  print("typeData==>$typeData");
                   if (targetDate == null) {
                     return _buildUnplannedButton(typeData['id']);
                   } else if (typeData['remaining_day'] == "finish") {
@@ -190,7 +191,7 @@ class _UnitSelectorState extends State<UnitSelector> {
             width: buttonSize, // Adjusted size for progress indicator
             height: buttonSize,
             child: CircularProgressIndicator(
-              value: exam_count / 8, // Dynamic value based on the exam_count
+              value: 1, // Dynamic value based on the exam_count
               strokeWidth: 10,
               color: Colors.red, // The color of the progress
               backgroundColor:

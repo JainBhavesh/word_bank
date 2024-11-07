@@ -18,13 +18,13 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Get.back();
-          },
-        ),
-        title: Text('login'.tr), // Translated 'Login'
+        // leading: IconButton(
+        //   icon: const Icon(Icons.arrow_back),
+        //   onPressed: () {
+        //     Get.back();
+        //   },
+        // ),
+        title: Text('add_single_word_warehouse'.tr), // Translated 'Login'
         // actions: const [
         //   Padding(
         //     padding: EdgeInsets.all(8.0),
@@ -191,7 +191,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 textColor: Colors.white,
                 icon: Icons.camera_alt,
                 onPressed: () {
-                  // controller.signInWithInstagram();
+                  controller.signInWithInstagram();
                 },
               ),
             ],

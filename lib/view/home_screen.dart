@@ -306,13 +306,12 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
           SizedBox(
             width: buttonSize, // Adjusted size for progress indicator
             height: buttonSize,
-            // child: CircularProgressIndicator(
-            //   value: typeData['exam_count'] ??
-            //       0 / 8, // Dynamic value based on the exam_count
-            //   strokeWidth: 10,
-            //   color: Colors.red, // The color of the progress
-            //   backgroundColor: Colors.red,
-            // ),
+            child: CircularProgressIndicator(
+              value: 1, // Dynamic value based on the exam_count
+              strokeWidth: 10,
+              color: Colors.red, // The color of the progress
+              backgroundColor: Colors.red,
+            ),
           ),
           Center(
             child: Text(
