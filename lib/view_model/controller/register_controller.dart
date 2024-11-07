@@ -245,30 +245,71 @@ class RegisterController extends GetxController {
     }
   }
 
-  // // Method for Facebook sign-in
   Future<void> signInWithFacebook() async {
     try {
       final LoginResult result = await FacebookAuth.instance.login();
-      print("result signInWithFacebook---->$result");
+      print("result signInWithFacebook ----> $result");
+
       if (result.status == LoginStatus.success) {
         final AccessToken? accessToken = result.accessToken;
+
         if (accessToken != null) {
           final OAuthCredential facebookAuthCredential =
               FacebookAuthProvider.credential(accessToken.tokenString);
-          UserCredential userCredential =
-              await _auth.signInWithCredential(facebookAuthCredential);
-          print("userCredential===>$userCredential");
-          String userDataString = jsonEncode(userCredential);
+
+          UserCredential userCredential = await FirebaseAuth.instance
+              .signInWithCredential(facebookAuthCredential);
+
+          // Extract data from UserCredential and AccessToken to match your map structure
+          Map<String, dynamic> user = {
+            'id': userCredential.user?.uid ?? '',
+            'displayName': userCredential.user?.displayName ?? '',
+            'email': userCredential.user?.email ?? '',
+            'photoUrl': userCredential.user?.photoURL ?? '',
+            'accessToken': accessToken.tokenString, // Use tokenString here
+            'idToken': '', // Facebook typically doesn't provide an idToken
+          };
+
+          // Convert user data to JSON string
+          String userDataString = jsonEncode(user);
+
+          // Pass user data to socialLogin
           socialLogin("facebook", userDataString);
+
+          print("User info for Facebook login ---> $userDataString");
         }
       } else {
-        print("Facebook sign-in failed------>: ${result.status}");
+        print("Facebook sign-in failed ---> ${result.status}");
       }
     } catch (e) {
       print("Error signing in with Facebook: $e");
-      return null;
     }
   }
+
+  // // Method for Facebook sign-in
+  // Future<void> signInWithFacebook() async {
+  //   try {
+  //     final LoginResult result = await FacebookAuth.instance.login();
+  //     print("result signInWithFacebook---->$result");
+  //     if (result.status == LoginStatus.success) {
+  //       final AccessToken? accessToken = result.accessToken;
+  //       if (accessToken != null) {
+  //         final OAuthCredential facebookAuthCredential =
+  //             FacebookAuthProvider.credential(accessToken.tokenString);
+  //         UserCredential userCredential =
+  //             await _auth.signInWithCredential(facebookAuthCredential);
+  //         print("userCredential===>$userCredential");
+  //         String userDataString = jsonEncode(userCredential);
+  //         socialLogin("facebook", userDataString);
+  //       }
+  //     } else {
+  //       print("Facebook sign-in failed------>: ${result.status}");
+  //     }
+  //   } catch (e) {
+  //     print("Error signing in with Facebook: $e");
+  //     return null;
+  //   }
+  // }
 
   void socialLogin(type, obj) async {
     if (obj == null) {
@@ -354,15 +395,26 @@ class RegisterController extends GetxController {
           ));
 
       // Hide the loader
-      print("signInWithInstagram user inf-->${result}");
-      String userDataString = jsonEncode(result);
-      socialLogin("instagram", userDataString);
+      print("signInWithInstagram user info-->${result}");
 
       if (result != null) {
-        // Handle the result from the screen
+        // Assuming 'result' contains 'token', 'userId', 'username', 'profilePicture'
+        Map<String, dynamic> user = {
+          'id': result['userId'],
+          'displayName': result['username'],
+          'email': result['email'] ?? '',
+          'photoUrl': result['profilePicture'] ?? '',
+          'accessToken': result['token'],
+          'idToken': '', // Instagram typically doesn't return an idToken
+        };
+
+        String userDataString = jsonEncode(user);
+        socialLogin("instagram", userDataString);
+
         instagramToken.value = result['token'];
         instagramUserId.value = result['userId'];
         instagramUsername.value = result['username'];
+
         Get.snackbar('Success', 'Signed in with Instagram',
             snackPosition: SnackPosition.TOP);
       } else {
