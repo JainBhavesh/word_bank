@@ -388,11 +388,11 @@ class RegisterController extends GetxController {
       // Show the loader
 
       final result = await Get.to(() => const InstaLoginScreen(
-            instaAppId: '215643524910532',
-            instaAppSecret: 'b19d87bf98b632e0319f2ebab495b345',
-            redirectUrl:
-                'https://my.m.redirect.net/?code=abcdefghijklmnopqrstuvwxyz#_/',
-          ));
+          instaAppId: '1707420580109291',
+          instaAppSecret: '1340639857aa4ef6e20a7b417bb92e14',
+          redirectUrl:
+              // 'https://my.m.redirect.net/?code=abcdefghijklmnopqrstuvwxyz#_/',
+              'https://yourdomain.com/oauth_callback'));
 
       // Hide the loader
       print("signInWithInstagram user info-->${result}");
