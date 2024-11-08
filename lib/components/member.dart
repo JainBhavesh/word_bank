@@ -101,11 +101,12 @@ class Member extends StatelessWidget {
                                           () async {
                                         await Preference.saveString(
                                             'token', '');
-                                        Get.toNamed(RouteName.loginScreen);
+                                        Get.offAllNamed(RouteName
+                                            .loginScreen); // This clears the stack
                                       });
                                     });
                                   },
-                                ),
+                                )
                               ],
                             );
                           },
