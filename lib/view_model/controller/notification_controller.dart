@@ -54,7 +54,6 @@ class NotificationController extends GetxController {
         var body = json.decode(res.body);
         if (body['status'] == true || body['status'] == "true") {
           totalCount.value = body['data'];
-          print('get total point-->$body');
         } else {
           Get.snackbar('Error', body['message'] ?? 'Unknown error occurred',
               snackPosition: SnackPosition.TOP);
@@ -103,7 +102,7 @@ class NotificationController extends GetxController {
   }
 
   void getTodayTask() async {
-    isLoading(true);
+    // isLoading(true);
 
     print("getTodayTask API call============>");
     try {

@@ -139,7 +139,6 @@ class AppTranslations extends Translations {
           'ironic': 'Ironic',
           'quiz_msg':
               'What is a push quiz?To strengthen your memory of the words, we will ask you to review the words at certain intervals, even after you have completed the self-test.',
-          'add_new_voc': 'Add new vocabulary -> Add single word bin',
           'Name': 'Name',
           "add_single_word_warehouse": "Add single word warehouse"
         },
@@ -269,7 +268,6 @@ class AppTranslations extends Translations {
           'starter': '起動機',
           'quiz_msg':
               '什麼是推播測驗？\n 要強化單字的記憶，我們會要求你在一定的間隔期 間複習這些單字，既使你已經完成自主測驗也一 樣。',
-          'add_new_voc': '新增詞庫->新增單字倉',
           'Name': '姓名',
           "add_single_word_warehouse": "新增單字倉"
         },

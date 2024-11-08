@@ -175,6 +175,7 @@ class _AdvanceWordPuzzleScreenState extends State<AdvanceWordPuzzleScreen> {
               textColor: Colors.white,
               onPressed: () {
                 notificationController.getTotalCount();
+                notificationController.getTodayTask();
                 if (mainUnitId == 0) {
                   Navigator.of(context).pop();
                   Navigator.of(context).pop();

@@ -24,7 +24,7 @@ class _LoginScreenState extends State<LoginScreen> {
         //     Get.back();
         //   },
         // ),
-        title: Text('add_single_word_warehouse'.tr), // Translated 'Login'
+        title: Text('login'.tr), // Translated 'Login'
         // actions: const [
         //   Padding(
         //     padding: EdgeInsets.all(8.0),

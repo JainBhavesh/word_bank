@@ -96,13 +96,11 @@ class ApiCall {
 
   getExam(unit_id, exam_id) async {
     final String url = '${AppUrl.exam}?unit_id=$unit_id&exam_id=$exam_id';
-    print("get exam url---->$url");
     return await ApiManager().getData(url);
   }
 
   getReview(unit_id) async {
     final String url = '${AppUrl.review}?id=$unit_id';
-    print("get review url---->$url");
     return await ApiManager().getData(url);
   }
 

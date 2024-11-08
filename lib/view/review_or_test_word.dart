@@ -40,7 +40,6 @@ class _ReviewOrTestScreenState extends State<ReviewOrTestScreen> {
     unitId = arguments['unitId'] ?? 0;
     daysLeft = arguments['daysLeft'] ?? 0;
     mainUnitId = arguments['mainUnitId'] ?? 0;
-    print('mainUnitId-==>$mainUnitId');
 
     _controller.getExamTypeList(unit_id: unitId);
     // _controller.getUnitWordsList(unit_id: unitId);

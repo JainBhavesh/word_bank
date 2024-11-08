@@ -35,7 +35,8 @@ class AddWordbankScreen extends StatelessWidget {
             Get.back();
           },
         ),
-        title: Text(isRename ? 'rename_wordbank'.tr : 'add_new_voc'.tr),
+        title: Text(
+            isRename ? 'rename_wordbank'.tr : 'add_single_word_warehouse'.tr),
         actions: [
           Padding(
             padding: EdgeInsets.all(8.0),

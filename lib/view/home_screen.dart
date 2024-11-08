@@ -239,7 +239,6 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                                     typeData['remaining_day'] == "finish")
                                 ? 0 // Handle case for "finish"
                                 : 0; // Default to 0 for other cases
-                        print("targetDate------>${targetDate}");
                         if (targetDate == null) {
                           return _buildUnplannedButton(typeData['id']);
                         } else if (typeData['remaining_day'] == "finish") {

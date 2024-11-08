@@ -71,7 +71,6 @@ class _ExamBoardScreenState extends State<ExamBoardScreen> {
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Get.back();
-            notificationController.getTodayTask();
           },
         ),
         actions: [
